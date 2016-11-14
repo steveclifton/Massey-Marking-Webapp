@@ -2,7 +2,7 @@
 
 namespace Marking\Controllers;
 
-
+use Exception;
 use Marking\Models\User;
 
 
@@ -20,6 +20,7 @@ class Authentication extends Base
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = $_POST;
 
+
             $user = new User();
             $existingUser = $user->verify($data);
 
@@ -29,6 +30,7 @@ class Authentication extends Base
                 die();
             } else {
                 header('location: /login');
+                die();
             }
         }
 
@@ -49,6 +51,9 @@ class Authentication extends Base
      */
     public function register()
     {
+        $user = new User();
+
+
         $this->isLoggedIn();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -63,7 +68,7 @@ class Authentication extends Base
                     header('location: /welcome');
                     die();
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 header('location: /register');
             }
         }
@@ -79,6 +84,7 @@ class Authentication extends Base
     public function setSession ($data)
     {
         $_SESSION['id'] = $data['id'];
+        $_SESSION['student_id'] = $data['student_id'];
         $_SESSION['first_name'] = $data['first_name'];
         $_SESSION['last_name'] = $data['last_name'];
         $_SESSION['email'] = $data['email'];
