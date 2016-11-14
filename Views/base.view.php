@@ -4,7 +4,6 @@
         <title>Massey Marking App - <?= $pageTitle; ?></title>
         <meta charset="utf-8">
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" href="/mystyle.css" />
 
         <script src="/Assets/AjaxVerify.js"></script>
 
@@ -17,10 +16,16 @@
 
     </head>
     <body>
-        <?php include('/var/www/marking/Views/layouts/header.php'); ?>
+        <div class="container">
+            <?php include('/var/www/marking/Views/layouts/header.php'); ?>
+        </div>
+
+        <div class="container">
+            <?php include($viewName . '.php'); ?>
+        </div>
 
 
-        <?php include($viewName . '.php'); ?>
+
 
 
 <!--        --><?php //include('/var/www/marking/Views/layouts/footer.php')?>
