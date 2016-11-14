@@ -15,14 +15,14 @@ use Marking\Exceptions\CustomException;
 class User extends Base
 {
 
-    public function getUserByUsername($username)
+    public function getUserByStudentId($studentId)
     {
 
         $query = $this->database->query("SELECT *
                                          FROM 
                                          `users` 
                                          WHERE 
-                                         username='$username'
+                                         student_id='$studentId'
                                          LIMIT 1
                                          "
         );
@@ -38,15 +38,14 @@ class User extends Base
      *
      * @param $userData
      * @return User - returns a new user object - used to log the user in automatically
-     * @throws ToolException
      */
     public function create($userData)
     {
 
         /* Sanitizes and filters data before being inserted */
+        $data['student_id'] = strtolower($this->database->real_escape_string($userData['username']));
         $data['first_name'] = ucfirst($this->database->real_escape_string($userData['first_name']));
         $data['last_name'] = ucfirst($this->database->real_escape_string($userData['last_name']));
-        $data['username'] = strtolower($this->database->real_escape_string($userData['username']));
         $data['password'] = $this->database->real_escape_string($userData['password']);
         $data['email'] = strtolower($this->database->real_escape_string($userData['email']));
 
@@ -56,24 +55,24 @@ class User extends Base
 
         $this->database->query("INSERT INTO `users` (
                                             `id`,
+                                            `student_id`,
                                             `first_name`,
                                             `last_name`,
-                                            `username`,
-                                            `email`,
                                             `password`,
+                                            `email`,
                                             `create_date`
                                             ) VALUES (
                                             NULL,
+                                             '".$data['student_id']."',
                                              '".$data['first_name']."', 
                                              '".$data['last_name']."', 
-                                             '".$data['username']."', 
-                                             '".$data['email']."', 
-                                             '".$password."', 
+                                             '".$password."',
+                                             '".$data['email']."',
                                              CURRENT_TIMESTAMP
                                              )"
         );
 
-        $newUserData = $this->getUserByUsername($data['username']);
+        $newUserData = $this->getUserByStudentId($data['student_id']);
 
         $newUser = new User();
 
@@ -93,11 +92,10 @@ class User extends Base
      */
     public function verify($userData)
     {
-        $data['username'] = strtolower($this->database->real_escape_string($userData['username']));
+        $data['student_id'] = strtolower($this->database->real_escape_string($userData['student_id']));
         $data['password'] = $this->database->real_escape_string($userData['password']);
 
-
-        $existingUser = $this->getUserByUsername($data['username']);
+        $existingUser = $this->getUserByStudentId($data['student_id']);
 
         /* Checks the database to see whether passwords match, if they do, user details are returned */
         if (password_verify($data['password'], $existingUser['password'])) {
@@ -105,27 +103,7 @@ class User extends Base
         }
     }
 
-    public function isUsernameAvailable($userName)
-    {
-        $query = $this->database->query("SELECT * FROM `users` WHERE users.username LIKE '$userName'");
 
-        if ($query->num_rows == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function isEmailAvailable($email)
-    {
-        $query = $this->database->query("SELECT * FROM `users` WHERE users.email LIKE '$email'");
-
-        if ($query->num_rows == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 
 
