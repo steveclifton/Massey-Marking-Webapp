@@ -11,11 +11,11 @@
                                 <h2>LOGIN</h2>
                                 <div class="form-group">
                                     <input type="text" name="student_id" id="student_id" tabindex="1" class="form-control"
-                                           placeholder="Student ID" value="">
+                                           placeholder="Student ID" value="" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="password" id="password" tabindex="2"
-                                           class="form-control" placeholder="Password">
+                                           class="form-control" placeholder="Password" required>
                                 </div>
                                 <div class="col-xs-6 form-group pull-left checkbox">
                                     <input id="checkbox1" type="checkbox" name="remember">
@@ -25,9 +25,6 @@
                                     <input type="submit" name="login-submit" id="login-submit" tabindex="4"
                                            class="form-control btn btn-login" value="Log In">
                                 </div>
-                            </form>
-                            <form action="register" method="post">
-                                <input type="submit">
                             </form>
                         </div>
                     </div>
