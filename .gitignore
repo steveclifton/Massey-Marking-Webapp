@@ -7,3 +7,5 @@ index.php
 /vendor
 /.idea
 composer.json
+
+phpmyadmin
