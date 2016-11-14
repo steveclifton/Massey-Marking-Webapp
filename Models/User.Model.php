@@ -34,7 +34,6 @@ class User extends Base
 
     /**
      * Creates a new user if registration information is valid
-     *  - logs them in to the internet banking system automatically
      *
      * @param $userData
      * @return User - returns a new user object - used to log the user in automatically
@@ -84,11 +83,10 @@ class User extends Base
     }
 
     /**
-     * Verifies whether the users login email and password exist/match
+     * Verifies whether the users student id and password exist and match
      *
      * @param $userData
      * @return mixed
-     * @throws ToolException
      */
     public function verify($userData)
     {
