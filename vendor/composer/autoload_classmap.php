@@ -15,5 +15,5 @@ return array(
     'Marking\\Models\\User' => $baseDir . '/Models/User.Model.php',
     'Marking\\Services\\DB' => $baseDir . '/Services/DB.Service.php',
     'Marking\\Services\\Database' => $baseDir . '/Services/Database.Service.php',
-    'Marking\\Services\\evn' => $baseDir . '/Services/env.php',
+    'Marking\\Services\\Evn' => $baseDir . '/Services/Env.php',
 );
