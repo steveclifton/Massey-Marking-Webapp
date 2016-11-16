@@ -4,6 +4,7 @@ namespace Marking\Models;
 
 use Marking\Exceptions\CustomException;
 use Marking\Services\Database;
+use Marking\Services\DB;
 
 
 /**
@@ -19,7 +20,7 @@ abstract class Base
 
     public function __construct()
     {
-        $this->database = Database::getInstance();
+        $this->database = DB::getInstance();
     }
 
 }
