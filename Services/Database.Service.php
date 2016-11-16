@@ -1,8 +1,17 @@
 <?php
+/**
+ * This class is not used by default
+ * Only here if it is required in the future
+ */
+
+
 
 namespace Marking\Services;
 
 use mysqli;
+use mysqli_sql_exception;
+use mysqli_result;
+
 
 class Database extends mysqli
 {
@@ -11,18 +20,19 @@ class Database extends mysqli
 
     /**
      * Constructs a mysqli connection
-     *
-     * ConnectToDatabase constructor.
      */
     public function __construct()
     {
-        mysqli_report(MYSQLI_REPORT_OFF);
-
-        @parent::__construct('localhost', 'root', 'root', 'marking');
-
-        if (mysqli_connect_errno()) {
-            throw new \mysqli_sql_exception();
-        }
+        /**
+         * Need to be setup if using a MySqli Connection
+         */
+//        mysqli_report(MYSQLI_REPORT_OFF);
+//
+//        @parent::__construct();
+//
+//        if (mysqli_connect_errno()) {
+//            throw new \mysqli_sql_exception();
+//        }
     }
 
     /**
@@ -48,9 +58,9 @@ class Database extends mysqli
     public function query($query)
     {
         if (!$this->real_query($query)) {
-            throw new \mysqli_sql_exception($this->error);
+            throw new mysqli_sql_exception($this->error);
         }
-        $result = new \mysqli_result($this);
+        $result = new mysqli_result($this);
         return $result;
     }
 
