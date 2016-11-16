@@ -53,7 +53,6 @@ class Authentication extends Base
     {
         $user = new User();
 
-
         $this->isLoggedIn();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
