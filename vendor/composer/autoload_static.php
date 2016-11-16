@@ -16,7 +16,7 @@ class ComposerStaticInitd14b701456a190287802b67245d9893b
         'Marking\\Models\\User' => __DIR__ . '/../..' . '/Models/User.Model.php',
         'Marking\\Services\\DB' => __DIR__ . '/../..' . '/Services/DB.Service.php',
         'Marking\\Services\\Database' => __DIR__ . '/../..' . '/Services/Database.Service.php',
-        'Marking\\Services\\evn' => __DIR__ . '/../..' . '/Services/env.php',
+        'Marking\\Services\\Evn' => __DIR__ . '/../..' . '/Services/Env.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
