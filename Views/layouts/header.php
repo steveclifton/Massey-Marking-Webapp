@@ -6,8 +6,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/" style="background-color: lightgrey; font-family: Calibri">Massey Marking
-                App</a>
+            <a class="navbar-brand" href="/" style="background-color: lightgrey; font-family: Calibri">Assignment Marker</a>
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav navbar-right">
