@@ -1,0 +1,10 @@
+{
+  "autoload" : {
+    "classmap" : [
+      "Controllers/",
+      "Models/",
+      "Services/",
+      "Exceptions"
+    ]
+  }
+}
