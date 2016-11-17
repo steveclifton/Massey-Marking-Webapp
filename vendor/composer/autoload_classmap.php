@@ -9,6 +9,7 @@ return array(
     'Marking\\Controllers\\Authentication' => $baseDir . '/Controllers/Authentication.Controller.php',
     'Marking\\Controllers\\Base' => $baseDir . '/Controllers/Base.Controller.php',
     'Marking\\Controllers\\Errors' => $baseDir . '/Controllers/Errors.Controller.php',
+    'Marking\\Controllers\\Upload' => $baseDir . '/Controllers/Upload.Controller.php',
     'Marking\\Controllers\\Welcome' => $baseDir . '/Controllers/Welcome.Controller.php',
     'Marking\\Exceptions\\CustomException' => $baseDir . '/Exceptions/Custom.Exception.php',
     'Marking\\Models\\Base' => $baseDir . '/Models/Base.Model.php',
