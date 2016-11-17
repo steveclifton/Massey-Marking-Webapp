@@ -41,6 +41,11 @@ else if ($uri == 'register') {
     $authentication->register();
 }
 
+else if ($uri == 'upload') {
+    $upload = new Controllers\Upload();
+    $upload->uploadFile();
+}
+
 else {
     $errorController = new Controllers\Errors();
     $errorController->notFound();
