@@ -3,6 +3,11 @@
 
 namespace Marking;
 
+use Marking\Controllers\Authentication;
+use Marking\Controllers\Welcome;
+use Marking\Controllers\Upload;
+use Marking\Controllers\Errors;
+
 require 'vendor/autoload.php';
 
 session_start();
@@ -17,37 +22,32 @@ if ($uri == '') {
 }
 
 else if ($uri == 'login') {
-    $authentication = new Controllers\Authentication();
-    $authentication->login();
-}
-
-else if ($uri == 'login') {
-    $authentication = new Controllers\Authentication();
+    $authentication = new Authentication();
     $authentication->login();
 }
 
 else if ($uri == 'welcome') {
-    $accounts = new Controllers\Welcome();
+    $accounts = new Welcome();
     $accounts->processWelcome();
 }
 
 else if ($uri == 'logout') {
-    $authentication = new Controllers\Authentication();
+    $authentication = new Authentication();
     $authentication->logout();
 }
 
 else if ($uri == 'register') {
-    $authentication = new Controllers\Authentication();
+    $authentication = new Authentication();
     $authentication->register();
 }
 
 else if ($uri == 'upload') {
-    $upload = new Controllers\Upload();
+    $upload = new Upload();
     $upload->uploadFile();
 }
 
 else {
-    $errorController = new Controllers\Errors();
+    $errorController = new Errors();
     $errorController->notFound();
 }
 
