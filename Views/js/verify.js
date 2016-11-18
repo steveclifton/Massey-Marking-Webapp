@@ -18,7 +18,21 @@ $(document).ready(function () {
         // });
     });
 
+    /**
+     * Checks to ensure the user enters a valid Student Id
+     *
+     *  Allows for only digits to be entered
+     */
+    $('#student_id').focusout(function() {
+        var studentId = $('#student_id').val();
 
+        reg = /^[0-9]+$/;
+        if (studentId != "") {
+            if (!reg.test(studentId)) {
+                $("#noStudent").html("*Invalid Student ID");
+            }
+        }
+    });
 
 
 
