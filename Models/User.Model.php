@@ -96,6 +96,8 @@ class User extends Base
         /* Checks the database to see whether passwords match, if they do, user details are returned */
         if (password_verify($userData['password'], $existingUser['password'])) {
             return $existingUser;
+        } else {
+            $_SESSION['failedLogin'] = "Please check login details";
         }
     }
 
