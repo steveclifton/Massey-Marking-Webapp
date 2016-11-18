@@ -38,6 +38,15 @@ $(document).ready(function () {
 
 });
 
+
+/**
+ * Checks the file type that is trying to be uploaded
+ *
+ * Allows only C and CPP files to be uploaded
+ *
+ * @param form
+ * @returns {boolean}
+ */
 function checkFileType(form) {
     var ext = $('#fileToUpload').val().split('.').pop().toLowerCase();
     if($.inArray(ext, ['cpp', 'c']) == -1) {
