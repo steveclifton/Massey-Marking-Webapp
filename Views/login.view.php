@@ -22,6 +22,16 @@
                                     <input type="submit" name="login-submit" id="login-submit" tabindex="4"
                                            class="form-control btn btn-login" value="Log In">
                                 </div>
+                                <div class="col-xs-6 form-group pull-left checkbox">
+                                    <p id="noStudent" style="color: red;">
+                                        <?php
+                                            if(isset($_SESSION['failedLogin'])) {
+                                                echo $_SESSION['failedLogin'];
+                                                unset($_SESSION['failedLogin']);
+                                            }
+                                        ?>
+                                    </p>
+                                </div>
                             </form>
                         </div>
                     </div>
