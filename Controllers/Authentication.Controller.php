@@ -46,6 +46,7 @@ class Authentication extends Base
         header('location: /login');
     }
 
+
     /**
      * Attempts to register a new user
      */
@@ -87,6 +88,7 @@ class Authentication extends Base
         $_SESSION['first_name'] = $data['first_name'];
         $_SESSION['last_name'] = $data['last_name'];
         $_SESSION['email'] = $data['email'];
+        $_SESSION['user_type'] = $data['user_type'];
     }
     
 }
