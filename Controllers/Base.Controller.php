@@ -54,6 +54,19 @@ abstract class Base
 
 
 
+
+    public function isAdminLoggedIn()
+    {
+        if (isset($_SESSION['id'])) {
+            if ($_SESSION['user_type'] != 'admin') {
+                header('location: /welcome');
+                die();
+            }
+
+        }
+    }
+
+
     /**
      *  This method directs controller data to the base view
      *
