@@ -3,6 +3,7 @@
 
 namespace Marking;
 
+use Marking\Controllers\Assignment;
 use Marking\Controllers\Authentication;
 use Marking\Controllers\Welcome;
 use Marking\Controllers\Upload;
@@ -42,8 +43,13 @@ else if ($uri == 'register') {
 }
 
 else if ($uri == 'upload') {
-    $upload = new Upload();
-    $upload->uploadFile();
+    $uploadAssignment = new Assignment();
+    $uploadAssignment->uploadFile();
+}
+
+else if ($uri == 'assignment') {
+    $assignment = new Assignment();
+    $assignment->loadAssignmentView();
 }
 
 else {
