@@ -8,6 +8,7 @@ use Marking\Controllers\Authentication;
 use Marking\Controllers\Welcome;
 use Marking\Controllers\Upload;
 use Marking\Controllers\Errors;
+use Marking\Controllers\Admin;
 
 require 'vendor/autoload.php';
 
@@ -50,6 +51,11 @@ else if ($uri == 'upload') {
 else if ($uri == 'assignment') {
     $assignment = new Assignment();
     $assignment->loadAssignmentView();
+}
+
+else if ($uri == 'admin') {
+    $admin = new Admin();
+    $admin->adminView();
 }
 
 else {
