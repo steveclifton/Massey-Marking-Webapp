@@ -17,6 +17,12 @@ class Welcome extends Base
         $viewData['first_name'] = $_SESSION['first_name'];
         $viewData['last_name'] = $_SESSION['last_name'];
 
+        if ($_SESSION['user_type'] == 'admin') {
+            $this->render('Admin', 'admin.view', $viewData);
+            return;
+            die();
+        }
+
         $this->render('Welcome', 'welcome.view', $viewData);
     }
 
