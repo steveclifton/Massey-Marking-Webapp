@@ -1,9 +1,5 @@
-    <h4 style="padding-top: 40px">Output Results</h4>
+<div id="centerdisplay" >
 
-    <p id="">
-        This is where the students overall marks will be displayed <br>
-        Assignment 1 - 10/10<br>
-        Assignment 2 - 9/10<br>
-    </p>
+    <h1>Student Stuff</h1>
 
 </div>
