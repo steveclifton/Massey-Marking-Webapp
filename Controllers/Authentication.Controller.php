@@ -20,7 +20,6 @@ class Authentication extends Base
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = $_POST;
 
-
             $user = new User();
             $existingUser = $user->verify($data);
 
@@ -45,7 +44,6 @@ class Authentication extends Base
         session_destroy();
         header('location: /login');
     }
-
 
     /**
      * Attempts to register a new user
