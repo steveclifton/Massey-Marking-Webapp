@@ -11,7 +11,6 @@
 
 if (isset($_SESSION['id'])) {
     echo "
-            <div class=\"col-xs-6 col-sm-2 sidebar-offcanvas\" id=\"sidebar\" role=\"navigation\" style=\"padding-top: 10px\">
             <h4 style='padding-left: 12px; font-size: 20pt;'>Assignments</h4>
             <ul class=\"nav\">
           ";
@@ -22,7 +21,7 @@ if (isset($_SESSION['id'])) {
         echo "<li><a class=\"assignment\" href=\"/assignment?num=$week\" id=\"$week\" style='text-decoration: underline; font-size: 12pt;'>Assignment $week</a></li>";
     }
 }
-echo "</ul></div>";
+echo "</ul>";
 
 
 
