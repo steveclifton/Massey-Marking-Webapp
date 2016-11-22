@@ -3,7 +3,7 @@
     <head>
         <title>Massey Marking System - <?= $pageTitle; ?></title>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
         <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -14,17 +14,27 @@
     </head>
     <body>
 
-        <div class="container">
+        <div class="container-fluid">
             <?php include('/var/www/marking/Views/layouts/header.php'); ?>
         </div>
 
         <div class="page-container">
-            <div class="container">
-                <div class="row row-offcanvas row-offcanvas-left">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3" id="sidebar" role="navigation" style="padding-top: 20px">
+                        <?php
+                        if (isset($_SESSION['user_type'])) {
+                            if ($_SESSION['user_type'] == 'admin') {
+                                include('/var/www/marking/Views/layouts/adminpanel.view.php');
+                            } else {
+                                include('/var/www/marking/Views/layouts/studentpanel.view.php');
+                            }
+                        }
+                        ?>
+                    </div>
 
-                    <?php include('/var/www/marking/Views/layouts/leftside.php'); ?>
 
-                    <div class="col-xs-12 col-sm-9">
+                    <div class="col-md-9" style="padding-top: 20px">
                         <?php include($viewName . '.php'); ?>
                     </div>
 
