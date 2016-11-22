@@ -1,9 +1,7 @@
-    <h4 style="padding-top: 40px">Output Results</h4>
+<?php
+    include('/var/www/marking/Views/layouts/studentpanel.view.php');
+?>
 
-    <p id="">
-        This is where the students overall marks will be displayed <br>
-        Assignment 1 - 10/10<br>
-        Assignment 2 - 9/10<br>
-    </p>
-
+<div class="col-xs-2 col-sm-10" id="centerdisplay" style="padding-left: 140px; padding-top: 30px;">
+    <h1>Student Login</h1>
 </div>
