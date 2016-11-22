@@ -12,9 +12,9 @@
             <ul class="nav navbar-nav navbar-right">
                 <?php
 
-                if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin') {
-                    echo "<li><a href=\"admin\">Admin</a></li>";
-                }
+//                if(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'admin') {
+//                    echo "<li><a href=\"admin\">Admin</a></li>";
+//                }
 
                     if (isset($_SESSION['id'])) {
                         $studentName = $_SESSION['first_name'] . " " . $_SESSION['last_name'];
