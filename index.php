@@ -6,7 +6,6 @@ namespace Marking;
 use Marking\Controllers\Assignment;
 use Marking\Controllers\Authentication;
 use Marking\Controllers\Welcome;
-use Marking\Controllers\Upload;
 use Marking\Controllers\Errors;
 use Marking\Controllers\Admin;
 
