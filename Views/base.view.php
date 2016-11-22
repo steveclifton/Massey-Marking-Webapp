@@ -20,13 +20,24 @@
 
         <div class="page-container">
             <div class="container">
-<!--                <div class="row row-offcanvas row-offcanvas-left">-->
+                <div class="row row-offcanvas row-offcanvas-left">
 
-                    <?php include($viewName . '.php'); ?>
+                    <?php include('/var/www/marking/Views/layouts/leftside.php'); ?>
 
-<!--                </div>-->
+                    <div class="col-xs-12 col-sm-9">
+                        <?php include($viewName . '.php'); ?>
+                    </div>
+
+                </div>
             </div>
         </div>
+
+
+
+
+
+
+<!--        --><?php //include('/var/www/marking/Views/layouts/footer.php')?>
 
     </body>
 </html>
