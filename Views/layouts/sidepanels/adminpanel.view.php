@@ -11,7 +11,6 @@
 
 if (isset($_SESSION['id'])) {
     echo "
-            
             <h4 style='padding-left: 12px; font-size: 18pt;'>Admin Panel</h4>
             <ul class=\"nav\">
           ";
