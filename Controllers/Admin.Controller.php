@@ -2,7 +2,11 @@
 
 namespace Marking\Controllers;
 
-
+/**
+ * Class Admin
+ *
+ * Controller for Admin related management
+ */
 class Admin extends Base
 {
 

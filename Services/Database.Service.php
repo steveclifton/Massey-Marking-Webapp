@@ -13,6 +13,11 @@ use mysqli_sql_exception;
 use mysqli_result;
 
 
+/**
+ * Class Database
+ *
+ * Used to create a database connection using MySQLi
+ */
 class Database extends mysqli
 {
     protected static $instance;

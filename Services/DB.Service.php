@@ -1,7 +1,6 @@
 <?php
 /*
  * All Connections to MySQL server are performed through this class
- *
  */
 
 namespace Marking\Services;
@@ -12,10 +11,9 @@ use Marking\Services\Evn;
 
 
 /**
- * All DB connections done through this class
- *
  * Class DB
- * @package Marking\Services
+ *
+ * All DB connections done through this class
  */
 class DB extends PDO
 {
@@ -36,13 +34,17 @@ class DB extends PDO
         }
     }
 
-
+    /**
+     * Allows the Database to be queried
+     */
     public function query($statement, $mode = PDO::ATTR_DEFAULT_FETCH_MODE, $arg3 = null)
     {
         parent::query($statement);
     }
 
-
+    /**
+     * Returns an instance of the Database Connection
+     */
     public static function getInstance()
     {
         if (!self::$instance) {

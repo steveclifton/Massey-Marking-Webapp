@@ -8,12 +8,13 @@ use PDO;
  * Class User
  *
  * Class used to query the database for user data
- *
- * @package
  */
 class User extends Base
 {
 
+    /**
+     * Returns a students database records
+     */
     public function getUserByStudentId($studentId)
     {
         $sql = "SELECT * FROM `users` WHERE student_id='$studentId' LIMIT 1 ";
@@ -45,7 +46,5 @@ class User extends Base
             $_SESSION['failedLogin'] = "Please check login details";
         }
     }
-
-
 
 }

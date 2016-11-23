@@ -5,7 +5,8 @@ namespace Marking\Controllers;
 
 /**
  * Class Errors
- * @package
+ *
+ * Controller for Error related management
  */
 class Errors extends Base
 {

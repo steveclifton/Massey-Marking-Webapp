@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Routing File
+ *
+ * All requests to views are routed through this file
+ */
 
 namespace Marking;
 
