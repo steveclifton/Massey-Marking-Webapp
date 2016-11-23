@@ -36,25 +36,19 @@ abstract class Base
             header('location: /login');
             die();
         }
+        if (isset($_SESSION) && $_SESSION['user_type'] != 'student') {
+            header('location: /admin');
+            die();
+        }
     }
+
 
 
     /**
-     * Returns True if the user is logged in
-     *
+     * Checks to see whether the user is an admin
+     *   - If they are not an admin, they are directed back to the welcome page
+     * @return bool
      */
-    public function activeUser()
-    {
-        if (isset($_SESSION['id'])) {
-            return true;
-            die();
-        }
-        return false;
-    }
-
-
-
-
     public function isAdminLoggedIn()
     {
         if (isset($_SESSION['id'])) {
@@ -62,7 +56,7 @@ abstract class Base
                 header('location: /welcome');
                 die();
             }
-
+            return true;
         }
     }
 
