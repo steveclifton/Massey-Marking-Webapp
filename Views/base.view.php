@@ -21,17 +21,7 @@
         <div class="page-container">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3" id="sidebar" role="navigation" style="padding-top: 20px">
-                        <?php
-                        if (isset($_SESSION['user_type'])) {
-                            if ($_SESSION['user_type'] == 'admin') {
-                                include('/var/www/marking/Views/layouts/adminpanel.view.php');
-                            } else {
-                                include('/var/www/marking/Views/layouts/studentpanel.view.php');
-                            }
-                        }
-                        ?>
-                    </div>
+
 
 
                     <div class="col-md-9" style="padding-top: 20px">
