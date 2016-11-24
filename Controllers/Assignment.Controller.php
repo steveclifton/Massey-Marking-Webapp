@@ -181,6 +181,45 @@ class Assignment extends Base
     }
 
 
+    /**
+     * Uses the created executable to test a variety of input
+     *  - Output from these tests is directed into a results text file
+     */
+    private function runAssignmentTests()
+    {
+        $studentId = $_SESSION['student_id'];
+
+        chdir("/home/student/$studentId/$this->assignmentNumber");
+
+        if ($this->assignmentNumber == 1) {
+            for ($i = 1; $i <= $this->testNumber; $i++) {
+                system("timeout 10 ./A$this->assignmentNumber matrix$i.txt matrix$i.txt > result$i.txt");
+                //chmod("result$i.txt", 0777); don't need to change for read only
+            }
+        }
+        else if ($this->assignmentNumber == 2) {
+
+        }
+        else if ($this->assignmentNumber == 3) {
+
+        }
+        else if ($this->assignmentNumber == 4) {
+
+        }
+        else if ($this->assignmentNumber == 5) {
+
+        }
+        else if ($this->assignmentNumber == 6) {
+
+        }
+        else if ($this->assignmentNumber == 7) {
+
+        }
+        else if ($this->assignmentNumber == 8) {
+
+        }
+
+    }
 
 }
 
