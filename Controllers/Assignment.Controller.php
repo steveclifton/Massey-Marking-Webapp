@@ -75,10 +75,10 @@ class Assignment extends Base
 
         $this->runAssignmentTests();
 
-    private function markAssignment()
-    {
+        /**
+         * Now begin processing and parsing
+         */
 
-    }
 
     private function compileAssignment($target_dir)
     {
