@@ -40,39 +40,40 @@ class Assignment extends Base
         // Gets the assignment number from the view
         $assNum = $this->getAssignmentNumber($_SERVER['HTTP_REFERER']);
 
-        // Sets the target directory
-        $target_dir = "/var/www/marking/uploads/" . $_SESSION['student_id'] . "/" . $assNum;
-
-
-        /**
-         * If the target directory does not exist, CREATE it
-         *  - otherwise, remove all files from it
-         */
-        if (!is_dir($target_dir)) {
-            mkdir($target_dir, 0700);
-        } else {
-            $this->removeAllFiles($target_dir);
-        }
-
-        // Sets the target file directory and name
-        $target_file = $target_dir . "/A$assNum.cpp";
-
-
         try {
+            // Sets the target directory
+            $target_dir = "/home/student/" . $_SESSION['student_id'] . "/" . $this->assignmentNumber;
+
+            /**
+             * If the target directory does not exist, CREATE it
+             *  - otherwise, remove all files from it
+             */
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir, 0777);
+            } else {
+                $this->removeAllFiles($target_dir);
+            }
+
+            $target_file = $target_dir . "/A$this->assignmentNumber.cpp";
+
             move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
+            chmod($target_file, 0777);
+
         } catch (Exception $e) {
             var_dump($e); //TODO remove
             die();
         }
 
-        if ($this->compileAssignment($target_dir)) {
-            // This means the assignment compiled
+
+        if (!$this->compileAssignment()) {
+            /* The assignment failed to compile */
+            die("Failed"); // TODO update this
         }
 
+        /* The Assignment compiled successfully */
+        $this->copyInputFiles();
 
-        header("Location: {$_SERVER["HTTP_REFERER"]}");
-    }
-
+        $this->runAssignmentTests();
 
     private function markAssignment()
     {
