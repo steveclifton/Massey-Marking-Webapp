@@ -23,6 +23,12 @@ class Assignment extends Base
             header('Location: /welcome');
         }
 
+        /**
+         * Query the database, check to see if there is any previous feedback for this assignment
+         *
+         * Dump into viewData if there is
+         */
+
         $viewData = "";
 
         $this->render('Assignment', 'assignment' . $_GET['num'] . '.view', $viewData);
