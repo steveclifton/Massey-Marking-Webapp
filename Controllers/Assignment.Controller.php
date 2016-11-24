@@ -85,12 +85,19 @@ class Assignment extends Base
         header("location: /assignment?num=$this->assignmentNumber");
     }
 
+    /**
+     * Returns the assignment number the user is testing
+     *
+     */
     private function getAssignmentNumber($httpRef)
     {
         $number = explode('=', $httpRef);
         return $number[1];
     }
 
+    /**
+     * Removes all the files in a directory
+     */
     private function removeAllFiles($target_dir)
     {
         $files = glob($target_dir . "/*"); // get all file names
