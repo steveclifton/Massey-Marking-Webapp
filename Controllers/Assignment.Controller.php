@@ -7,6 +7,9 @@ use Exception;
 
 class Assignment extends Base
 {
+    private $assignmentNumber;
+    private $testNumber = 10; // Set the number of tests to be run
+
 
     /**
      * Gets the users details from SESSION and passes to the view
