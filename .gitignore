@@ -4,3 +4,5 @@ Services/Env.php
 uploads
 
 
+
+*.sql
