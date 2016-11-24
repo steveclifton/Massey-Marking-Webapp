@@ -38,7 +38,7 @@ class Assignment extends Base
     public function processUploadedFile()
     {
         // Gets the assignment number from the view
-        $assNum = $this->getAssignmentNumber($_SERVER['HTTP_REFERER']);
+        $this->assignmentNumber = $this->getAssignmentNumber($_SERVER['HTTP_REFERER']);
 
         try {
             // Sets the target directory
