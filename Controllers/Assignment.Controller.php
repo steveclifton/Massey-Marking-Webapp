@@ -110,6 +110,77 @@ class Assignment extends Base
         return true;
     }
 
+    /**
+     * Compiles the assignment from a cpp file to a executable
+     */
+    private function compileAssignment()
+    {
+        try {
+            chdir("/home/student/1234/$this->assignmentNumber");
+            system("sudo g++ A$this->assignmentNumber.cpp -o A$this->assignmentNumber");
+            if (file_exists("/home/student/1234/$this->assignmentNumber/A$this->assignmentNumber")) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            throw $e; //into the bin .. TODO
+        }
+
+    }
+
+    /**
+     * Copys all the test input files from the master directory into the students directory
+     */
+    private function copyInputFiles()
+    {
+        $studentId = $_SESSION['student_id'];
+
+        if ($this->assignmentNumber == 1) {
+            for ($i = 1; $i <= $this->testNumber; $i++) {
+                system("cp /home/assignmentfiles/matrix$i.txt /home/student/$studentId/$this->assignmentNumber");
+                //system(""); //Copy the answers into the folder also
+            }
+        }
+        else if ($this->assignmentNumber == 2) {
+            for ($i = 1; $i <= $this->testNumber; $i++) {
+//                system("cp /home/assignmentfiles/ /home/student/$studentId/$this->assignmentNumber");
+            }
+        }
+        else if ($this->assignmentNumber == 3) {
+            for ($i = 1; $i <= $this->testNumber; $i++) {
+//                system("cp /home/assignmentfiles/ /home/student/$studentId/$this->assignmentNumber");
+            }
+        }
+        else if ($this->assignmentNumber == 4) {
+            for ($i = 1; $i <= $this->testNumber; $i++) {
+//                system("cp /home/assignmentfiles/ /home/student/$studentId/$this->assignmentNumber");
+            }
+        }
+        else if ($this->assignmentNumber == 5) {
+            for ($i = 1; $i <= $this->testNumber; $i++) {
+//                system("cp /home/assignmentfiles/ /home/student/$studentId/$this->assignmentNumber");
+            }
+        }
+        else if ($this->assignmentNumber == 6) {
+            for ($i = 1; $i <= $this->testNumber; $i++) {
+//                system("cp /home/assignmentfiles/ /home/student/$studentId/$this->assignmentNumber");
+            }
+        }
+        else if ($this->assignmentNumber == 7) {
+            for ($i = 1; $i <= $this->testNumber; $i++) {
+//                system("cp /home/assignmentfiles/ /home/student/$studentId/$this->assignmentNumber");
+            }
+        }
+        else if ($this->assignmentNumber == 8) {
+            for ($i = 1; $i <= $this->testNumber; $i++) {
+//                system("cp /home/assignmentfiles/ /home/student/$studentId/$this->assignmentNumber");
+            }
+        }
+
+    }
+
+
 
 }
 
