@@ -14,6 +14,7 @@ return array(
     'Marking\\Controllers\\Welcome' => $baseDir . '/Controllers/Welcome.Controller.php',
     'Marking\\Exceptions\\CustomException' => $baseDir . '/Exceptions/Custom.Exception.php',
     'Marking\\Models\\Base' => $baseDir . '/Models/Base.Model.php',
+    'Marking\\Models\\Feedback' => $baseDir . '/Models/Feedback.Model.php',
     'Marking\\Models\\Marks' => $baseDir . '/Models/Marks.Model.php',
     'Marking\\Models\\User' => $baseDir . '/Models/User.Model.php',
     'Marking\\Services\\DB' => $baseDir . '/Services/DB.Service.php',

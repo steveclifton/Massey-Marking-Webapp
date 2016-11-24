@@ -15,6 +15,7 @@ class ComposerStaticInitd14b701456a190287802b67245d9893b
         'Marking\\Controllers\\Welcome' => __DIR__ . '/../..' . '/Controllers/Welcome.Controller.php',
         'Marking\\Exceptions\\CustomException' => __DIR__ . '/../..' . '/Exceptions/Custom.Exception.php',
         'Marking\\Models\\Base' => __DIR__ . '/../..' . '/Models/Base.Model.php',
+        'Marking\\Models\\Feedback' => __DIR__ . '/../..' . '/Models/Feedback.Model.php',
         'Marking\\Models\\Marks' => __DIR__ . '/../..' . '/Models/Marks.Model.php',
         'Marking\\Models\\User' => __DIR__ . '/../..' . '/Models/User.Model.php',
         'Marking\\Services\\DB' => __DIR__ . '/../..' . '/Services/DB.Service.php',
