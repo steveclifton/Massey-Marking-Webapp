@@ -34,9 +34,9 @@ class Assignment extends Base
         $this->render('Assignment', 'assignment' . $_GET['num'] . '.view', $viewData);
     }
 
-    public function uploadFile()
-    {
 
+    public function processUploadedFile()
+    {
         // Gets the assignment number from the view
         $assNum = $this->getAssignmentNumber($_SERVER['HTTP_REFERER']);
 
