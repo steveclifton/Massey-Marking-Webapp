@@ -49,7 +49,7 @@ else if ($uri == 'register') {
 
 else if ($uri == 'upload') {
     $uploadAssignment = new Assignment();
-    $uploadAssignment->uploadFile();
+    $uploadAssignment->processUploadedFile();
 }
 
 else if ($uri == 'assignment') {
