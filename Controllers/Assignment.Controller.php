@@ -80,12 +80,9 @@ class Assignment extends Base
          */
 
 
-    private function compileAssignment($target_dir)
-    {
-        // todo
 
 
-        return true;
+        header("location: /assignment?num=$this->assignmentNumber");
     }
 
     private function getAssignmentNumber($httpRef)
