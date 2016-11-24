@@ -18,6 +18,11 @@ class Assignment extends Base
     {
         $this->isNotLoggedIn();
 
+        // Ensures that the user accesses a valid view
+        if (!isset($_GET['num'])) {
+            header('Location: /welcome');
+        }
+
         $viewData = "";
 
         $this->render('Assignment', 'assignment' . $_GET['num'] . '.view', $viewData);
