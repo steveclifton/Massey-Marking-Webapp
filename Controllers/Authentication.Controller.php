@@ -85,7 +85,6 @@ class Authentication extends Base
         $_SESSION['student_id'] = $data['student_id'];
         $_SESSION['first_name'] = $data['first_name'];
         $_SESSION['last_name'] = $data['last_name'];
-        $_SESSION['email'] = $data['email'];
         $_SESSION['user_type'] = $data['user_type'];
     }
     
