@@ -42,9 +42,9 @@ else if ($uri == 'logout') {
     $authentication->logout();
 }
 
-else if ($uri == 'register') {
+else if ($uri == 'adduser') {
     $authentication = new Authentication();
-    $authentication->register();
+    $authentication->addSingleUser();
 }
 
 else if ($uri == 'upload') {
