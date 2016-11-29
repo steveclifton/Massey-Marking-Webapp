@@ -15,11 +15,8 @@ if (isset($_SESSION['id'])) {
             <ul class=\"nav\">
           ";
 
-    $weeks = ['1', '2', '3', '4', '5', '6', '7', '8'];
+    echo "<li><a href=\"/adduser\" style='text-decoration: underline; font-size: 12pt;'>Single Add User</a></li>";
 
-    foreach ($weeks as $week) {
-        echo "<li><a class=\"assignment\" href=\"/assignment?num=$week\" id=\"$week\" style='text-decoration: underline; font-size: 12pt;'>Stuff $week</a></li>";
-    }
 }
 echo "</ul>";
 
