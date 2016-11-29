@@ -1,7 +1,7 @@
 <form class="form-horizontal" action='' method="POST">
     <fieldset>
         <div id="legend">
-            <legend class="">Register</legend>
+            <legend class="">Add New Student</legend>
         </div>
         <div class="control-group">
             <label class="control-label"  for="username">Student ID</label>
@@ -28,12 +28,11 @@
             <label class="control-label" for="password">Password</label>
             <div class="controls">
                 <input type="text" id="password" name="password" placeholder="" class="input-xlarge">
-                <p class="help-block">Password should be at least 4 characters</p>
             </div>
         </div>
+        <br>
 
         <div class="control-group">
-            <!-- Button -->
             <div class="controls">
                 <button class="btn btn-success">Register</button>
             </div>
