@@ -30,6 +30,19 @@ $(document).ready(function () {
     });
 
 
+    $('#first_name').focusout(function() {
+        var studentId = $('#student_id').val();
+        var firstName = $('#first_name').val();
+        firstName = firstName.toUpperCase();
+
+        var password = firstName[0] + studentId;
+
+        $('#password').val(password);
+
+    });
+
+
+
     // $('#login-submit').click(function(){
     //     var studentId = $('#student_id').val();
     //
