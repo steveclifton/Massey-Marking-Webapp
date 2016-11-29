@@ -48,30 +48,27 @@ class Authentication extends Base
     /**
      * Attempts to register a new user
      */
-    public function register()
+    public function addSingleUser()
     {
-        $user = new User();
 
-        $this->isLoggedIn();
+//        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//            $data = $_POST;
+//            $user = new User();
+//
+//            try {
+//                $newUser = $user->create($data);
+//                if (isset($newUser)) {
+//                    $newUser = $user->verify($data);
+//                    $this->setSession($newUser);
+//                    header('location: /welcome');
+//                    die();
+//                }
+//            } catch (Exception $e) {
+//                header('location: /register');
+//            }
+//        }
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = $_POST;
-            $user = new User();
-
-            try {
-                $newUser = $user->create($data);
-                if (isset($newUser)) {
-                    $newUser = $user->verify($data);
-                    $this->setSession($newUser);
-                    header('location: /welcome');
-                    die();
-                }
-            } catch (Exception $e) {
-                header('location: /register');
-            }
-        }
-
-        $this->render('Register New User', 'register.view');
+        $this->render('Add New User', 'adduser.view');
     }
 
     /**
