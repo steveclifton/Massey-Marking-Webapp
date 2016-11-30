@@ -4,22 +4,22 @@
             <legend class="">Add New Student</legend>
         </div>
         <div class="control-group">
-            <label class="control-label"  for="username">Student ID</label>
+            <label class="control-label"  for="student_id">Student ID</label>
             <div class="controls">
-                <input type="text" id="student_id" name="student_id" placeholder="" class="input-xlarge">
+                <input type="text" id="student_id" name="student_id" placeholder="" class="input-xlarge" required>
             </div>
         </div>
 
         <div class="control-group">
-            <label class="control-label" for="email">First Name</label>
+            <label class="control-label" for="first_name">First Name</label>
             <div class="controls">
-                <input type="text" id="first_name" name="first_name" placeholder="" class="input-xlarge">
+                <input type="text" id="first_name" name="first_name" placeholder="" class="input-xlarge" required>
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label" for="email">Last Name</label>
+            <label class="control-label" for="last_name">Last Name</label>
             <div class="controls">
-                <input type="text" id="last_name" name="last_name" placeholder="" class="input-xlarge">
+                <input type="text" id="last_name" name="last_name" placeholder="" class="input-xlarge" required>
             </div>
         </div>
 
@@ -27,9 +27,17 @@
             <!-- Password-->
             <label class="control-label" for="password">Password</label>
             <div class="controls">
-                <input type="text" id="password" name="password" placeholder="" class="input-xlarge">
+                <input type="text" id="password" name="password" placeholder="" class="input-xlarge" required>
             </div>
         </div>
+        <br>
+        <div class="control-group">
+            <label class="control-label"  for="username">Tick for Admin</label>
+            <div class="controls">
+                <input type="checkbox" id="user_type" name="user_type" class="input-xlarge">
+            </div>
+        </div>
+
         <br>
 
         <div class="control-group">
