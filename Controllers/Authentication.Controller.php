@@ -51,22 +51,20 @@ class Authentication extends Base
     public function addSingleUser()
     {
 
-//        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//            $data = $_POST;
-//            $user = new User();
-//
-//            try {
-//                $newUser = $user->create($data);
-//                if (isset($newUser)) {
-//                    $newUser = $user->verify($data);
-//                    $this->setSession($newUser);
-//                    header('location: /welcome');
-//                    die();
-//                }
-//            } catch (Exception $e) {
-//                header('location: /register');
-//            }
-//        }
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $data = $_POST;
+            $user = new User();
+            $userFolders = new Folders();
+
+            try {
+                $newUser = $user->create($data);
+                if ($newUser) {
+                    $userFolders->createFolders($data['student_id']);
+                }
+            } catch (Exception $e) {
+                header('location: /register');
+            }
+       }
 
         $this->render('Add New User', 'adduser.view');
     }
