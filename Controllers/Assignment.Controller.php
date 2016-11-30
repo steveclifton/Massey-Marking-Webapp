@@ -42,18 +42,9 @@ class Assignment extends Base
 
         try {
             // Sets the target directory
-            $target_dir = "/home/student/" . $_SESSION['student_id'] . "/" . $this->assignmentNumber;
+            $target_dir = "/home/student/" . $_SESSION['student_id'] . "/" . "A" . $this->assignmentNumber;
 
-            /**
-             * If the target directory does not exist, CREATE it
-             *  - otherwise, remove all files from it
-             */
-            if (!is_dir($target_dir)) {
-                mkdir($target_dir, 0777);
-            } else {
-                $this->removeAllFiles($target_dir);
-            }
-
+            // Sets the target file
             $target_file = $target_dir . "/A$this->assignmentNumber.cpp";
 
             move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
@@ -63,7 +54,7 @@ class Assignment extends Base
             var_dump($e); //TODO remove
             die();
         }
-
+        die();
 
         if (!$this->compileAssignment()) {
             /* The assignment failed to compile */
@@ -95,20 +86,6 @@ class Assignment extends Base
         return $number[1];
     }
 
-    /**
-     * Removes all the files in a directory
-     */
-    private function removeAllFiles($target_dir)
-    {
-        $files = glob($target_dir . "/*"); // get all file names
-
-        // Removes each file in the directory
-        foreach ($files as $file){
-            if (is_file($file))
-                unlink($file); // delete file
-        }
-        return true;
-    }
 
     /**
      * Compiles the assignment from a cpp file to a executable
@@ -117,7 +94,10 @@ class Assignment extends Base
     {
         try {
             chdir("/home/student/1234/$this->assignmentNumber");
+
+
             system("sudo g++ A$this->assignmentNumber.cpp -o A$this->assignmentNumber");
+            
             if (file_exists("/home/student/1234/$this->assignmentNumber/A$this->assignmentNumber")) {
                 return true;
             } else {
