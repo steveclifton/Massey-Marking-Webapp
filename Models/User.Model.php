@@ -47,4 +47,15 @@ class User extends Base
         }
     }
 
+    public function create($userData)
+    {
+        $sql = "INSERT INTO `users` WHERE student_id='$studentId' LIMIT 1 ";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $stm->execute(array('$studentId'));
+
+        return true;
+    }
+
 }
