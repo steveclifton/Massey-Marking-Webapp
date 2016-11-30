@@ -46,6 +46,10 @@ else if ($uri == 'adduser') {
     $authentication = new Authentication();
     $authentication->addSingleUser();
 }
+else if ($uri == 'showstudents') {
+    $authentication = new Authentication();
+    $authentication->showAllUsers();
+}
 
 else if ($uri == 'upload') {
     $uploadAssignment = new Assignment();
