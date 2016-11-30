@@ -47,13 +47,30 @@ class User extends Base
         }
     }
 
+    /**
+     * Creates a new user in the database
+     */
     public function create($userData)
     {
-        $sql = "INSERT INTO `users` WHERE student_id='$studentId' LIMIT 1 ";
+        $firstName = $userData['first_name'];
+        $lastName = $userData['last_name'];
+        $studentId = $userData['student_id'];
+        $password = password_hash($userData['password'], PASSWORD_DEFAULT);
+
+        if (isset($userData['user_type'])) {
+            $userType = "admin";
+        } else {
+            $userType = "student";
+        }
+        $sql = "INSERT INTO `users` 
+                                (`id`, `first_name`, `last_name`, `user_type`, `student_id`, `password`) 
+                            VALUES 
+                                (NULL, '$firstName', '$lastName', '$userType', '$studentId', '$password');
+               ";
 
         $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-        $stm->execute(array('$studentId'));
+        $stm->execute(array('$firstName, $lastName, $userType, $studentId, $password'));
 
         return true;
     }
