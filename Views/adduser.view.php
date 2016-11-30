@@ -1,4 +1,4 @@
-<form class="form-horizontal" action='' method="POST">
+<form class="form-horizontal" action="/adduser" method="POST">
     <fieldset>
         <div id="legend">
             <legend class="">Add New Student</legend>
