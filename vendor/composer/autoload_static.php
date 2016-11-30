@@ -12,6 +12,7 @@ class ComposerStaticInitd14b701456a190287802b67245d9893b
         'Marking\\Controllers\\Authentication' => __DIR__ . '/../..' . '/Controllers/Authentication.Controller.php',
         'Marking\\Controllers\\Base' => __DIR__ . '/../..' . '/Controllers/Base.Controller.php',
         'Marking\\Controllers\\Errors' => __DIR__ . '/../..' . '/Controllers/Errors.Controller.php',
+        'Marking\\Controllers\\Folders' => __DIR__ . '/../..' . '/Controllers/Folders.Controller.php',
         'Marking\\Controllers\\Welcome' => __DIR__ . '/../..' . '/Controllers/Welcome.Controller.php',
         'Marking\\Exceptions\\CustomException' => __DIR__ . '/../..' . '/Exceptions/Custom.Exception.php',
         'Marking\\Models\\Base' => __DIR__ . '/../..' . '/Models/Base.Model.php',
