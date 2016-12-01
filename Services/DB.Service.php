@@ -7,7 +7,7 @@ namespace Marking\Services;
 
 use PDO;
 use PDOException;
-use Marking\Services\Evn;
+use Marking\Services\Env;
 
 
 /**
@@ -26,7 +26,7 @@ class DB extends PDO
      */
     public function __construct()
     {
-        $db = new Evn();
+        $db = new Env();
         try {
             parent::__construct($db->database, $db->username, $db->password);
         } catch (PDOException $Exception) {
