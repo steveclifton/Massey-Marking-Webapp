@@ -72,6 +72,18 @@ class User extends Base
 
         $stm->execute(array('$firstName, $lastName, $userType, $studentId, $password'));
 
+    public function removeExistingUser($studentId)
+    {
+
+        $sql = "DELETE FROM `users` WHERE `users`.`student_id` = '$studentId';";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $result = $stm->execute(array('$studentId'));
+
+        if (!$result) {
+            return false;
+        }
         return true;
     }
 
