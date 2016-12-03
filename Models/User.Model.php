@@ -56,21 +56,24 @@ class User extends Base
         $lastName = $userData['last_name'];
         $studentId = $userData['student_id'];
         $password = password_hash($userData['password'], PASSWORD_DEFAULT);
+        $userType = $userData['user_type'];
+        $semester = $userData['semester'];
 
-        if (isset($userData['user_type'])) {
-            $userType = "admin";
-        } else {
-            $userType = "student";
-        }
         $sql = "INSERT INTO `users` 
-                                (`id`, `first_name`, `last_name`, `user_type`, `student_id`, `password`) 
+                                (`id`, `first_name`, `last_name`, `user_type`, `student_id`, `semester`, `password`) 
                             VALUES 
-                                (NULL, '$firstName', '$lastName', '$userType', '$studentId', '$password');
+                                (NULL, '$firstName', '$lastName', '$userType', '$studentId', '$semester', '$password');
                ";
 
         $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-        $stm->execute(array('$firstName, $lastName, $userType, $studentId, $password'));
+        $result = $stm->execute(array('$firstName, $lastName, $userType, $studentId, $semester, $password'));
+
+        if (!$result) {
+            return false;
+        }
+        return true;
+    }
 
     public function removeExistingUser($studentId)
     {
