@@ -17,6 +17,11 @@ class Folders extends Base
         if (!is_dir("/home/student/" . $studentId)) {
             system("sudo mkdir /home/student/" . $studentId);
             system("sudo chmod 777 /home/student/" . $studentId);
+        } else {
+            /* The folder (and student) already exists so all files are deleted out of its account */
+            for ($i = 1; $i <= 8; $i++) {
+                $this->removeAllFiles("/home/student" . $studentId . "/A" . $i); // Now is in the assignment folder
+            }
         }
 
         /**
@@ -28,9 +33,6 @@ class Folders extends Base
                 system("sudo chmod 777 /home/student/" . $studentId . "/A" . $i);
             }
         }
-
-        //Todo remove
-        var_dump($studentId); die();
     }
 
 
