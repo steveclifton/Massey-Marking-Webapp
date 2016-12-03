@@ -50,23 +50,35 @@ class Authentication extends Base
      */
     public function addSingleUser()
     {
-
+        //var_dump($_POST); die();
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = $_POST;
             $user = new User();
             $userFolders = new Folders();
 
             try {
-                $newUser = $user->create($data);
-                if ($newUser) {
-                    $userFolders->createFolders($data['student_id']);
+                /* Sets the user type */
+                if (isset($data['user_type'])) {
+                    $data['user_type'] = "admin";
+                } else {
+                    $data['user_type'] = "student";
                 }
+
+                /* If the user already exists, remove them from the DB */
+                $checkStudent = $user->getUserByStudentId($data['student_id']);
+                if (isset($checkStudent[0])) {
+                    $user->removeExistingUser($data['student_id']);
+                }
+                /* Create user and folders */
+                $user->create($data);
+                $userFolders->createFolders($data['student_id']);
+
             } catch (Exception $e) {
-                header('location: /register');
+                header('location: /');
             }
        }
 
-        $this->render('Add New User', 'adduser.view');
+       $this->render('Add New User', 'adduser.view');
     }
 
     public function showAllUsers()
