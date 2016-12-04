@@ -54,15 +54,12 @@ class Assignment extends Base
             var_dump($e); //TODO remove
             die();
         }
-        die();
 
-        if (!$this->compileAssignment()) {
+        if (!$this->compileAssignment($target_dir, $this->assignmentNumber)) {
             /* The assignment failed to compile */
-            die("Failed"); // TODO update this
+            //die("Failed"); // TODO update this
         }
 
-        /* The Assignment compiled successfully */
-        $this->copyInputFiles();
 
         $this->runAssignmentTests();
 
@@ -90,72 +87,20 @@ class Assignment extends Base
     /**
      * Compiles the assignment from a cpp file to a executable
      */
-    private function compileAssignment()
+    private function compileAssignment($target_dir, $assNum)
     {
         try {
-            chdir("/home/student/1234/$this->assignmentNumber");
-
+            chdir($target_dir);
 
             system("sudo g++ A$this->assignmentNumber.cpp -o A$this->assignmentNumber");
             
-            if (file_exists("/home/student/1234/$this->assignmentNumber/A$this->assignmentNumber")) {
+            if (file_exists($target_dir . "/A$assNum")) {
                 return true;
             } else {
                 return false;
             }
         } catch (Exception $e) {
             throw $e; //into the bin .. TODO
-        }
-
-    }
-
-    /**
-     * Copys all the test input files from the master directory into the students directory
-     */
-    private function copyInputFiles()
-    {
-        $studentId = $_SESSION['student_id'];
-
-        if ($this->assignmentNumber == 1) {
-            for ($i = 1; $i <= $this->testNumber; $i++) {
-                system("cp /home/assignmentfiles/matrix$i.txt /home/student/$studentId/$this->assignmentNumber");
-                //system(""); //Copy the answers into the folder also
-            }
-        }
-        else if ($this->assignmentNumber == 2) {
-            for ($i = 1; $i <= $this->testNumber; $i++) {
-//                system("cp /home/assignmentfiles/ /home/student/$studentId/$this->assignmentNumber");
-            }
-        }
-        else if ($this->assignmentNumber == 3) {
-            for ($i = 1; $i <= $this->testNumber; $i++) {
-//                system("cp /home/assignmentfiles/ /home/student/$studentId/$this->assignmentNumber");
-            }
-        }
-        else if ($this->assignmentNumber == 4) {
-            for ($i = 1; $i <= $this->testNumber; $i++) {
-//                system("cp /home/assignmentfiles/ /home/student/$studentId/$this->assignmentNumber");
-            }
-        }
-        else if ($this->assignmentNumber == 5) {
-            for ($i = 1; $i <= $this->testNumber; $i++) {
-//                system("cp /home/assignmentfiles/ /home/student/$studentId/$this->assignmentNumber");
-            }
-        }
-        else if ($this->assignmentNumber == 6) {
-            for ($i = 1; $i <= $this->testNumber; $i++) {
-//                system("cp /home/assignmentfiles/ /home/student/$studentId/$this->assignmentNumber");
-            }
-        }
-        else if ($this->assignmentNumber == 7) {
-            for ($i = 1; $i <= $this->testNumber; $i++) {
-//                system("cp /home/assignmentfiles/ /home/student/$studentId/$this->assignmentNumber");
-            }
-        }
-        else if ($this->assignmentNumber == 8) {
-            for ($i = 1; $i <= $this->testNumber; $i++) {
-//                system("cp /home/assignmentfiles/ /home/student/$studentId/$this->assignmentNumber");
-            }
         }
 
     }
@@ -169,15 +114,20 @@ class Assignment extends Base
     {
         $studentId = $_SESSION['student_id'];
 
-        chdir("/home/student/$studentId/$this->assignmentNumber");
+        $assignmentController = new AssignmentConfig();
+        $cmd = $assignmentController->getAssignmentCommands($this->assignmentNumber);
 
+        chdir("/home/student/$studentId/A$this->assignmentNumber");
         if ($this->assignmentNumber == 1) {
             for ($i = 1; $i <= $this->testNumber; $i++) {
-                system("timeout 10 ./A$this->assignmentNumber matrix$i.txt matrix$i.txt > result$i.txt");
-                //chmod("result$i.txt", 0777); don't need to change for read only
+                system($cmd[$i]);
+                //system("timeout 10 ./A$this->assignmentNumber matrix$i.txt matrix$i.txt > result$i.txt");
+                //chmod("result$i.txt", 0777); // don't need to change for read only
             }
         }
-        else if ($this->assignmentNumber == 2) {
+        die("DIED");
+
+         if ($this->assignmentNumber == 2) {
 
         }
         else if ($this->assignmentNumber == 3) {
