@@ -87,7 +87,7 @@ class Assignment extends Base
      */
     private function getCurrentMark()
     {
-        $semester = new AssignmentConfig();
+        $semester = new MarkingConfig();
         $semester = $semester->getCurrentSemester();
 
         $assignmentNumber = $this->getAssignmentNumber($_SERVER["REQUEST_URI"]);
@@ -127,7 +127,7 @@ class Assignment extends Base
     {
         $studentId = $_SESSION['student_id'];
 
-        $assignmentController = new AssignmentConfig();
+        $assignmentController = new MarkingConfig();
 
         /* Copies all the test files into the students Assignment Folder */
         $assignmentController->copyTestFiles($this->assignmentNumber);
