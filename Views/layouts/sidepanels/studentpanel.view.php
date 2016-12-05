@@ -1,5 +1,6 @@
 <?php
 
+use Marking\Controllers\AssignmentConfig;
 /**
  * If the user is logged in (SessionID is set) then a list of available
  *   assignments will be displayed.
@@ -14,11 +15,12 @@ if (isset($_SESSION['id'])) {
             <h4 style='padding-left: 12px; font-size: 20pt;'>Assignments</h4>
             <ul class=\"nav\">
           ";
+    $assignments = new AssignmentConfig();
+    $assignments = $assignments->getAssignmentNumber();
 
-    $weeks = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
-    foreach ($weeks as $week) {
-        echo "<li><a class=\"assignment\" href=\"/assignment?num=$week\" id=\"$week\" style='text-decoration: underline; font-size: 12pt;'>Assignment $week</a></li>";
+    for ($i = 1; $i <= $assignments; $i++) {
+        echo "<li><a class=\"assignment\" href=\"/assignment?num=$i\" id=\"$i\" style='text-decoration: underline; font-size: 12pt;'>Assignment $i</a></li>";
     }
 }
 echo "</ul>";
