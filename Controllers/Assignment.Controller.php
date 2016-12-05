@@ -9,7 +9,6 @@ use Marking\Models\Marks;
 class Assignment extends Base
 {
     private $assignmentNumber;
-    private $testNumber = 10; // Set the number of tests to be run /****************/
 
 
     /**
@@ -71,9 +70,6 @@ class Assignment extends Base
          * Now begin processing and parsing
          */
 
-
-
-
         header("location: /assignment?num=$this->assignmentNumber");
     }
 
@@ -120,8 +116,8 @@ class Assignment extends Base
         } catch (Exception $e) {
             throw $e; //into the bin .. TODO
         }
-
     }
+
 
     /**
      * Uses the created executable to test a variety of input
@@ -139,10 +135,13 @@ class Assignment extends Base
         /* Gets the assignment Commands from the config file */
         $cmd = $assignmentController->getAssignmentCommands($this->assignmentNumber);
 
+        /* Gets the number of tests each assignment will perform */
+        $testNumber = $assignmentController->getAssignmentTestNumber();
+
         chdir("/home/student/$studentId/A$this->assignmentNumber");
 
         if ($this->assignmentNumber == 1) {
-            for ($i = 1; $i <= $this->testNumber; $i++) {
+            for ($i = 1; $i <= $testNumber; $i++) {
                 system($cmd[$i]);
             }
         }
