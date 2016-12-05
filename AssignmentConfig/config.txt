@@ -1,5 +1,0 @@
-# 159.201 Config file
-# Assignments
-8
-# Tests per assignment
-10
