@@ -24,16 +24,10 @@ class Assignment extends Base
             header('Location: /welcome');
         }
 
-        $semester = new AssignmentConfig();
-        $semester = $semester->getCurrentSemester();
-
-
-        $assignmentNumber = $this->getAssignmentNumber($_SERVER["REQUEST_URI"]);
-
-        $mark = new Marks();
-
-        $mark = $mark->getUsersMarks($_SESSION['student_id'], $assignmentNumber, $semester);
-
+        /**
+         * Gets the students current assignment mark
+         */
+        $mark = $this->getCurrentMark();
         if (isset($mark[0])) {
             $viewData['mark'] = $mark[0]['mark'];
         } else {
@@ -90,6 +84,22 @@ class Assignment extends Base
     {
         $number = explode('=', $httpRef);
         return $number[1];
+    }
+
+    /**
+     * Method to get the students current assignments mark
+     */
+    private function getCurrentMark()
+    {
+        $semester = new AssignmentConfig();
+        $semester = $semester->getCurrentSemester();
+
+        $assignmentNumber = $this->getAssignmentNumber($_SERVER["REQUEST_URI"]);
+
+        $mark = new Marks();
+        $mark = $mark->getUsersMarks($_SESSION['student_id'], $assignmentNumber, $semester);
+
+        return $mark;
     }
 
     /**
