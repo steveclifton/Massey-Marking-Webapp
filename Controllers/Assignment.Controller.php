@@ -75,14 +75,12 @@ class Assignment extends Base
 
     /**
      * Returns the assignment number the user is testing
-     *
      */
     private function getAssignmentNumber($httpRef)
     {
         $number = explode('=', $httpRef);
         return $number[1];
     }
-
 
     /**
      * Compiles the assignment from a cpp file to a executable
@@ -105,7 +103,6 @@ class Assignment extends Base
 
     }
 
-
     /**
      * Uses the created executable to test a variety of input
      *  - Output from these tests is directed into a results text file
@@ -115,6 +112,11 @@ class Assignment extends Base
         $studentId = $_SESSION['student_id'];
 
         $assignmentController = new AssignmentConfig();
+
+        /* Copies all the test files into the students Assignment Folder */
+        $assignmentController->copyTestFiles($this->assignmentNumber);
+
+        /* Gets the assignment Commands from the config file */
         $cmd = $assignmentController->getAssignmentCommands($this->assignmentNumber);
 
         chdir("/home/student/$studentId/A$this->assignmentNumber");
