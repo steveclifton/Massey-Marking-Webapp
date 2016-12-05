@@ -35,4 +35,19 @@ class AssignmentConfig extends Base
     }
 
 
+    /**
+     * Copies the test files into the students Assignment folder
+     *
+     * - This is done when the student uploads the assignment so that if there are changes made to the assignment
+     *    test files then they can be done in the master folder and will be applied anytime a student uploads
+     *    their assignment to the marker.
+     */
+    public function copyTestFiles($aNum)
+    {
+        $studentId = $_SESSION['student_id'];
+        system("sudo cp /home/assignmentfiles/A$aNum/*" . " /home/student/$studentId/A$aNum");
+        return;
+    }
+
+
 }
