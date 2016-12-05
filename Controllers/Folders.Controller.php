@@ -41,7 +41,6 @@ class Folders extends Base
             for ($i = 1; $i <= $assignmentNumber; $i++) {
                 system("sudo mkdir /home/student/$studentId/A$i");
                 system("sudo chmod 777 /home/student/$studentId/A$i");
-                system("sudo cp /home/assignmentfiles/A$i/*" . " /home/student/$studentId/A$i");
             }
         }
     }
