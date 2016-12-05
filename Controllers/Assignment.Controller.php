@@ -4,11 +4,12 @@
 namespace Marking\Controllers;
 
 use Exception;
+use Marking\Models\Marks;
 
 class Assignment extends Base
 {
     private $assignmentNumber;
-    private $testNumber = 10; // Set the number of tests to be run
+    private $testNumber = 10; // Set the number of tests to be run /****************/
 
 
     /**
@@ -23,13 +24,22 @@ class Assignment extends Base
             header('Location: /welcome');
         }
 
-        /**
-         * Query the database, check to see if there is any previous feedback for this assignment
-         *
-         * Dump into viewData if there is
-         */
+        $semester = new AssignmentConfig();
+        $semester = $semester->getCurrentSemester();
 
-        $viewData = "";
+
+        $assignmentNumber = $this->getAssignmentNumber($_SERVER["REQUEST_URI"]);
+
+        $mark = new Marks();
+
+        $mark = $mark->getUsersMarks($_SESSION['student_id'], $assignmentNumber, $semester);
+
+        if (isset($mark[0])) {
+            $viewData['mark'] = $mark[0]['mark'];
+        } else {
+            $viewData['mark'] = 0;
+        }
+
 
         $this->render('Assignment', 'assignment.view', $viewData);
     }
@@ -42,7 +52,7 @@ class Assignment extends Base
 
         try {
             // Sets the target directory
-            $target_dir = "/home/student/" . $_SESSION['student_id'] . "/" . "A" . $this->assignmentNumber;
+            $target_dir = "/home/student/" . $_SESSION['student_id'] . "/A$this->assignmentNumber";
 
             // Sets the target file
             $target_file = $target_dir . "/A$this->assignmentNumber.cpp";
