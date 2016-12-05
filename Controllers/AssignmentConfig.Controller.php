@@ -17,6 +17,7 @@ use Exception;
 class AssignmentConfig extends Base
 {
     private $numberOfAssignments = 7;
+    private $numberOfAssignmentTestCases = 10;
     private $currentSemester = "17-01";
 
     /**
@@ -31,6 +32,14 @@ class AssignmentConfig extends Base
     public function getCurrentSemester()
     {
         return $this->currentSemester;
+    }
+
+    /**
+     * Returns the number of test cases per assignment
+     */
+    public function getAssignmentTestNumber()
+    {
+        return $this->numberOfAssignmentTestCases;
     }
 
     public function getAssignmentCommands($assignmentNumber)
