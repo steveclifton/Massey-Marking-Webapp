@@ -3,8 +3,6 @@
 
 namespace Marking\Controllers;
 
-use Exception;
-
 
 /**
  * Class AssignmentConfig
@@ -12,7 +10,9 @@ use Exception;
  * This class is designed to hold all assignment configurations
  *  Can be configured here and represented throughout the application
  *
- * - EG number of assignments is 7
+ * - Number of assignments is 7
+ * - Number of test cases per assignment is 10
+ * - Current Semester is 17-01
  */
 class AssignmentConfig extends Base
 {
@@ -20,15 +20,18 @@ class AssignmentConfig extends Base
     private $numberOfAssignmentTestCases = 10;
     private $currentSemester = "17-01";
 
+    
     /**
      * Returns the number of assignments
-     * @return int
      */
     public function getAssignmentNumber()
     {
         return $this->numberOfAssignments;
     }
 
+    /**
+     * Returns the current semester
+     */
     public function getCurrentSemester()
     {
         return $this->currentSemester;
@@ -42,6 +45,9 @@ class AssignmentConfig extends Base
         return $this->numberOfAssignmentTestCases;
     }
 
+    /**
+     * Gets the commands from the assignments command-file
+     */
     public function getAssignmentCommands($assignmentNumber)
     {
         $file = file("/var/www/marking/AssignmentConfig/A$assignmentNumber" . ".txt");
