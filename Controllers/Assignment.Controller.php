@@ -31,7 +31,7 @@ class Assignment extends Base
 
         $viewData = "";
 
-        $this->render('Assignment', 'assignment' . $_GET['num'] . '.view', $viewData);
+        $this->render('Assignment', 'assignment.view', $viewData);
     }
 
 
@@ -120,16 +120,14 @@ class Assignment extends Base
         $cmd = $assignmentController->getAssignmentCommands($this->assignmentNumber);
 
         chdir("/home/student/$studentId/A$this->assignmentNumber");
+
         if ($this->assignmentNumber == 1) {
             for ($i = 1; $i <= $this->testNumber; $i++) {
                 system($cmd[$i]);
-                //system("timeout 10 ./A$this->assignmentNumber matrix$i.txt matrix$i.txt > result$i.txt");
-                //chmod("result$i.txt", 0777); // don't need to change for read only
             }
         }
-        die("DIED");
 
-         if ($this->assignmentNumber == 2) {
+        else if ($this->assignmentNumber == 2) {
 
         }
         else if ($this->assignmentNumber == 3) {
