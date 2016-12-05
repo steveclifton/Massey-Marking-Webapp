@@ -142,7 +142,7 @@ class Assignment extends Base
 
         if ($this->assignmentNumber == 1) {
             for ($i = 1; $i <= $testNumber; $i++) {
-                system($cmd[$i]);
+                system(trim($cmd[$i]));
             }
         }
 
