@@ -3,7 +3,8 @@
 namespace Marking\Models;
 
 use Marking\Exceptions\CustomException;
-
+use Marking\Controllers\MarkingConfig;
+use PDO;
 
 /**
  * Class Marks
@@ -65,6 +66,21 @@ class Feedback extends Base
 
         return $result;
     }
+
+    private function updateFeedback($feedback, $feedbackId)
+    {
+        $sql = "UPDATE `feedback` 
+                SET `feedback` = '$feedback' 
+                WHERE `feedback`.`id` = '$feedbackId'
+                ";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $result = $stm->execute(array('$feedback, $feedbackId'));
+
+        return $result;
+    }
+
 
 
 
