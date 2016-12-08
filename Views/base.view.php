@@ -27,7 +27,7 @@
 
                 <?php include('/var/www/marking/Views/layouts/sidepanels/sidepanel.view.php'); ?>
 
-                <div class="col-md-10" style="padding-top: 20px">
+                <div class="col-sm-6 col-md-10" style="padding-top: 20px">
                     <?php include($viewName . '.php'); ?>
                 </div>
             </div>
