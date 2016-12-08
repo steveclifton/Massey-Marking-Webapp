@@ -33,6 +33,16 @@ class Assignment extends Base
             $viewData['mark'] = 0;
         }
 
+        /**
+         * Gets the students current assignment feedback
+         */
+        $feedback = $this->getAssignmentFeedback();
+        if (isset($feedback[0])) {
+            $viewData['feedback'] = $feedback[0]['feedback'];
+        } else {
+            $viewData['feedback'] = "";
+        }
+
 
         $this->render('Assignment', 'assignment.view', $viewData);
     }
