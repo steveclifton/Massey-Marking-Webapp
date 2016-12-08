@@ -40,6 +40,9 @@ class Assignment extends Base
 
     public function processUploadedFile()
     {
+        $feedback = new Feedback();
+        $confSem = new MarkingConfig();
+        $this->semester = $confSem->getCurrentSemester();
         // Gets the assignment number from the view
         $this->assignmentNumber = $this->getAssignmentNumber($_SERVER['HTTP_REFERER']);
 
@@ -60,7 +63,14 @@ class Assignment extends Base
 
         if (!$this->compileAssignment($target_dir, $this->assignmentNumber)) {
             /* The assignment failed to compile */
-            //die("Failed"); // TODO update this
+            $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Failed to compiled");
+        } else {
+            /* The assignment successfully compiled
+             * - Run tests on assignment
+             */
+            $this->runAssignmentTests();
+
+            $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Assignment compiled");
         }
 
 
