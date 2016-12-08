@@ -36,6 +36,23 @@ class Feedback extends Base
     }
 
 
+    public function getAssignmentFeedback($studentId, $assignment, $semester)
+    {
+        $sql = "SELECT `id`, `feedback`  
+                FROM `feedback` 
+                WHERE student_id='$studentId' 
+                AND semester='$semester'
+                AND assignment_number='$assignment'
+                ";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $stm->execute(array('$studentId, $assignment, $semester'));
+
+        $data = $stm->fetchAll();
+
+        return $data;
+    }
 
 
 
