@@ -180,31 +180,6 @@ class Assignment extends Base
         /* Navigates to the assignment folder */
         chdir("/home/student/$studentId/A$this->assignmentNumber");
 
-        if ($this->assignmentNumber == 1) {
-            for ($i = 1; $i <= $testNumber; $i++) {
-                system(trim($cmd[$i]));
-            }
-        }
-
-        else if ($this->assignmentNumber == 2) {
-
-        }
-        else if ($this->assignmentNumber == 3) {
-
-        }
-        else if ($this->assignmentNumber == 4) {
-
-        }
-        else if ($this->assignmentNumber == 5) {
-
-        }
-        else if ($this->assignmentNumber == 6) {
-
-        }
-        else if ($this->assignmentNumber == 7) {
-
-        }
-        else if ($this->assignmentNumber == 8) {
 
         }
 
