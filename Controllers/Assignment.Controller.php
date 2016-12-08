@@ -83,7 +83,16 @@ class Assignment extends Base
         }
 
 
-            $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Assignment compiled");
+        /* The assignment successfully compiled
+        * - Run tests on assignment
+        */
+        else {
+            $result = $this->runAssignmentTests();
+
+            if (!$result) {
+                $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Infinate Loop");
+                header("location: /assignment?num=$this->assignmentNumber");
+            }
         }
 
 
