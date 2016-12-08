@@ -1,15 +1,11 @@
-<?php
+<h1>Mark so far : <?= $viewData['mark'] ?>/10</h1>
+<hr>
 
-    $mark = $viewData['mark'];
+<?php include ('/var/www/marking/Views/layouts/upload.view.php'); ?>
 
-    echo "<h1>Mark so far : $mark/10</h1><br>";
+<h1>Feedback</h1>
+<hr>
 
-    include ('/var/www/marking/Views/layouts/upload.view.php');
-
-
-    /**
-     *
-     * HERE I NEED TO ECHO OUT ANY DATA FROM THE DATABASE
-     *
-     *
-     */
+<p>
+    <?= $viewData['feedback'] ?>
+</p>
