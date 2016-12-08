@@ -50,6 +50,9 @@ class Assignment extends Base
             // Sets the target directory
             $target_dir = "/home/student/" . $_SESSION['student_id'] . "/A$this->assignmentNumber";
 
+            // Removes all files in the folder currently
+            system("sudo rm $target_dir/*");
+
             // Sets the target file
             $target_file = $target_dir . "/A$this->assignmentNumber.cpp";
 
