@@ -2,6 +2,8 @@
 
 namespace Marking\Controllers;
 
+use Marking\Models\Marks;
+
 /**
  * Class Welcome - aka Student Controller
  *
@@ -24,12 +26,21 @@ class Welcome extends Base
          * If the user is an Admin they are routed to the Admin view
          */
         if ($_SESSION['user_type'] == 'admin') {
+
+            /**
+             * Need to decide what to put on the landing page of the admin view
+             */
             $this->render('Admin', 'admin.view', $viewData);
             return;
             die();
         }
 
-        $this->render('Welcome', 'welcome.view', $viewData);
+        /**
+         * Else they are a user/student so they get the welcome page
+            $this->render('Welcome', 'welcome.view', $viewData);
+        }
+
+
     }
 
 }
