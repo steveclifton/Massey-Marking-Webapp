@@ -4,11 +4,13 @@
 namespace Marking\Controllers;
 
 use Exception;
+use Marking\Models\Feedback;
 use Marking\Models\Marks;
 
 class Assignment extends Base
 {
     private $assignmentNumber;
+    private $semester;
 
 
     /**
@@ -87,7 +89,7 @@ class Assignment extends Base
         }
 
 
-        $this->runAssignmentTests();
+
 
         /**
          * Now begin processing and parsing
@@ -136,6 +138,7 @@ class Assignment extends Base
 
     /**
      * Compiles the assignment from a cpp file to a executable
+     * - If it compiled into an executable, returns TRUE
      */
     private function compileAssignment($target_dir, $assNum)
     {
@@ -150,7 +153,7 @@ class Assignment extends Base
                 return false;
             }
         } catch (Exception $e) {
-            throw $e; //into the bin .. TODO
+            throw $e;
         }
     }
 
@@ -174,6 +177,7 @@ class Assignment extends Base
         /* Gets the number of tests each assignment will perform */
         $testNumber = $assignmentController->getAssignmentTestNumber();
 
+        /* Navigates to the assignment folder */
         chdir("/home/student/$studentId/A$this->assignmentNumber");
 
         if ($this->assignmentNumber == 1) {
