@@ -6,7 +6,6 @@ use Marking\Models\Marks;
 
 /**
  * Class Welcome - aka Student Controller
- *
  * Controller for Student related management
  */
 class Welcome extends Base
@@ -37,10 +36,17 @@ class Welcome extends Base
 
         /**
          * Else they are a user/student so they get the welcome page
+         *  - Gets the users current marks and displays them on the welcome page
+         */
+        else {
+            $marks = new Marks();
+            $semester = new MarkingConfig();
+            $semester = $semester->getCurrentSemester();
+
+            $viewData['marks'] = $marks->getAllUsersMarks($_SESSION['student_id'], $semester);
+
             $this->render('Welcome', 'welcome.view', $viewData);
         }
-
-
     }
 
 }
