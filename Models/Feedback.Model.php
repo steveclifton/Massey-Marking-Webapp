@@ -54,6 +54,17 @@ class Feedback extends Base
         return $data;
     }
 
+    private function writeFeedback($studentId, $semester, $assignment, $feedback)
+    {
+        $sql = "INSERT INTO `feedback` (`id`, `student_id`, `assignment_number`, `semester`, `feedback`, `created_date`) 
+                VALUES (NULL, '$studentId', '$assignment', '$semester', '$feedback', CURRENT_TIME());";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $result = $stm->execute(array('$studentId, $assignment, $semester, $feedback'));
+
+        return $result;
+    }
 
 
 
