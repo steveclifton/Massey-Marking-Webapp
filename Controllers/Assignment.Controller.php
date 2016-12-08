@@ -98,6 +98,19 @@ class Assignment extends Base
         return $mark;
     }
 
+    private function getAssignmentFeedback()
+    {
+        $semester = new MarkingConfig();
+        $semester = $semester->getCurrentSemester();
+
+        $assignmentNumber = $this->getAssignmentNumber($_SERVER["REQUEST_URI"]);
+
+        $feedback = new Feedback();
+        $feedback = $feedback->getAssignmentFeedback($_SESSION['student_id'], $assignmentNumber, $semester);
+
+        return $feedback;
+    }
+
     /**
      * Compiles the assignment from a cpp file to a executable
      */
