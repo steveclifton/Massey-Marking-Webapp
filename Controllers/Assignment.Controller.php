@@ -79,11 +79,9 @@ class Assignment extends Base
         if (!$this->compileAssignment($target_dir, $this->assignmentNumber)) {
             /* The assignment failed to compile */
             $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Failed to compiled");
-        } else {
-            /* The assignment successfully compiled
-             * - Run tests on assignment
-             */
-            $this->runAssignmentTests();
+            header("location: /assignment?num=$this->assignmentNumber");
+        }
+
 
             $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Assignment compiled");
         }
