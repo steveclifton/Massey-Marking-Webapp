@@ -31,6 +31,24 @@ class Marks extends Base
         return $data;
     }
 
+    public function getAllUsersMarks($studentId, $semester)
+    {
+        $sql = "SELECT * 
+                FROM `marks` 
+                WHERE marks.student_id = '$studentId' 
+                AND marks.semester = '$semester' 
+                ORDER BY `assignment_number`
+                ";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $stm->execute(array('$studentId, $semester'));
+
+        $data = $stm->fetchAll();
+//        print_r($data);die();
+
+        return $data;
+    }
 
 
 }
