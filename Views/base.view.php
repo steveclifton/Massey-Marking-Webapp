@@ -16,31 +16,21 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-</head>
-<body>
-
-<div class="container-fluid">
-    <?php include('/var/www/marking/Views/layouts/header.php'); ?>
-</div>
-
-<div class="page-container">
-    <div class="container-fluid">
-        <div class="row">
-
-            <?php
-            include('/var/www/marking/Views/layouts/sidepanels/sidepanel.view.php')
-            ?>
-
-            <div class="col-md-9" style="padding-top: 20px">
-                <?php include($viewName . '.php'); ?>
-            </div>
-
+    </head>
+    <body>
+        <div class="container-fluid">
+            <?php include('/var/www/marking/Views/layouts/header.php'); ?>
         </div>
-    </div>
-</div>
 
+        <div class="page-container">
+            <div class="container-fluid">
 
-<!--        --><?php //include('/var/www/marking/Views/layouts/footer.php')?>
+                <?php include('/var/www/marking/Views/layouts/sidepanels/sidepanel.view.php'); ?>
 
-</body>
+                <div class="col-md-10" style="padding-top: 20px">
+                    <?php include($viewName . '.php'); ?>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
