@@ -180,9 +180,15 @@ class Assignment extends Base
         /* Navigates to the assignment folder */
         chdir("/home/student/$studentId/A$this->assignmentNumber");
 
+        for ($i = 1; $i <= $testNumber; $i++) {
+            system(trim($cmd[$i]), $result);
 
+            // If there is an infinite loop
+            if ($result == 139) {
+                return false;
+            }
         }
-
+        return true;
     }
 
 }
