@@ -97,6 +97,8 @@ class Assignment extends Base
 
 
 
+        $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Assignment ran and is ok");
+
 
         /**
          * Now begin processing and parsing
