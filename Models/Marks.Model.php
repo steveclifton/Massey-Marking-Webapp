@@ -13,7 +13,10 @@ use PDOException;
 class Marks extends Base
 {
 
-    public function getUsersMarks($studentId, $assignmentNumber, $semester)
+    /**
+     * Returns a specific assignments mark from the Marks table
+     */
+    public function getUsersMark($studentId, $assignmentNumber, $semester)
     {
         $sql = "SELECT mark 
                 FROM `marks` 
@@ -31,6 +34,9 @@ class Marks extends Base
         return $data;
     }
 
+    /**
+     * Returns all data from the Marks table
+     */
     public function getAllUsersMarks($studentId, $semester)
     {
         $sql = "SELECT * 
@@ -105,5 +111,6 @@ class Marks extends Base
 
         return;
     }
+
 
 }
