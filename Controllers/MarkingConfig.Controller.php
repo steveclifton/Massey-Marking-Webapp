@@ -55,6 +55,13 @@ class MarkingConfig extends Base
         return $file;
     }
 
+    public function getCompareCommands()
+    {
+        $file = file("/var/www/marking/AssignmentConfig/MasterCompare.txt");
+
+        return $file;
+    }
+
 
     /**
      * Copies the test files into the students Assignment folder
