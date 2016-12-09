@@ -26,7 +26,7 @@ class Marks extends Base
 
         $stm->execute(array('$studentId, $assignmentNumber, $semester'));
 
-        $data = $stm->fetchAll();
+        $data = $stm->fetchAll(PDO::FETCH_ASSOC);
 
         return $data;
     }
@@ -44,8 +44,7 @@ class Marks extends Base
 
         $stm->execute(array('$studentId, $semester'));
 
-        $data = $stm->fetchAll();
-//        print_r($data);die();
+        $data = $stm->fetchAll(PDO::FETCH_ASSOC);
 
         return $data;
     }
