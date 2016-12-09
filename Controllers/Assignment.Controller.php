@@ -200,5 +200,37 @@ class Assignment extends Base
         return true;
     }
 
+    /**
+     * Checks to see if the assignment output and master output are identical
+     * - If they are not, the numbers of the test which failed is returned
+     */
+    private function compareOutputs()
+    {
+        $studentId = $_SESSION['student_id'];
+
+        $assignmentController = new MarkingConfig();
+
+        /* Gets the assignment Commands from the config file */
+        $cmd = $assignmentController->getCompareCommands();
+
+        /* Gets the number of tests each assignment will perform */
+        $testNumber = $assignmentController->getAssignmentTestNumber();
+
+        /* Navigates to the assignment folder */
+        chdir("/home/student/$studentId/A$this->assignmentNumber");
+
+        for ($i = 1; $i <= $testNumber; $i++) {
+            system(trim($cmd[$i]), $result);
+        }
+
+        $toCheck = array();
+        for ($i = 1; $i <= $testNumber; $i++) {
+            if (filesize("compare$i.txt") != 0) {
+                $toCheck[$i] = $i;
+            }
+        }
+        return $toCheck;
+    }
+
 }
 
