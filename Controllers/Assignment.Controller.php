@@ -59,6 +59,10 @@ class Assignment extends Base
     }
 
 
+    /**
+     * This is the main function for Assignment Control
+     *
+     */
     public function processUploadedFile()
     {
         $feedback = new Feedback();
@@ -81,10 +85,14 @@ class Assignment extends Base
             chmod($target_file, 0777);
 
         } catch (Exception $e) {
-            var_dump($e); //TODO remove
+            var_dump($e);
             die();
         }
 
+        /**
+         * Tries to compile the assignment
+         * - If not successful, updates DB and returns to page
+         */
         if (!$this->compileAssignment($target_dir, $this->assignmentNumber)) {
             /* The assignment failed to compile */
             $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Failed to compiled");
@@ -93,9 +101,10 @@ class Assignment extends Base
         }
 
 
-        /* The assignment successfully compiled
-        * - Run tests on assignment
-        */
+        /**
+         * Tries to run all the test cases on the assignment
+         * - If an infinite loop occurs, updates DB and returns to page
+         */
         else {
             $result = $this->runAssignmentTests();
 
@@ -110,7 +119,6 @@ class Assignment extends Base
          * This checks if the assignment output matches the master output
          * - Those tests that do not match are returned in an array
          */
-
         $assignmentsToCheck = $this->compareOutputs();
 
         /**
@@ -130,6 +138,7 @@ class Assignment extends Base
         header("location: /assignment?num=$this->assignmentNumber");
     }
 
+
     /**
      * Returns the assignment number the user is testing
      */
@@ -139,19 +148,24 @@ class Assignment extends Base
         return $number[1];
     }
 
+
     /**
-     * Method to get the students current assignments mark
+     * Method to get the students current assignment's mark
      */
     private function getCurrentMark()
     {
         $assignmentNumber = $this->getAssignmentNumber($_SERVER["REQUEST_URI"]);
 
         $mark = new Marks();
-        $mark = $mark->getUsersMarks($_SESSION['student_id'], $assignmentNumber, $this->semester);
+        $mark = $mark->getUsersMark($_SESSION['student_id'], $assignmentNumber, $this->semester);
 
         return $mark;
     }
 
+
+    /**
+     * Method to get the students assignment's feedback
+     */
     private function getAssignmentFeedback()
     {
         $assignmentNumber = $this->getAssignmentNumber($_SERVER["REQUEST_URI"]);
@@ -161,6 +175,7 @@ class Assignment extends Base
 
         return $feedback;
     }
+
 
     /**
      * Compiles the assignment from a cpp file to a executable
@@ -214,6 +229,7 @@ class Assignment extends Base
         }
         return true;
     }
+
 
     /**
      * Checks to see if the assignment output and master output are identical
