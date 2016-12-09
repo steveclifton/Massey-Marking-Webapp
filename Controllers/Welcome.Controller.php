@@ -2,6 +2,7 @@
 
 namespace Marking\Controllers;
 
+use Marking\Models\Feedback;
 use Marking\Models\Marks;
 
 /**
@@ -39,11 +40,12 @@ class Welcome extends Base
          *  - Gets the users current marks and displays them on the welcome page
          */
         else {
-            $marks = new Marks();
             $semester = new MarkingConfig();
-            $semester = $semester->getCurrentSemester();
+            $feedback = new Feedback();
 
-            $viewData['marks'] = $marks->getAllUsersMarks($_SESSION['student_id'], $semester);
+            $semester = $semester->getCurrentSemester();
+            $viewData['marks'] = $feedback->getMarkAndFeedback($_SESSION['student_id'], $semester);
+
 
             $this->render('Welcome', 'welcome.view', $viewData);
         }
