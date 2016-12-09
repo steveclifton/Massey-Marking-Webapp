@@ -80,9 +80,9 @@ class Feedback extends Base
 
         $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-        $result = $stm->execute(array('$studentId, $assignment, $semester, $feedback'));
+        $stm->execute(array('$studentId, $assignment, $semester, $feedback'));
 
-        return $result;
+        return;
     }
 
     private function updateFeedback($feedback, $feedbackId)
@@ -94,9 +94,9 @@ class Feedback extends Base
 
         $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-        $result = $stm->execute(array('$feedback, $feedbackId'));
+        $stm->execute(array('$feedback, $feedbackId'));
 
-        return $result;
+        return;
     }
 
 }
