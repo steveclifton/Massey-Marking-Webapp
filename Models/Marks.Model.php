@@ -49,5 +49,28 @@ class Marks extends Base
         return $data;
     }
 
+    /**
+     * Sets/Updates the users mark in the database
+     */
+    public function setUsersMark($studentId, $assignmentNumber, $semester, $mark)
+    {
+        $result = $this->getUsersMark($studentId, $assignmentNumber, $semester);
+
+        /**
+         * Mark already exists for this assignment
+         * - Update it
+         */
+        if (isset($result[0])) {
+            $this->updateMark($result[0]['id'], $mark);
+        }
+
+        /**
+         * Mark does not exist for this assignment
+         * - Create it
+         */
+        else {
+            $this->setMark($studentId, $assignmentNumber, $semester, $mark);
+        }
+    }
 
 }
