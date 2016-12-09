@@ -67,9 +67,8 @@ class Assignment extends Base
     {
         $feedback = new Feedback();
         $mark = new Marks();
-
-        // Gets the assignment number from the view
         $this->assignmentNumber = $this->getAssignmentNumber($_SERVER['HTTP_REFERER']);
+
 
         try {
             // Sets the target directory
@@ -99,8 +98,6 @@ class Assignment extends Base
             header("location: /assignment?num=$this->assignmentNumber");
             die();
         }
-
-
         /**
          * Tries to run all the test cases on the assignment
          * - If an infinite loop occurs, updates DB and returns to page
@@ -115,22 +112,20 @@ class Assignment extends Base
             }
         }
 
+        
         /**
          * This checks if the assignment output matches the master output
-         * - Those tests that do not match are returned in an array
+         * - If the assignment's output is identical to the master output
+         * - Award 10 marks and update feedback
          */
         $assignmentsToCheck = $this->compareOutputs();
 
-        /**
-         * If the assignment's output is identical to the master output
-         * - Award 10 marks and update feedback
-         */
         if (!isset($assignmentsToCheck[0])) {
             $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "All test cases passed");
             $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 10);
             header("location: /assignment?num=$this->assignmentNumber");
+            die();
         }
-
         /**
          * Now begin processing and parsing
          */
@@ -258,6 +253,8 @@ class Assignment extends Base
                 $toCheck[$i] = $i;
             }
         }
+
+
         return $toCheck;
     }
 
