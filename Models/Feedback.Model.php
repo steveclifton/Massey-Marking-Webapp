@@ -36,6 +36,24 @@ class Feedback extends Base
         }
     }
 
+    public function getMarkAndFeedback($studentId, $semester)
+    {
+        $sql = "SELECT *  
+                FROM `feedback` 
+                JOIN `marks`
+                ON feedback.mark_id = marks.id
+                WHERE feedback.student_id='$studentId' 
+                AND feedback.semester='$semester'
+                ";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $stm->execute(array('$studentId, $semester'));
+
+        $data = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+        return $data;
+    }
 
     public function getAssignmentFeedback($studentId, $assignment, $semester)
     {
@@ -50,7 +68,7 @@ class Feedback extends Base
 
         $stm->execute(array('$studentId, $assignment, $semester'));
 
-        $data = $stm->fetchAll();
+        $data = $stm->fetchAll(PDO::FETCH_ASSOC);
 
         return $data;
     }
@@ -80,8 +98,5 @@ class Feedback extends Base
 
         return $result;
     }
-
-
-
 
 }
