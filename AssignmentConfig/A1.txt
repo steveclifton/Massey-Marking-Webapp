@@ -1,4 +1,4 @@
-# 159.201 Assignment 1
+# 159.201 Assignment 1 test cases
 timeout 10 ./A1 matrix_3x3_A.txt matrix_3x3_B.txt > result1.txt
 timeout 10 ./A1 matrix_3x3_C.txt matrix_3x3_B.txt > result2.txt
 timeout 10 ./A1 matrix_3x3_A.txt matrix_3x3_C.txt > result3.txt
