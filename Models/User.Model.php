@@ -24,7 +24,7 @@ class User extends Base
 
         $stm->execute(array('$studentId'));
 
-        $data = $stm->fetchAll();
+        $data = $stm->fetchAll(PDO::FETCH_ASSOC);
 
         return $data;
     }
@@ -100,7 +100,7 @@ class User extends Base
 
         $stm->execute();
 
-        $data = $stm->fetchAll();
+        $data = $stm->fetchAll(PDO::FETCH_ASSOC);
 
         return $data;
     }
