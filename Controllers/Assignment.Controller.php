@@ -91,11 +91,23 @@ class Assignment extends Base
             $result = $this->runAssignmentTests();
 
             if (!$result) {
-                $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Infinate Loop");
+                $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Infinite Loop");
                 header("location: /assignment?num=$this->assignmentNumber");
                 die();
             }
         }
+
+        /**
+         * This checks if the assignment output matches the master output
+         * - Those tests that do not match are returned in an array
+         */
+
+        $assignmentsToCheck = $this->compareOutputs();
+
+        foreach ($assignmentsToCheck as $ass) {
+            print_r($ass); echo "<br><br>";
+        }
+        die('dead');
 
         $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Assignment ran and is ok");
 
