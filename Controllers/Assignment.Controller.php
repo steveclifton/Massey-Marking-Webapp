@@ -11,6 +11,15 @@ class Assignment extends Base
 {
     private $assignmentNumber;
     private $semester;
+    private $studentId;
+
+    public function __construct()
+    {
+        $mSemester = new MarkingConfig();
+        $this->semester = $mSemester->getCurrentSemester();
+
+        $this->studentId = $_SESSION['student_id'];
+    }
 
 
     /**
