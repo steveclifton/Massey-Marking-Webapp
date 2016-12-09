@@ -62,8 +62,7 @@ class Assignment extends Base
     public function processUploadedFile()
     {
         $feedback = new Feedback();
-        $confSem = new MarkingConfig();
-        $this->semester = $confSem->getCurrentSemester();
+
         // Gets the assignment number from the view
         $this->assignmentNumber = $this->getAssignmentNumber($_SERVER['HTTP_REFERER']);
 
@@ -113,11 +112,6 @@ class Assignment extends Base
 
         $assignmentsToCheck = $this->compareOutputs();
 
-        foreach ($assignmentsToCheck as $ass) {
-            print_r($ass); echo "<br><br>";
-        }
-        die('dead');
-
         $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Assignment ran and is ok");
 
 
@@ -142,26 +136,20 @@ class Assignment extends Base
      */
     private function getCurrentMark()
     {
-        $semester = new MarkingConfig();
-        $semester = $semester->getCurrentSemester();
-
         $assignmentNumber = $this->getAssignmentNumber($_SERVER["REQUEST_URI"]);
 
         $mark = new Marks();
-        $mark = $mark->getUsersMarks($_SESSION['student_id'], $assignmentNumber, $semester);
+        $mark = $mark->getUsersMarks($_SESSION['student_id'], $assignmentNumber, $this->semester);
 
         return $mark;
     }
 
     private function getAssignmentFeedback()
     {
-        $semester = new MarkingConfig();
-        $semester = $semester->getCurrentSemester();
-
         $assignmentNumber = $this->getAssignmentNumber($_SERVER["REQUEST_URI"]);
 
         $feedback = new Feedback();
-        $feedback = $feedback->getAssignmentFeedback($_SESSION['student_id'], $assignmentNumber, $semester);
+        $feedback = $feedback->getAssignmentFeedback($_SESSION['student_id'], $assignmentNumber, $this->semester);
 
         return $feedback;
     }
@@ -194,8 +182,6 @@ class Assignment extends Base
      */
     private function runAssignmentTests()
     {
-        $studentId = $_SESSION['student_id'];
-
         $assignmentController = new MarkingConfig();
 
         /* Copies all the test files into the students Assignment Folder */
@@ -208,7 +194,7 @@ class Assignment extends Base
         $testNumber = $assignmentController->getAssignmentTestNumber();
 
         /* Navigates to the assignment folder */
-        chdir("/home/student/$studentId/A$this->assignmentNumber");
+        chdir("/home/student/$this->studentId/A$this->assignmentNumber");
 
         for ($i = 1; $i <= $testNumber; $i++) {
             system(trim($cmd[$i]), $result);
@@ -227,8 +213,6 @@ class Assignment extends Base
      */
     private function compareOutputs()
     {
-        $studentId = $_SESSION['student_id'];
-
         $assignmentController = new MarkingConfig();
 
         /* Gets the assignment Commands from the config file */
@@ -238,7 +222,7 @@ class Assignment extends Base
         $testNumber = $assignmentController->getAssignmentTestNumber();
 
         /* Navigates to the assignment folder */
-        chdir("/home/student/$studentId/A$this->assignmentNumber");
+        chdir("/home/student/$this->studentId/A$this->assignmentNumber");
 
         for ($i = 1; $i <= $testNumber; $i++) {
             system(trim($cmd[$i]), $result);
