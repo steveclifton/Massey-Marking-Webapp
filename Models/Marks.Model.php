@@ -73,4 +73,19 @@ class Marks extends Base
         }
     }
 
+    /**
+     * Inserts a new mark into the Marks table
+     */
+    private function setMark($studentId, $assignmentNumber, $semester, $mark)
+    {
+        $sql = "INSERT INTO `marks` (`id`, `student_id`, `mark`, `assignment_number`, `semester`, `created_date`) 
+                VALUES (NULL, '$studentId', '$mark', '$assignmentNumber', '$semester', CURRENT_TIME())
+                ";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $stm->execute(array('$studentId, $mark, $assignmentNumber, $semester'));
+
+        return;
+    }
 }
