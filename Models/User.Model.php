@@ -94,7 +94,9 @@ class User extends Base
 
     public function showAllUsers()
     {
-        $sql = "SELECT first_name, last_name, student_id FROM `users`";
+        $sql = "SELECT first_name, last_name, student_id 
+                FROM `users`
+                ";
 
         $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
