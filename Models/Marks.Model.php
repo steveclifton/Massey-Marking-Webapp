@@ -88,4 +88,22 @@ class Marks extends Base
 
         return;
     }
+
+    /**
+     * Updates an existing mark in the Marks table
+     */
+    private function updateMark($markId, $mark)
+    {
+        $sql = "UPDATE `marks` 
+                SET `mark` = '$mark' 
+                WHERE `marks`.`id` = '$markId'
+                ";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $stm->execute(array('$mark, $markId'));
+
+        return;
+    }
+
 }
