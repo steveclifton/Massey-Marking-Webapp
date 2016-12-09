@@ -102,7 +102,8 @@ class Assignment extends Base
          * Tries to run all the test cases on the assignment
          * - If an infinite loop occurs, updates DB and returns to page
          */
-        else {
+        else
+        {
             $result = $this->runAssignmentTests();
 
             if (!$result) {
@@ -112,7 +113,7 @@ class Assignment extends Base
             }
         }
 
-        
+
         /**
          * This checks if the assignment output matches the master output
          * - If the assignment's output is identical to the master output
@@ -130,7 +131,8 @@ class Assignment extends Base
          * There are differences in one or more assignment output vs master output
          * - begin checking assignments
          */
-        else {
+        else
+        {
             foreach ($assignmentsToCheck as $key => $value) {
                 echo $key . " " . $value . "<br>";
             } die();
