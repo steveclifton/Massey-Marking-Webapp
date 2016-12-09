@@ -95,7 +95,7 @@ class Assignment extends Base
          */
         if (!$this->compileAssignment($target_dir, $this->assignmentNumber)) {
             /* The assignment failed to compile */
-            $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Failed to compiled");
+            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Failed to compiled");
             header("location: /assignment?num=$this->assignmentNumber");
             die();
         }
@@ -109,7 +109,7 @@ class Assignment extends Base
             $result = $this->runAssignmentTests();
 
             if (!$result) {
-                $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Infinite Loop");
+                $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Infinite Loop");
                 header("location: /assignment?num=$this->assignmentNumber");
                 die();
             }
@@ -126,7 +126,7 @@ class Assignment extends Base
          * - Award 10 marks and update feedback
          */
         if (!isset($assignmentsToCheck[0])) {
-            $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "All test cases passed");
+            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "All test cases passed");
             $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 10);
             header("location: /assignment?num=$this->assignmentNumber");
         }
