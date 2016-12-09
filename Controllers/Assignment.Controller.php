@@ -80,6 +80,7 @@ class Assignment extends Base
             /* The assignment failed to compile */
             $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Failed to compiled");
             header("location: /assignment?num=$this->assignmentNumber");
+            die();
         }
 
 
@@ -92,10 +93,9 @@ class Assignment extends Base
             if (!$result) {
                 $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Infinate Loop");
                 header("location: /assignment?num=$this->assignmentNumber");
+                die();
             }
         }
-
-
 
         $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Assignment ran and is ok");
 
