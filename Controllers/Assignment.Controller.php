@@ -120,15 +120,22 @@ class Assignment extends Base
          */
         $assignmentsToCheck = $this->compareOutputs();
 
-        if (!isset($assignmentsToCheck[0])) {
+        if (!is_array($assignmentsToCheck)) {
             $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "All test cases passed");
             $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 10);
             header("location: /assignment?num=$this->assignmentNumber");
             die();
         }
         /**
-         * Now begin processing and parsing
+         * There are differences in one or more assignment output vs master output
+         * - begin checking assignments
          */
+        else {
+            foreach ($assignmentsToCheck as $key => $value) {
+                echo $key . " " . $value . "<br>";
+            } die();
+
+        }
 
         header("location: /assignment?num=$this->assignmentNumber");
     }
@@ -247,7 +254,7 @@ class Assignment extends Base
             system(trim($cmd[$i]), $result);
         }
 
-        $toCheck = array();
+        $toCheck = "";
         for ($i = 1; $i <= $testNumber; $i++) {
             if (filesize("compare$i.txt") != 0) {
                 $toCheck[$i] = $i;
