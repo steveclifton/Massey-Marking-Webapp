@@ -18,7 +18,7 @@ class Marks extends Base
      */
     public function getUsersMark($studentId, $assignmentNumber, $semester)
     {
-        $sql = "SELECT mark 
+        $sql = "SELECT * 
                 FROM `marks` 
                 WHERE marks.student_id = '$studentId' 
                 AND marks.semester = '$semester' 
