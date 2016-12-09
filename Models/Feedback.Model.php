@@ -13,29 +13,9 @@ use PDO;
 class Feedback extends Base
 {
 
-    public function setFeedback($studentId, $semester, $assignment, $feedback)
-    {
-        $result = $this->getAssignmentFeedback($studentId, $assignment, $semester);
-
-        /**
-         * Feedback already exists for this assignment
-         * - Update it
-         */
-        if (isset($result[0])) {
-            $this->updateFeedback($feedback, $result[0]['id']);
-            return;
-            die();
-        }
-
-        /**
-         * Feedback does not exist for this assignment
-         * - Create it
-         */
-        else {
-            $this->writeFeedback($studentId, $semester, $assignment, $feedback);
-        }
-    }
-
+    /**
+     * Returns all from the Feedback and Marks table (joined)
+     */
     public function getMarkAndFeedback($studentId, $semester)
     {
         $sql = "SELECT *  
@@ -55,6 +35,9 @@ class Feedback extends Base
         return $data;
     }
 
+    /**
+     * Returns the ID and Feedback from the Feedback table
+     */
     public function getAssignmentFeedback($studentId, $assignment, $semester)
     {
         $sql = "SELECT `id`, `feedback`  
@@ -73,7 +56,36 @@ class Feedback extends Base
         return $data;
     }
 
-    private function writeFeedback($studentId, $semester, $assignment, $feedback)
+    /**
+     * Sets/Updates the users feedback in the database
+     */
+    public function setUserFeedback($studentId, $semester, $assignment, $feedback)
+    {
+        $result = $this->getAssignmentFeedback($studentId, $assignment, $semester);
+
+        /**
+         * Feedback already exists for this assignment
+         * - Update it
+         */
+        if (isset($result[0])) {
+            $this->updateFeedback($feedback, $result[0]['id']);
+            return;
+            die();
+        }
+
+        /**
+         * Feedback does not exist for this assignment
+         * - Create it
+         */
+        else {
+            $this->setFeedback($studentId, $semester, $assignment, $feedback);
+        }
+    }
+
+    /**
+     * Inserts new feedback into the Feedback table
+     */
+    private function setFeedback($studentId, $semester, $assignment, $feedback)
     {
         $sql = "INSERT INTO `feedback` (`id`, `student_id`, `assignment_number`, `semester`, `feedback`, `created_date`) 
                 VALUES (NULL, '$studentId', '$assignment', '$semester', '$feedback', CURRENT_TIME());";
@@ -85,6 +97,9 @@ class Feedback extends Base
         return;
     }
 
+    /**
+     * Updates feedback in the Feedback table
+     */
     private function updateFeedback($feedback, $feedbackId)
     {
         $sql = "UPDATE `feedback` 
