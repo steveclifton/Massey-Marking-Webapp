@@ -62,6 +62,7 @@ class Assignment extends Base
     public function processUploadedFile()
     {
         $feedback = new Feedback();
+        $mark = new Marks();
 
         // Gets the assignment number from the view
         $this->assignmentNumber = $this->getAssignmentNumber($_SERVER['HTTP_REFERER']);
@@ -112,8 +113,15 @@ class Assignment extends Base
 
         $assignmentsToCheck = $this->compareOutputs();
 
-        $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Assignment ran and is ok");
-
+        /**
+         * If the assignment's output is identical to the master output
+         * - Award 10 marks and update feedback
+         */
+        if (!isset($assignmentsToCheck[0])) {
+            $feedback->setFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "All test cases passed");
+            $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 10);
+            header("location: /assignment?num=$this->assignmentNumber");
+        }
 
         /**
          * Now begin processing and parsing
