@@ -95,6 +95,7 @@ class Assignment extends Base
         if (!$this->compileAssignment($target_dir, $this->assignmentNumber)) {
             /* The assignment failed to compile */
             $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Failed to compiled");
+            $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 0);
             header("location: /assignment?num=$this->assignmentNumber");
             die();
         }
@@ -136,7 +137,6 @@ class Assignment extends Base
             foreach ($assignmentsToCheck as $key => $value) {
                 echo $key . " " . $value . "<br>";
             } die();
-
         }
 
         header("location: /assignment?num=$this->assignmentNumber");
