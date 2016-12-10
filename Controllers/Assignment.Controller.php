@@ -109,6 +109,7 @@ class Assignment extends Base
 
             if (!$result) {
                 $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Infinite Loop");
+                $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 0);
                 header("location: /assignment?num=$this->assignmentNumber");
                 die();
             }
