@@ -69,24 +69,18 @@ class Assignment extends Base
         $mark = new Marks();
         $this->assignmentNumber = $this->getAssignmentNumber($_SERVER['HTTP_REFERER']);
 
+        $target_dir = "/home/student/" . $_SESSION['student_id'] . "/A$this->assignmentNumber";
 
+        /**
+         * Upload the file to the target directory
+         */
         try {
-            // Sets the target directory
-            $target_dir = "/home/student/" . $_SESSION['student_id'] . "/A$this->assignmentNumber";
-
-            // Removes all files in the folder currently
-            system("sudo rm $target_dir/*");
-
-            // Sets the target file
-            $target_file = $target_dir . "/A$this->assignmentNumber.cpp";
-
-            move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
-            chmod($target_file, 0777);
-
+            $this->uploadFile();
         } catch (Exception $e) {
             var_dump($e);
             die();
         }
+
 
         /**
          * Tries to compile the assignment
@@ -151,6 +145,27 @@ class Assignment extends Base
     {
         $number = explode('=', $httpRef);
         return $number[1];
+    }
+
+    /**
+     * Uploads the file to the correct folder
+     *  - Renames it to match the Assignment number
+     */
+    public function uploadFile()
+    {
+        $this->assignmentNumber = $this->getAssignmentNumber($_SERVER['HTTP_REFERER']);
+
+        $target_dir = "/home/student/" . $_SESSION['student_id'] . "/A$this->assignmentNumber";
+
+        // Removes all files in the folder currently
+        system("sudo rm $target_dir/*");
+
+        // Sets the target file
+        $target_file = $target_dir . "/A$this->assignmentNumber.cpp";
+
+        move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
+        chmod($target_file, 0777);
+
     }
 
 
