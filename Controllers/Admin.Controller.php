@@ -17,4 +17,11 @@ class Admin extends Base
         $this->render('Admin', 'admin.view');
     }
 
+    public function testingTools()
+    {
+        $this->isAdminLoggedIn();
+
+        $this->render('Admin', 'testtools.view');
+    }
+
 }
