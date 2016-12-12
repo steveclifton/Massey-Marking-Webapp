@@ -91,8 +91,9 @@ class Marks extends Base
         $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
         $stm->execute(array('$studentId, $mark, $assignmentNumber, $semester'));
+        $id = $this->database->lastInsertId();
 
-        return;
+        return $id;
     }
 
     /**
