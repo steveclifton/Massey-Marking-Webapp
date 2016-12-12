@@ -84,26 +84,27 @@ class Assignment extends Base
 
         /**
          * Tries to compile the assignment
-         * - If not successful, updates DB and returns to page
+         * - If does not compile
+         *      - updates DB and returns to page
+         *
+         * - Else
+         *   Tries to run all the test cases on the assignment
+         *      - If an infinite loop occurs, updates DB and returns to page
          */
         if (!$this->compileAssignment($target_dir, $this->assignmentNumber)) {
-            /* The assignment failed to compile */
-            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Failed to compiled");
-            $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 0);
+            $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 0);
+            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Failed to compiled", $markId);
+
             header("location: /assignment?num=$this->assignmentNumber");
             die();
         }
-        /**
-         * Tries to run all the test cases on the assignment
-         * - If an infinite loop occurs, updates DB and returns to page
-         */
         else
         {
             $result = $this->runAssignmentTests();
 
             if (!$result) {
-                $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Infinite Loop");
-                $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 0);
+                $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 0);
+                $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Infinite Loop", $markId);
                 header("location: /assignment?num=$this->assignmentNumber");
                 die();
             }
@@ -113,25 +114,25 @@ class Assignment extends Base
         /**
          * This checks if the assignment output matches the master output
          * - If the assignment's output is identical to the master output
-         * - Award 10 marks and update feedback
+         *          - Award 10 marks and update feedback
+         * - Else
+         *  - There are differences in one or more assignment output vs master output
+         *          - Begin checking assignments
          */
         $assignmentsToCheck = $this->compareOutputs();
 
         if (!is_array($assignmentsToCheck)) {
-            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "All test cases passed");
-            $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 10);
+            $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 10);
+            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "All test cases passed", $markId);
             header("location: /assignment?num=$this->assignmentNumber");
             die();
         }
-        /**
-         * There are differences in one or more assignment output vs master output
-         * - begin checking assignments
-         */
         else
         {
             foreach ($assignmentsToCheck as $key => $value) {
                 echo $key . " " . $value . "<br>";
-            } die();
+            }
+            die();
         }
 
         header("location: /assignment?num=$this->assignmentNumber");
