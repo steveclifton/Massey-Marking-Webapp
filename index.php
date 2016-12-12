@@ -55,6 +55,11 @@ else if ($uri == 'testtools') {
     $test->testingTools();
 }
 
+else if ($uri == 'adminupload') {
+    $admin = new Admin();
+    $admin->uploadFile();
+}
+
 else if ($uri == 'upload') {
     $uploadAssignment = new Assignment();
     $uploadAssignment->processUploadedFile();
