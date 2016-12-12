@@ -50,6 +50,10 @@ else if ($uri == 'showstudents') {
     $authentication = new Authentication();
     $authentication->showAllUsers();
 }
+else if ($uri == 'testtools') {
+    $test = new Admin();
+    $test->testingTools();
+}
 
 else if ($uri == 'upload') {
     $uploadAssignment = new Assignment();
