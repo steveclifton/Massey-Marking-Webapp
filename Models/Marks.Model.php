@@ -75,7 +75,8 @@ class Marks extends Base
          * - Create it
          */
         else {
-            $this->setMark($studentId, $assignmentNumber, $semester, $mark);
+            $id = $this->setMark($studentId, $assignmentNumber, $semester, $mark);
+            return $id;
         }
     }
 
