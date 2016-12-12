@@ -59,7 +59,7 @@ class Feedback extends Base
     /**
      * Sets/Updates the users feedback in the database
      */
-    public function setUserFeedback($studentId, $semester, $assignment, $feedback)
+    public function setUserFeedback($studentId, $semester, $assignment, $feedback, $markId)
     {
         $result = $this->getAssignmentFeedback($studentId, $assignment, $semester);
 
@@ -78,21 +78,22 @@ class Feedback extends Base
          * - Create it
          */
         else {
-            $this->setFeedback($studentId, $semester, $assignment, $feedback);
+            $this->setFeedback($studentId, $semester, $assignment, $feedback, $markId);
+            return;
         }
     }
 
     /**
      * Inserts new feedback into the Feedback table
      */
-    private function setFeedback($studentId, $semester, $assignment, $feedback)
+    private function setFeedback($studentId, $semester, $assignment, $feedback, $markId)
     {
-        $sql = "INSERT INTO `feedback` (`id`, `student_id`, `assignment_number`, `semester`, `feedback`, `created_date`) 
-                VALUES (NULL, '$studentId', '$assignment', '$semester', '$feedback', CURRENT_TIME());";
+        $sql = "INSERT INTO `feedback` (`id`, `student_id`, `assignment_number`, `semester`, `feedback`, `mark_id`, `created_date`) 
+                VALUES (NULL, '$studentId', '$assignment', '$semester', '$feedback', '$markId', CURRENT_TIME());";
 
         $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-        $stm->execute(array('$studentId, $assignment, $semester, $feedback'));
+        $stm->execute(array('$studentId, $assignment, $semester, $feedback, $markId'));
 
         return;
     }
