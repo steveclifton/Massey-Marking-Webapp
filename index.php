@@ -60,6 +60,11 @@ else if ($uri == 'adminupload') {
     $admin->uploadFile();
 }
 
+else if ($uri == 'admincompile') {
+    $admin = new Admin();
+    $admin->compileFile();
+}
+
 else if ($uri == 'upload') {
     $uploadAssignment = new Assignment();
     $uploadAssignment->processUploadedFile();
