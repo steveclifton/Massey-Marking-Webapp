@@ -10,6 +10,9 @@ namespace Marking\Controllers;
 class Admin extends Base
 {
 
+    /**
+     * Loads the Admin View
+     */
     public function adminView()
     {
         $this->isAdminLoggedIn();
@@ -17,6 +20,9 @@ class Admin extends Base
         $this->render('Admin', 'admin.view');
     }
 
+    /**
+     * Loads the Admin Testing Tools view
+     */
     public function testingTools()
     {
         $this->isAdminLoggedIn();
@@ -26,6 +32,9 @@ class Admin extends Base
     }
 
 
+    /**
+     * Allows the Admin to upload a file to a folder
+     */
     public function uploadFile()
     {
         $assignmentNumber = $_POST['assignment_number'];
@@ -51,5 +60,26 @@ class Admin extends Base
 
     }
 
+    /**
+     * Allows the Admin to compile a file in a folder
+     */
+    public function compileFile()
+    {
+        $assignmentNumber = $_POST['assignment_number'];
+
+        $target_dir = "/home/student/" . $_SESSION['student_id'] . "/A$assignmentNumber";
+        $target_file = $target_dir . "/A$assignmentNumber";
+
+
+        system("sudo g++ $target_dir/A$assignmentNumber.cpp -o $target_dir/A$assignmentNumber");
+
+        if (file_exists($target_file)) {
+            $viewData['compiled'] = $target_file;
+        } else {
+            $viewData['compiled'] = false;
+        }
+
+        $this->render('Admin', 'testtools.view', $viewData);
+    }
 
 }
