@@ -1,0 +1,11 @@
+# 159.201 Assignment 5 - compares students output against master output
+cmp result1.txt gabarito1.txt > compare1.txt
+cmp result2.txt gabarito2.txt > compare2.txt
+cmp result3.txt gabarito3.txt > compare3.txt
+cmp result4.txt gabarito4.txt > compare4.txt
+cmp result5.txt gabarito5.txt > compare5.txt
+cmp result6.txt gabarito6.txt > compare6.txt
+cmp result7.txt gabarito7.txt > compare7.txt
+cmp result8.txt gabarito8.txt > compare8.txt
+cmp result9.txt gabarito9.txt > compare9.txt
+cmp result10.txt gabarito10.txt > compare10.txt

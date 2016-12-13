@@ -1,4 +1,4 @@
-# 159.201 Assignment - compares students output against master output
+# 159.201 Assignment 1 - compares students output against master output
 cmp result1.txt gabarito_test1.txt > compare1.txt
 cmp result2.txt gabarito_test2.txt > compare2.txt
 cmp result3.txt gabarito_test3.txt > compare3.txt
