@@ -1,0 +1,11 @@
+# 159.201 Assignment 5
+timeout 10 ./A5 RPN1.txt > result1.txt
+timeout 10 ./A5 RPN2.txt > result2.txt
+timeout 10 ./A5 RPN3.txt > result3.txt
+timeout 10 ./A5 RPN4.txt > result4.txt
+timeout 10 ./A5 RPN5.txt > result5.txt
+timeout 10 ./A5 RPN6.txt > result6.txt
+timeout 10 ./A5 RPN7.txt > result7.txt
+timeout 10 ./A5 RPN8.txt > result8.txt
+timeout 10 ./A5 RPN9.txt > result9.txt
+timeout 10 ./A5 RPN10.txt > result10.txt

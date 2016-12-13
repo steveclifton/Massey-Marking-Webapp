@@ -1,0 +1,11 @@
+# 159.201 Assignment 3
+timeout 10 ./A3 simulation3ports.txt > result1.txt
+timeout 10 ./A3 simulation4ports.txt > result2.txt
+timeout 10 ./A3 simulation10ports.txt > result3.txt
+timeout 10 ./A3 simulation50ports.txt > result4.txt
+timeout 10 ./A3 simulation50portsB.txt > result5.txt
+timeout 10 ./A3 simulation50portsC.txt > result6.txt
+timeout 10 ./A3 simulation128portsA.txt > result7.txt
+timeout 10 ./A3 simulation128portsB.txt > result8.txt
+timeout 10 ./A3 simulation128portsC.txt > result9.txt
+timeout 10 ./A3 simulation128portsD.txt > result10.txt

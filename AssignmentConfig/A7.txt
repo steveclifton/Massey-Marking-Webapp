@@ -1,0 +1,11 @@
+# 159.201 Assignment 7
+timeout 10 ./A7 random_N_5.txt reversed_N_5.txt sorted_N_5.txt > result1.txt
+timeout 10 ./A7 random_N_10.txt reversed_N_10.txt sorted_N_10.txt > result2.txt
+timeout 10 ./A7 random_N_100.txt reversed_N_100.txt sorted_N_100.txt > result3.txt
+timeout 10 ./A7 random_N_1000.txt reversed_N_1000.txt sorted_N_1000.txt > result4.txt
+timeout 10 ./A7 random_N_10000.txt reversed_N_10000.txt sorted_N_10000.txt > result5.txt
+timeout 10 ./A7 random_N_2500.txt reversed_N_2500.txt sorted_N_2500.txt > result6.txt
+timeout 10 ./A7 random_N_25000.txt reversed_N_25000.txt sorted_N_25000.txt > result7.txt
+timeout 10 ./A7 random_N_500.txt reversed_N_500.txt sorted_N_500.txt > result8.txt
+timeout 10 ./A7 random_N_5000.txt reversed_N_5000.txt sorted_N_5000.txt > result9.txt
+timeout 10 ./A7 random_N_50000.txt reversed_N_50000.txt sorted_N_50000.txt > result10.txt

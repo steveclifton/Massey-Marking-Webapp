@@ -1,0 +1,11 @@
+# 159.201 Assignment 6
+timeout 10 ./A6 graph1.txt > result1.txt
+timeout 10 ./A6 graph2.txt > result2.txt
+timeout 10 ./A6 graph3.txt > result3.txt
+timeout 10 ./A6 graph4.txt > result4.txt
+timeout 10 ./A6 graph5.txt > result5.txt
+timeout 10 ./A6 graph6.txt > result6.txt
+timeout 10 ./A6 graph7.txt > result7.txt
+timeout 10 ./A6 graph8.txt > result8.txt
+timeout 10 ./A6 graph9.txt > result9.txt
+timeout 10 ./A6 graph10.txt > result10.txt
