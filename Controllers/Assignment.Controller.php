@@ -129,9 +129,15 @@ class Assignment extends Base
         }
         else
         {
+            $feedbackStr = "";
+            $markAss = 10;
             foreach ($assignmentsToCheck as $key => $value) {
-                echo $key . " " . $value . "<br>";
+                $feedbackStr = $feedbackStr . " " . $key;
+                $markAss--;
             }
+            $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, $markAss);
+            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Failed on : " . $feedbackStr, $markId);
+            header("location: /assignment?num=$this->assignmentNumber");
             die();
         }
 
@@ -261,7 +267,7 @@ class Assignment extends Base
         $assignmentController = new MarkingConfig();
 
         /* Gets the assignment Commands from the config file */
-        $cmd = $assignmentController->getCompareCommands();
+        $cmd = $assignmentController->getCompareCommands($this->assignmentNumber);
 
         /* Gets the number of tests each assignment will perform */
         $testNumber = $assignmentController->getAssignmentTestNumber();
