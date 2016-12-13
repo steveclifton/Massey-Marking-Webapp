@@ -55,9 +55,10 @@ class MarkingConfig extends Base
         return $file;
     }
 
-    public function getCompareCommands()
+    public function getCompareCommands($num)
     {
-        $file = file("/var/www/marking/AssignmentConfig/MasterCompare.txt");
+
+        $file = file("/var/www/marking/AssignmentConfig/MasterCompare$num.txt");
 
         return $file;
     }
