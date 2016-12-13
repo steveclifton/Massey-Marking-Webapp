@@ -19,18 +19,19 @@
 </form>
 <?php
 if (isset($viewData['uploaded'])) {
-    echo "<h4 style='color: red'>**Assignment uploaded to : " . $viewData['uploaded'] . "</h4>";
-} else {
-    echo "<h3 style='color: red'>**Assignment upload FAILED</h3>";
+    if ($viewData['uploaded']) {
+        echo "<h4 style='color: red'>**Assignment uploaded to : " . $viewData['uploaded'] . "</h4>";
+    } else {
+        echo "<h3 style='color: red'>**Assignment upload FAILED</h3>";
+    }
 }
-
 ?>
 <br>
 <hr>
 
 <h4>Compile Assignment</h4>
 <br>
-<form action="/admincompile" method="post">
+<form action="/admincompile" method="post" enctype="multipart/form-data">
     <h4>Choose Assignment Number</h4>
     <select name="assignment_number" id="assignment_number">
         <option name="1" value="1">1</option>
@@ -44,6 +45,15 @@ if (isset($viewData['uploaded'])) {
     <br><br>
     <input type="submit" id="submitButtom" class="btn btn-success" value="compile">
 </form>
-
-
+<?php
+if (isset($viewData['compiled'])) {
+    if ($viewData['compiled']) {
+        echo "<h4 style='color: red'>**Assignment compiled : " . $viewData['compiled'] . "</h4>";
+    } else {
+        echo "<h3 style='color: red'>**Assignment compile FAILED</h3>";
+    }
+}
+?>
+<br>
+<hr>
 
