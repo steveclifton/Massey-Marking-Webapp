@@ -298,9 +298,11 @@ class Assignment extends Base
         }
 
         $toCheck = "";
+        $j = 0;
         for ($i = 1; $i <= $testNumber; $i++) {
             if (filesize("compare$i.txt") != 0) {
-                $toCheck[$i] = $i;
+                $toCheck[$j] = $i;
+                $j++;
             }
         }
 
