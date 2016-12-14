@@ -131,10 +131,27 @@ class Assignment extends Base
         {
             $feedbackStr = "";
             $markAss = 10;
-            foreach ($assignmentsToCheck as $key => $value) {
-                $feedbackStr = $feedbackStr . " " . $key;
-                $markAss--;
-            }
+            //print_r($assignmentsToCheck);
+            for ($i = 0; $i < count($assignmentsToCheck); $i++) {
+                $master = $this->getMasterOutput($assignmentsToCheck[$i]);
+                $studentOutput = $this->getAssignmentOutput($assignmentsToCheck[$i]);
+
+
+                var_dump($master);
+                echo "<br><br>";
+
+                var_dump($studentOutput);
+                echo "<br><br><br><br><br><br><br><br>";
+
+
+            }die('here');
+
+
+
+
+
+
+            die();
             $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, $markAss);
             $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Failed on : " . $feedbackStr, $markId);
             header("location: /assignment?num=$this->assignmentNumber");
