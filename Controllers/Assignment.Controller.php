@@ -225,6 +225,24 @@ class Assignment extends Base
         }
     }
 
+    public function getAssignmentOutput($assignmentNumber)
+    {
+        $studentId = $_SESSION['id'];
+        chdir("/home/student/$this->studentId/A$this->assignmentNumber");
+        $file = file("result$assignmentNumber" . ".txt");
+
+        return $file;
+    }
+
+    public function getMasterOutput($assignmentNumber)
+    {
+        $studentId = $_SESSION['id'];
+        chdir("/home/student/$this->studentId/A$this->assignmentNumber");
+        $file = file("gabarito$assignmentNumber" . ".txt");
+
+        return $file;
+    }
+
 
     /**
      * Uses the created executable to test a variety of input
