@@ -120,35 +120,72 @@ class Assignment extends Base
          *  - There are differences in one or more assignment output vs master output
          *          - Begin checking assignments
          */
-        $assignmentsToCheck = $this->compareOutputs();
+//        $assignmentsToCheck = $this->compareOutputs();
 
-        if (!is_array($assignmentsToCheck)) {
-            $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 10);
-            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "All test cases passed", $markId);
-            header("location: /assignment?num=$this->assignmentNumber");
-            die();
-        }
-        else
-        {
-            $feedbackStr = "";
-            $markAss = 10;
-            //print_r($assignmentsToCheck);
-            for ($i = 0; $i < count($assignmentsToCheck); $i++) {
-                $master = $this->getMasterOutput($assignmentsToCheck[$i]);
-                $studentOutput = $this->getAssignmentOutput($assignmentsToCheck[$i]);
+//        if (!is_array($assignmentsToCheck)) {
+//            $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 10);
+//            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "All test cases passed", $markId);
+//            header("location: /assignment?num=$this->assignmentNumber");
+//            die();
+//        }
+//        else
+//        {
+//            $feedbackStr = "";
+//            $markAss = 10;
+//            //print_r($assignmentsToCheck);
+
+            for ($j = 0; $j < count($assignmentsToCheck); $j++) {
+                echo "Assignment being checked : $assignmentsToCheck[$j] <br>";
+
+                // Loads the output of the two assignments in question
+                $masterOutput = $this->getMasterOutput($assignmentsToCheck[$j]);
+                $studentOutput = $this->getAssignmentOutput($assignmentsToCheck[$j]);
+
+                // Gets the lowest line count from the two files
+                $masterLineCount = count($masterOutput);
+                $studentLineCount = count($studentOutput);
+                $lowLineCount = ($masterLineCount < $studentLineCount ? $studentLineCount : $masterLineCount);
+
+                // Find the line that the two strings differ on
+                // Sets the two variables to be lowercase strings
+                $masterOutputDifferLine = "";
+                $studentOutputDifferLine = "";
+                for ($i = 0; $i < $lowLineCount; $i++) {
+                    if (!strcasecmp($masterOutput[$i], $studentOutput[$i]) == 0) {
+                        $masterOutputDifferLine = strtolower($masterOutput[$i]);
+                        $studentOutputDifferLine = strtolower($studentOutput[$i]);
+                        break;
+                    }
+                }
+
+                // Removes all white space
+                $masterOutputDifferLine = preg_replace('/\s+/', '', $masterOutputDifferLine);
+                $studentOutputDifferLine = preg_replace('/\s+/', '', $studentOutputDifferLine);
+
+                // Checks which line has the least amount of characters
+                $masterCharCount = strlen($masterOutputDifferLine);
+                $studentCharCount = strlen($studentOutputDifferLine);
+                $lowCharCount = ($masterCharCount > $studentCharCount ? $studentCharCount : $masterCharCount);
+
+                // Finds which character the line differs on
+                $differOnChar = -1;
+                for ($i = 0; $i < $lowCharCount; $i++) {
+                    if (strcasecmp($masterOutputDifferLine[$i], $studentOutputDifferLine[$i]) != 0) {
+                        $differOnChar = $i;
+                        break;
+                    }
+                }
+
+                // There is a difference in the line at some point
+                if ($differOnChar != -1) {
+                    echo "Difference Chars : " . $masterOutputDifferLine[$differOnChar] . " " . $studentOutputDifferLine[$differOnChar] . "<br>";
+                    echo $masterOutputDifferLine . "<br>" . $studentOutputDifferLine . "<br>";
+                }
+
+                echo "<br><br><br>";
 
 
-                var_dump($master);
-                echo "<br><br>";
-
-                var_dump($studentOutput);
-                echo "<br><br><br><br><br><br><br><br>";
-
-
-            }die('here');
-
-
-
+            }
 
             die('died');
 
