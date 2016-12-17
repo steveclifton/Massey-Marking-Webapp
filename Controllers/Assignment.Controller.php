@@ -110,6 +110,7 @@ class Assignment extends Base
             }
         }
 
+        $assignmentsToCheck = $this->compareOutputs();
 
         /**
          * This checks if the assignment output matches the master output
@@ -149,14 +150,14 @@ class Assignment extends Base
 
 
 
+            die('died');
 
 
-            die();
-            $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, $markAss);
-            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Failed on : " . $feedbackStr, $markId);
-            header("location: /assignment?num=$this->assignmentNumber");
-            die();
-        }
+//            $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, $markAss);
+//            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Failed on : " . $feedbackStr, $markId);
+//            header("location: /assignment?num=$this->assignmentNumber");
+//            die();
+//        }
 
         header("location: /assignment?num=$this->assignmentNumber");
     }
@@ -322,7 +323,6 @@ class Assignment extends Base
                 $j++;
             }
         }
-
 
         return $toCheck;
     }
