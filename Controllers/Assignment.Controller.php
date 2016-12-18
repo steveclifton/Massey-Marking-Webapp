@@ -120,81 +120,118 @@ class Assignment extends Base
          *  - There are differences in one or more assignment output vs master output
          *          - Begin checking assignments
          */
-//        $assignmentsToCheck = $this->compareOutputs();
 
-//        if (!is_array($assignmentsToCheck)) {
-//            $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 10);
-//            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "All test cases passed", $markId);
-//            header("location: /assignment?num=$this->assignmentNumber");
-//            die();
-//        }
-//        else
-//        {
-//            $feedbackStr = "";
-//            $markAss = 10;
-//            //print_r($assignmentsToCheck);
+        if (!is_array($assignmentsToCheck)) {
+            $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 10);
+            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "All test cases passed", $markId);
+            header("location: /assignment?num=$this->assignmentNumber");
+            die();
+        }
+        else
+        {
+            $databaseFeedback = array();
 
             for ($j = 0; $j < count($assignmentsToCheck); $j++) {
-                echo "Assignment being checked : $assignmentsToCheck[$j] <br>";
+                array_push($databaseFeedback, "Feedback for Test $assignmentsToCheck[$j] <br>");
 
                 // Loads the output of the two assignments in question
                 $masterOutput = $this->getMasterOutput($assignmentsToCheck[$j]);
                 $studentOutput = $this->getAssignmentOutput($assignmentsToCheck[$j]);
 
+                // Converts each line to lower case
+                $masterOutputFiltered="";
+                $studentOutputFiltered="";
+                for ($i = 0; $i < count($masterOutput); $i++) {
+                    $masterOutputFiltered[$i] = trim(strtolower($masterOutput[$i]));
+                }
+                for ($i = 0; $i < count($studentOutput); $i++) {
+                    $studentOutputFiltered[$i] = trim(strtolower($studentOutput[$i]));
+                }
+
                 // Gets the lowest line count from the two files
                 $masterLineCount = count($masterOutput);
                 $studentLineCount = count($studentOutput);
-                $lowLineCount = ($masterLineCount < $studentLineCount ? $studentLineCount : $masterLineCount);
+                $lowLineCount = ($masterLineCount < $studentLineCount ? $masterLineCount : $studentLineCount);
 
                 // Find the line that the two strings differ on
                 // Sets the two variables to be lowercase strings
-                $masterOutputDifferLine = "";
-                $studentOutputDifferLine = "";
+                $differOnLine = array();
                 for ($i = 0; $i < $lowLineCount; $i++) {
-                    if (!strcasecmp($masterOutput[$i], $studentOutput[$i]) == 0) {
-                        $masterOutputDifferLine = strtolower($masterOutput[$i]);
-                        $studentOutputDifferLine = strtolower($studentOutput[$i]);
-                        break;
+                    if (strcmp($masterOutputFiltered[$i], $studentOutputFiltered[$i]) != 0) {
+                        array_push($differOnLine, $i);
                     }
                 }
 
-                // Removes all white space
-                $masterOutputDifferLine = preg_replace('/\s+/', '', $masterOutputDifferLine);
-                $studentOutputDifferLine = preg_replace('/\s+/', '', $studentOutputDifferLine);
+                // Stores the line differences in an array
+                // - What is stored is the original lines that failed
+                $linesForReview = array();
+                $count = 0;
+                foreach ($differOnLine as $line) {
+                    $numLine = $line+1;
+                    $string = "Line $numLine<br>Expected: $masterOutput[$line]<br>Assignment: $studentOutput[$line]<br><br>";
+                    array_push($linesForReview, $string);
 
-                // Checks which line has the least amount of characters
-                $masterCharCount = strlen($masterOutputDifferLine);
-                $studentCharCount = strlen($studentOutputDifferLine);
-                $lowCharCount = ($masterCharCount > $studentCharCount ? $studentCharCount : $masterCharCount);
-
-                // Finds which character the line differs on
-                $differOnChar = -1;
-                for ($i = 0; $i < $lowCharCount; $i++) {
-                    if (strcasecmp($masterOutputDifferLine[$i], $studentOutputDifferLine[$i]) != 0) {
-                        $differOnChar = $i;
+                    $count++;
+                    if ($count == 10) {
                         break;
                     }
                 }
+                $linesForReview = implode($linesForReview);
+                array_push($databaseFeedback, $linesForReview);
+                array_push($databaseFeedback, "___________________________<br>");
 
-                // There is a difference in the line at some point
-                if ($differOnChar != -1) {
-                    echo "Difference Chars : " . $masterOutputDifferLine[$differOnChar] . " " . $studentOutputDifferLine[$differOnChar] . "<br>";
-                    echo $masterOutputDifferLine . "<br>" . $studentOutputDifferLine . "<br>";
+                $sampleMasterOutput = array();
+                $count = 0;
+                foreach ($masterOutput as $output) {
+                    $string = "$output<br>";
+                    array_push($sampleMasterOutput, $string);
+
+                    $count++;
+                    if ($count == 20) {
+                        break;
+                    }
                 }
+                array_push($sampleMasterOutput, "...etc");
+                $sampleMasterOutput = implode($sampleMasterOutput);
+                array_push($databaseFeedback, $sampleMasterOutput);
 
-                echo "<br><br><br>";
 
+
+
+                array_push($databaseFeedback, "<br><br>***************************************************************************************************<br><br>");
+
+//                // Removes all white space
+//                $masterOutputRmvWSLine = preg_replace('/\s+/', '', $masterOutputDifferLine);
+//                $studentOutputRmvWSLine = preg_replace('/\s+/', '', $studentOutputDifferLine);
+//
+//                // Checks which line has the least amount of characters
+//                $masterCharCount = strlen($masterOutputRmvWSLine);
+//                $studentCharCount = strlen($studentOutputRmvWSLine);
+//                $lowCharCount = ($masterCharCount > $studentCharCount ? $studentCharCount : $masterCharCount);
+//
+//                // Finds which character the line differs on
+//                $differOnChar = -1;
+//                for ($i = 0; $i < $lowCharCount; $i++) {
+//                    if (strcasecmp($masterOutputRmvWSLine[$i], $studentOutputRmvWSLine[$i]) != 0) {
+//                        $differOnChar = $i;
+//                        break;
+//                    }
+//                }
+//
+//                // There is a difference in the line at some point
+//                if ($differOnChar != -1) {
+//                    //echo $masterOutputDifferLine . "<br>" . $studentOutputDifferLine . "<br>";
+//                }
 
             }
 
-            die('died');
+            $databaseFeedback = implode($databaseFeedback);
+            $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 99);
+            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, $databaseFeedback, $markId);
 
-
-//            $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, $markAss);
-//            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Failed on : " . $feedbackStr, $markId);
-//            header("location: /assignment?num=$this->assignmentNumber");
-//            die();
-//        }
+            header("location: /assignment?num=$this->assignmentNumber");
+            die();
+        }
 
         header("location: /assignment?num=$this->assignmentNumber");
     }
