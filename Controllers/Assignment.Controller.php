@@ -132,7 +132,7 @@ class Assignment extends Base
             $databaseFeedback = array();
 
             for ($j = 0; $j < count($assignmentsToCheck); $j++) {
-                array_push($databaseFeedback, "Feedback for Test $assignmentsToCheck[$j] <br>");
+                array_push($databaseFeedback, "<h4><u>Feedback for Test $assignmentsToCheck[$j]</u></h4>");
 
                 // Loads the output of the two assignments in question
                 $masterOutput = $this->getMasterOutput($assignmentsToCheck[$j]);
@@ -168,7 +168,15 @@ class Assignment extends Base
                 $count = 0;
                 foreach ($differOnLine as $line) {
                     $numLine = $line+1;
-                    $string = "Line $numLine<br>Expected: $masterOutput[$line]<br>Assignment: $studentOutput[$line]<br><br>";
+
+                    if (strlen($masterOutput[$line]) > 100) {
+                        $masterOutput[$line] = substr($masterOutput[$line],0, 100) . "..." . PHP_EOL;
+                    }
+                    if (strlen($studentOutput[$line]) > 100) {
+                        $studentOutput[$line] = substr($studentOutput[$line],0, 100) . "..." . PHP_EOL;
+                    }
+
+                    $string = "Line $numLine<br>$masterOutput[$line]" . "$studentOutput[$line]<br>";
                     array_push($linesForReview, $string);
 
                     $count++;
@@ -178,12 +186,20 @@ class Assignment extends Base
                 }
                 $linesForReview = implode($linesForReview);
                 array_push($databaseFeedback, $linesForReview);
-                array_push($databaseFeedback, "___________________________<br>");
 
+
+
+                // Provide the students with a sample of the desired output
                 $sampleMasterOutput = array();
                 $count = 0;
+                array_push($sampleMasterOutput, "<h4><u>Desired Output</u></h4>");
                 foreach ($masterOutput as $output) {
-                    $string = "$output<br>";
+                    $string = $output;
+                    if (strlen($string) > 100) {
+                        $string = substr($string, 0, 50);
+                        $string = $string . " ..." .PHP_EOL;
+                    }
+
                     array_push($sampleMasterOutput, $string);
 
                     $count++;
