@@ -6,6 +6,4 @@
 <h1>Feedback</h1>
 <hr>
 
-<p>
-    <?= $viewData['feedback'] ?>
-</p>
+<pre><?= $viewData['feedback'] ?></pre>
