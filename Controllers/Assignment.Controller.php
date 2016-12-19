@@ -132,15 +132,15 @@ class Assignment extends Base
             $databaseFeedback = array();
 
             for ($j = 0; $j < count($assignmentsToCheck); $j++) {
-                array_push($databaseFeedback, "<h4><u>Feedback for Test $assignmentsToCheck[$j]</u></h4>");
+                array_push($databaseFeedback, "<pre><h4><u>Feedback for Test $assignmentsToCheck[$j]</u></h4>");
 
                 // Loads the output of the two assignments in question
                 $masterOutput = $this->getMasterOutput($assignmentsToCheck[$j]);
                 $studentOutput = $this->getAssignmentOutput($assignmentsToCheck[$j]);
 
                 // Converts each line to lower case
-                $masterOutputFiltered="";
-                $studentOutputFiltered="";
+                $masterOutputFiltered='';
+                $studentOutputFiltered='';
                 for ($i = 0; $i < count($masterOutput); $i++) {
                     $masterOutputFiltered[$i] = trim(strtolower($masterOutput[$i]));
                 }
@@ -149,9 +149,7 @@ class Assignment extends Base
                 }
 
                 // Gets the lowest line count from the two files
-                $masterLineCount = count($masterOutput);
-                $studentLineCount = count($studentOutput);
-                $lowLineCount = ($masterLineCount < $studentLineCount ? $masterLineCount : $studentLineCount);
+                $lowLineCount = (count($masterOutput) < count($studentOutput) ? count($masterOutput) : count($studentOutput));
 
                 // Find the line that the two strings differ on
                 // Sets the two variables to be lowercase strings
@@ -162,8 +160,22 @@ class Assignment extends Base
                     }
                 }
 
+
+                /*****************************************************************
+                 * Here I want to perform assignment specific fault analysis to report to a user
+                 * EG for
+                 *    - assignment 1 - 'Cannot open file %s. Exiting' and
+                 *    - assignment 2 - 'too many operators'
+                 *    - assignment 7 - 'Heap is already empty'
+                 *
+                 * Basically check which assignment it is, see if any of the errors exist
+                 *****************************************************************/
+
+
+
                 // Stores the line differences in an array
-                // - What is stored is the original lines that failed
+                //    - What is stored is the original lines that failed
+                //    - Limit of 10 lines
                 $linesForReview = array();
                 $count = 0;
                 foreach ($differOnLine as $line) {
@@ -176,16 +188,79 @@ class Assignment extends Base
                         $studentOutput[$line] = substr($studentOutput[$line],0, 100) . "..." . PHP_EOL;
                     }
 
-                    $string = "Line $numLine<br>$masterOutput[$line]" . "$studentOutput[$line]<br>";
+                    $string = "Line $numLine<br>$masterOutput[$line]" . "<b style=\"color:red\">$studentOutput[$line]</b><br>";
                     array_push($linesForReview, $string);
 
                     $count++;
                     if ($count == 10) {
+                        array_push($linesForReview, "...First 10 faults displayed.");
                         break;
                     }
                 }
                 $linesForReview = implode($linesForReview);
                 array_push($databaseFeedback, $linesForReview);
+
+
+
+
+
+
+
+
+
+                // Start listing possible causes
+                array_push($databaseFeedback, "<h4><u>Possible Causes</u></h4>");
+                array_push($databaseFeedback, "<ul>");
+
+                /**
+                 * First step
+                 * Remove white space to check if the strings match
+                 *    - if the number of chars on each line do not match, report to user
+                 * Count number of spaces on each line
+                 *    - if the number of spaces on each line do not match, report to user
+                 */
+                $hasAddedChars = false;
+                $hasAddedWhiteSpace = false;
+                foreach ($differOnLine as $line) {
+                    $masterOutputRmvWSLine = preg_replace('/\s+/', '', $masterOutput[$line]);
+                    $studentOutputRmvWSLine = preg_replace('/\s+/', '', $studentOutput[$line]);
+
+                    if (!$hasAddedChars) {
+                        $masterCharCount = strlen($masterOutputRmvWSLine);
+                        $studentCharCount = strlen($studentOutputRmvWSLine);
+                        if ($masterCharCount != $studentCharCount) {
+                            array_push($databaseFeedback, "<li>Additional characters in output</li>");
+                            $hasAddedChars = true;
+                        }
+                    }
+
+
+                    if (!$hasAddedWhiteSpace) {
+                        $wsCountStudent = substr_count($studentOutput[$line], " ");
+                        $wsCountMaster = substr_count($masterOutput[$line], " ");
+                        if ($wsCountStudent != $wsCountMaster) {
+                            array_push($databaseFeedback, "<li>Additional whitespace (spaces) in output</li>");
+                            $hasAddedWhiteSpace = true;
+                        }
+                    }
+
+                }
+                array_push($databaseFeedback, "</ul><br>");
+
+
+
+
+
+                // If there is only 2 lines of output
+                // Skip printing the desired output
+                if (count($studentOutput) <= 2) {
+                    array_push($databaseFeedback, "</pre>");
+                    continue;
+                }
+
+
+
+
 
 
 
@@ -197,47 +272,21 @@ class Assignment extends Base
                     $string = $output;
                     if (strlen($string) > 100) {
                         $string = substr($string, 0, 50);
-                        $string = $string . " ..." .PHP_EOL;
+                        $string = $string . " ..." . PHP_EOL;
                     }
-
                     array_push($sampleMasterOutput, $string);
-
                     $count++;
                     if ($count == 20) {
+                        array_push($sampleMasterOutput, "...etc");
                         break;
                     }
                 }
-                array_push($sampleMasterOutput, "...etc");
+
                 $sampleMasterOutput = implode($sampleMasterOutput);
                 array_push($databaseFeedback, $sampleMasterOutput);
 
 
-
-
-                array_push($databaseFeedback, "<br><br>***************************************************************************************************<br><br>");
-
-//                // Removes all white space
-//                $masterOutputRmvWSLine = preg_replace('/\s+/', '', $masterOutputDifferLine);
-//                $studentOutputRmvWSLine = preg_replace('/\s+/', '', $studentOutputDifferLine);
-//
-//                // Checks which line has the least amount of characters
-//                $masterCharCount = strlen($masterOutputRmvWSLine);
-//                $studentCharCount = strlen($studentOutputRmvWSLine);
-//                $lowCharCount = ($masterCharCount > $studentCharCount ? $studentCharCount : $masterCharCount);
-//
-//                // Finds which character the line differs on
-//                $differOnChar = -1;
-//                for ($i = 0; $i < $lowCharCount; $i++) {
-//                    if (strcasecmp($masterOutputRmvWSLine[$i], $studentOutputRmvWSLine[$i]) != 0) {
-//                        $differOnChar = $i;
-//                        break;
-//                    }
-//                }
-//
-//                // There is a difference in the line at some point
-//                if ($differOnChar != -1) {
-//                    //echo $masterOutputDifferLine . "<br>" . $studentOutputDifferLine . "<br>";
-//                }
+                array_push($databaseFeedback, "</pre>");
 
             }
 
@@ -418,4 +467,3 @@ class Assignment extends Base
     }
 
 }
-
