@@ -16,7 +16,7 @@
             <tr>
                 <td class="col-md-1 col-sm-1" style="text-align: center"> <?= $data['assignment_number'] ?> </td>
                 <td class="col-md-1 col-sm-1" style="text-align: center"> <?= $data['mark'] ?>/10</td>
-                <td class="col-md-4 col-sm-2"> <?= $data ['feedback'] ?> </td>
+                <td class="col-md-4 col-sm-2"> <pre><?= $data ['feedback'] ?></pre> </td>
             </tr>
         <?php } ?>
         </tbody>
