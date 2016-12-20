@@ -111,7 +111,7 @@ class Assignment extends Base
             }
         }
 
-        $assignmentsToCheck = $this->compareOutputs();
+
 
         /**
          * This checks if the assignment output matches the master output
@@ -119,10 +119,14 @@ class Assignment extends Base
          *          - Award 10 marks and update feedback
          * - Else
          *  - There are differences in one or more assignment output vs master output
+         *     - Count the number of tests failed in the array and apply to VAR
          *          - Begin checking assignments
+         *          - Award marks if the output is correct
          */
 
-        if (!is_array($assignmentsToCheck)) {
+        $assignmentsToCheck = $this->compareOutputs();
+
+        if (!in_array('FAILED', $assignmentsToCheck)) {
             $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 10);
             $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "All test cases passed", $markId);
             header("location: /assignment?num=$this->assignmentNumber");
@@ -130,14 +134,30 @@ class Assignment extends Base
         }
         else
         {
-            $databaseFeedback = array();
+            /*Structure
+             *  Test X
+             *    - Pass/Passed with errors/Failed
+             *
+             *  Possible Causes
+             *
+             *  Desired output
+             */
 
-            for ($j = 0; $j < count($assignmentsToCheck); $j++) {
-                array_push($databaseFeedback, "<pre><h4><u>Feedback for Test $assignmentsToCheck[$j]</u></h4>");
+
+            $databaseFeedback = array();
+            $this->assignmentMark = 0;
+            for ($j = 1; $j <= 10; $j++) {
+                array_push($databaseFeedback, "<pre><h3><u>Test $j</u></h3>");
+
+                if ($assignmentsToCheck[$j] === 'PASSED') {
+                    array_push($databaseFeedback, "<h4 style=\"color:red\">Passed</h4></pre>");
+                    $this->assignmentMark++;
+                    continue;
+                }
 
                 // Loads the output of the two assignments in question
-                $masterOutput = $this->getMasterOutput($assignmentsToCheck[$j]);
-                $studentOutput = $this->getAssignmentOutput($assignmentsToCheck[$j]);
+                $masterOutput = $this->getMasterOutput($j);
+                $studentOutput = $this->getAssignmentOutput($j);
 
                 // Converts each line to lower case
                 $masterOutputFiltered='';
@@ -292,7 +312,7 @@ class Assignment extends Base
             }
 
             $databaseFeedback = implode($databaseFeedback);
-            $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 99);
+            $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, $this->assignmentMark);
             $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, $databaseFeedback, $markId);
 
             header("location: /assignment?num=$this->assignmentNumber");
