@@ -12,6 +12,7 @@ class Assignment extends Base
     private $assignmentNumber;
     private $semester;
     private $studentId;
+    private $assignmentMark;
 
     public function __construct()
     {
