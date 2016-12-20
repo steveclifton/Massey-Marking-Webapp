@@ -454,12 +454,12 @@ class Assignment extends Base
             system(trim($cmd[$i]), $result);
         }
 
-        $toCheck = "";
-        $j = 0;
+        $toCheck = array();
         for ($i = 1; $i <= $testNumber; $i++) {
-            if (filesize("compare$i.txt") != 0) {
-                $toCheck[$j] = $i;
-                $j++;
+            if (filesize("compare$i.txt") == 0) {
+                $toCheck[$i] = 'PASSED';
+            } else {
+                $toCheck{$i} = 'FAILED';
             }
         }
 
