@@ -200,6 +200,12 @@ class Assignment extends Base
                 $linesForReview = implode($linesForReview);
                 array_push($databaseFeedback, $linesForReview);
 
+                // If there is only 2 lines of output
+                // Skip printing the desired output
+                if (count($studentOutput) <= 2) {
+                    array_push($databaseFeedback, "</pre>");
+                    continue;
+                }
 
 
 
@@ -251,12 +257,6 @@ class Assignment extends Base
 
 
 
-                // If there is only 2 lines of output
-                // Skip printing the desired output
-                if (count($studentOutput) <= 2) {
-                    array_push($databaseFeedback, "</pre>");
-                    continue;
-                }
 
 
 
