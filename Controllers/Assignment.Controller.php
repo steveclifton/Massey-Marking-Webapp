@@ -143,115 +143,151 @@ class Assignment extends Base
              *  Desired output
              */
 
+            // Loops through each test output and checks it
+            // If it passed, push into the array
+            // If it failed, start parsing and checking
+
 
             $databaseFeedback = array();
             $this->assignmentMark = 0;
             for ($j = 1; $j <= 10; $j++) {
                 array_push($databaseFeedback, "<pre><h3><u>Test $j</u></h3>");
 
+                // If the assignment was compared previously and classed as passed
+                // Don't check, assign as passed and continue
                 if ($assignmentsToCheck[$j] === 'PASSED') {
                     array_push($databaseFeedback, "<h4 style=\"color:red\">Passed</h4></pre>");
                     $this->assignmentMark++;
                     continue;
                 }
 
+
                 // Loads the output of the two assignments in question
                 $masterOutput = $this->getMasterOutput($j);
                 $studentOutput = $this->getAssignmentOutput($j);
 
+//                // If there is only 2 lines of output
+//                // Skip printing the desired output
+//                if (count($studentOutput) <= 2) {
+//                    array_push($databaseFeedback, "<h4 style=\"color:red\">Failed</h4>");
+//                    array_push($databaseFeedback, "</pre>");
+//                    continue;
+//                }
 
 
 
-                // Converts each line to lower case
-                $masterOutputFiltered='';
-                $studentOutputFiltered='';
-                for ($i = 0; $i < count($masterOutput); $i++) {
-                    $masterOutputFiltered[$i] = trim(strtolower($masterOutput[$i]));
-                }
-                for ($i = 0; $i < count($studentOutput); $i++) {
-                    $studentOutputFiltered[$i] = trim(strtolower($studentOutput[$i]));
-                }
-
-
-
-
-                /* NB. No animals were hurt in the making of the below function..
-                 *
+                /*
                  * Loops through each line and checks to see if the lines are identical
+                 * If the lines are identical
+                 *  - Push a 'Passed' string onto the array
                  * If the lines are not identical
-                 *   - splits the lines ignoring white space
-                 *   - does a string compare on each word
-                 *      - if the word is a number
-                 *        * check to see if the diff is less than 5 *
-                 *           - if less than 5
-                 *              * set as passed *
-                 *           - else it is more than 5
-                 *              * set as failed *
-                 *
-                 * Push the line number difference onto the array
+                 *  - Removes all white space and check again
+                 * If the lines still differ after removing whitespace
+                 *  - Push the line number difference onto an array
                  */
 
-                $closeEnough = array();
+                $lineStatus = array();
                 $differOnLine = array();
+
+                $hasAddedCaseOrWs = false;
+                $hasAddedWs = false;
+
+
+                $masterOutputFiltered= '';
+                $studentOutputFiltered='';
                 $lowLineCount = (count($masterOutput) < count($studentOutput) ? count($masterOutput) : count($studentOutput));
 
                 for ($i = 0; $i < $lowLineCount; $i++) {
 
-                    // If the filtered lines are not identical, proceed
-                    if (strcmp($masterOutputFiltered[$i], $studentOutputFiltered[$i]) != 0) {
-                        $masterSplit = preg_split('/\s+/', $masterOutputFiltered[$i]);
-                        $studentSplit = preg_split('/\s+/', $studentOutputFiltered[$i]);
-                        $elemCount = (count($masterSplit) < count($studentSplit) ? count($masterSplit) : count($studentSplit));
+                    // If the lines match
+                    // - Passed
+                    if (strcmp($masterOutput[$i], $studentOutput[$i]) == 0) {
+                        array_push($lineStatus, "PASSED");
+                        continue;
+                    }
 
-                        for ($k = 0; $k < $elemCount; $k++) {
-                            if (strcmp($masterSplit[$k], $studentSplit[$k]) != 0) {
-                                if (is_numeric($masterSplit[$k]) && is_numeric($studentSplit[$k])) {
-                                    $masterVal = $masterSplit[$k];
-                                    $studentVal = $studentSplit[$k];
-                                    $difference = abs($masterVal - $studentVal);
-                                    if ($difference < 5) {
-                                        array_push($closeEnough, "PASSED");
-                                    } else {
-                                        array_push($closeEnough, "FAILED");
-                                    }
-                                }
+                    $masterOutputFiltered[$i] = trim(strtolower($masterOutput[$i]));
+                    $studentOutputFiltered[$i] = trim(strtolower($studentOutput[$i]));
+
+                    // If the lines match after they have been trimmed / case corrected
+                    // - Pass
+                    // - Set var as true
+                    if (strcmp($masterOutputFiltered[$i], $studentOutputFiltered[$i]) == 0) {
+                        array_push($lineStatus, "PASSED WITH ERRORS");
+                        $hasAddedCaseOrWs = true;
+                    }
+
+
+                    // The lines do not match after being trimmed/converted to lower case
+                    // Remove all white space and check to see if they match then
+                    else if (strcmp($masterOutputFiltered[$i], $studentOutputFiltered[$i]) != 0) {
+                        $masterOutputRmvWSLine = preg_replace('/\s+/', '', $masterOutputFiltered[$i]);
+                        $studentOutputRmvWSLine = preg_replace('/\s+/', '', $studentOutputFiltered[$i]);
+
+                        // if they match after removing all white space, passed
+                        if (strcmp($masterOutputRmvWSLine, $studentOutputRmvWSLine) == 0) {
+                            array_push($lineStatus, "PASSED WITH ERRORS");
+                            if (!$hasAddedWs) {
+                                $hasAddedWs = true;
                             }
                         }
-                        array_push($differOnLine, $i);
+
+                        // Else there is something else wrong on that needs further investigation
+                        else {
+                            array_push($differOnLine, $i);
+                            array_push($lineStatus, "FAILED");
+                        }
+//                        $masterSplit = preg_split('/\s+/', $masterOutputFiltered[$i]);
+//                        $studentSplit = preg_split('/\s+/', $studentOutputFiltered[$i]);
+//                        $elemCount = (count($masterSplit) < count($studentSplit) ? count($masterSplit) : count($studentSplit));
+//                        //var_dump($masterSplit); echo "<br>"; var_dump($studentSplit); die();
+//                        for ($k = 0; $k < $elemCount; $k++) {
+//
+//                            if (strcmp($masterSplit[$k], $studentSplit[$k]) == 0) {
+//                                if (is_numeric($masterSplit[$k]) && is_numeric($studentSplit[$k])) {
+//                                    array_push($closeEnough, "PASSED");
+//                                }
+//                            }
+//                            if (strcmp($masterSplit[$k], $studentSplit[$k]) != 0) {
+//                                if (is_numeric($masterSplit[$k]) && is_numeric($studentSplit[$k])) {
+//                                    $masterVal = $masterSplit[$k];
+//                                    $studentVal = $studentSplit[$k];
+//                                    $difference = abs($masterVal - $studentVal);
+//                                    if ($difference < 5) {
+//                                        array_push($closeEnough, "PASSED");
+//                                    } else {
+//                                        array_push($closeEnough, "FAILED");
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        //var_dump($masterSplit); echo "<br>"; var_dump($studentSplit); die();
                     }
                 }
+
 
                 /**
-                 ******* Setting of Test Status ********
-                 *
+                 ******* Setting of Test Status *******
                  * Count up the number of PASSED vs FAILED
-                 *
-                 * If there are more passes than fails
-                 *  * Set test as passed *
-                 *  * Increment mark by 1 *
-                 * Else
-                 *  * Set test as failed
+                 * If there is any FAILED
+                 *  - Set test as Failed
+                 * Else If there are only Passed in the array
+                 *  - Set as Passed
+                 * Else if there are a mix of Passed and Passed with Errors
+                 *  - Set as Passed with Errors
                  */
 
-                $totalCount = array_count_values($closeEnough);
+                $totalCount = array_count_values($lineStatus);
                 $targetOutputFailed = false;
-                if (isset($totalCount['PASSED'])) {
-                    if (isset($totalCount['FAILED'])) {
-                        if ($totalCount['PASSED'] > $totalCount['FAILED']) {
-                            array_push($databaseFeedback, "<h4 style=\"color:red\">Passed With Errors</h4>");
-                            $this->assignmentMark++;
-                        } else {
-                            array_push($databaseFeedback, "<h4 style=\"color:red\">Failed</h4>");
-                            $targetOutputFailed = true;
-                        }
-                    } else {
-                        array_push($databaseFeedback, "<h4 style=\"color:red\">Passed With Errors</h4>");
-                        $this->assignmentMark++;
-                    }
-                } else {
+
+                if (isset($totalCount['FAILED'])) {
                     array_push($databaseFeedback, "<h4 style=\"color:red\">Failed</h4>");
-                    $targetOutputFailed = true;
+                } else if (isset($totalCount['PASSED']) && !isset($totalCount['PASSED WITH ERRORS'])) {
+                    array_push($databaseFeedback, "<h4 style=\"color:red\">Passed</h4>");
+                } else if (isset($totalCount['PASSED']) && isset($totalCount['PASSED WITH ERRORS'])) {
+                    array_push($databaseFeedback, "<h4 style=\"color:red\">Passed with Errors</h4>");
                 }
+
 
 
 
@@ -275,7 +311,6 @@ class Assignment extends Base
                 $count = 0;
                 foreach ($differOnLine as $line) {
                     $numLine = $line+1;
-
                     if (strlen($masterOutput[$line]) > 100) {
                         $masterOutput[$line] = substr($masterOutput[$line],0, 100) . "..." . PHP_EOL;
                     }
@@ -292,27 +327,14 @@ class Assignment extends Base
                         break;
                     }
                 }
+                // Push the lines that differ into the feedback array
                 $linesForReview = implode($linesForReview);
                 array_push($databaseFeedback, $linesForReview);
-
-                // If there is only 2 lines of output
-                // Skip printing the desired output
-                if (count($studentOutput) <= 2) {
-                    array_push($databaseFeedback, "</pre>");
-                    continue;
-                }
-
-
-
-
 
 
 
 
                 // Start listing possible causes
-                array_push($databaseFeedback, "<h4><u>Possible Causes</u></h4>");
-                array_push($databaseFeedback, "<ul>");
-
                 /**
                  * First step
                  * Remove white space to check if the strings match
@@ -320,46 +342,19 @@ class Assignment extends Base
                  * Count number of spaces on each line
                  *    - if the number of spaces on each line do not match, report to user
                  */
-                $hasAddedChars = false;
-                $hasAddedWhiteSpace = false;
-                foreach ($differOnLine as $line) {
-                    $masterOutputRmvWSLine = preg_replace('/\s+/', '', $masterOutput[$line]);
-                    $studentOutputRmvWSLine = preg_replace('/\s+/', '', $studentOutput[$line]);
+                array_push($databaseFeedback, "<h4><u>Possible Causes</u></h4>");
+                array_push($databaseFeedback, "<ul>");
 
-                    if (!$hasAddedChars) {
-                        $masterCharCount = strlen($masterOutputRmvWSLine);
-                        $studentCharCount = strlen($studentOutputRmvWSLine);
-                        if ($masterCharCount != $studentCharCount) {
-                            array_push($databaseFeedback, "<li>Additional characters in output</li>");
-                            $hasAddedChars = true;
-                        }
-                    }
-
-
-                    if (!$hasAddedWhiteSpace) {
-                        $wsCountStudent = substr_count($studentOutput[$line], " ");
-                        $wsCountMaster = substr_count($masterOutput[$line], " ");
-                        if ($wsCountStudent != $wsCountMaster) {
-                            array_push($databaseFeedback, "<li>Additional whitespace (spaces) in output</li>");
-                            $hasAddedWhiteSpace = true;
-                        }
-                    }
-
-                    if ($targetOutputFailed) {
-                        array_push($databaseFeedback, "<li>Target output failed, check algorithms</li>");
-                    }
-
+                if ($hasAddedWs) {
+                    array_push($databaseFeedback, "<li>Additional whitespace (spaces) in the middle of lines</li>");
+                } else if ($hasAddedCaseOrWs) {
+                    array_push($databaseFeedback, "<li>Possible added whitespace (spaces) at ends of lines</li>");
+                    array_push($databaseFeedback, "<li>Possible character case difference</li>");
+                } else {
+                    array_push($databaseFeedback, "<li>Possible differences in target output</li>");
                 }
-                array_push($databaseFeedback, "</ul><br>");
 
-
-
-
-
-
-
-
-
+                array_push($databaseFeedback, "</ul>");
 
 
 
@@ -380,13 +375,9 @@ class Assignment extends Base
                         break;
                     }
                 }
-
                 $sampleMasterOutput = implode($sampleMasterOutput);
                 array_push($databaseFeedback, $sampleMasterOutput);
-
-
                 array_push($databaseFeedback, "</pre>");
-
             }
 
             $databaseFeedback = implode($databaseFeedback);
@@ -396,8 +387,6 @@ class Assignment extends Base
             header("location: /assignment?num=$this->assignmentNumber");
             die();
         }
-
-        header("location: /assignment?num=$this->assignmentNumber");
     }
 
 
