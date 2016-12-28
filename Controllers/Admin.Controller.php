@@ -2,6 +2,7 @@
 
 namespace Marking\Controllers;
 
+use Marking\Models\AdminSetup;
 use Marking\Models\Marks;
 use Marking\Models\User;
 
@@ -111,6 +112,15 @@ class Admin extends Base
         }
 
         $this->render('Admin', 'testtools.view', $viewData);
+    }
+
+    public function markingConfig()
+    {
+        $setup = new AdminSetup();
+
+        $result = $setup->getCurrentSemester();
+
+        var_export($result);die();
     }
 
 }
