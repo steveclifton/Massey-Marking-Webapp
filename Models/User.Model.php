@@ -97,6 +97,7 @@ class User extends Base
         $sql = "SELECT id, first_name, last_name, student_id, semester
                 FROM `users`
                 WHERE `users`.`semester` = '$semester'
+                ORDER BY `student_id`
                 ";
 
         $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
