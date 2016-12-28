@@ -55,6 +55,26 @@ class Marks extends Base
         return $data;
     }
 
+
+    /**
+     * Returns all of a users marks only
+     */
+    public function getOnlyUsersMarks($studentId, $semester)
+    {
+        $sql = "SELECT assignment_number, mark
+                FROM `marks` 
+                WHERE marks.student_id = '$studentId' 
+                AND marks.semester = '$semester'
+                ";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $stm->execute(array('$studentId, $semester'));
+
+        $data = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+        return $data;
+    }
     /**
      * Sets/Updates the users mark in the database
      */
