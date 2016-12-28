@@ -199,7 +199,7 @@ class Assignment extends Base
 
                 for ($i = 0; $i < $lowLineCount; $i++) {
 
-                    // If the lines match
+                    // If the lines match without being modified
                     // - Passed
                     if (strcmp($masterOutput[$i], $studentOutput[$i]) == 0) {
                         array_push($lineStatus, "PASSED");
@@ -210,7 +210,7 @@ class Assignment extends Base
                     $studentOutputFiltered[$i] = trim(strtolower($studentOutput[$i]));
 
                     // If the lines match after they have been trimmed / case corrected
-                    // - Pass
+                    // - Passed
                     // - Set var as true
                     if (strcmp($masterOutputFiltered[$i], $studentOutputFiltered[$i]) == 0) {
                         array_push($lineStatus, "PASSED WITH ERRORS");
@@ -224,7 +224,7 @@ class Assignment extends Base
                         $masterOutputRmvWSLine = preg_replace('/\s+/', '', $masterOutputFiltered[$i]);
                         $studentOutputRmvWSLine = preg_replace('/\s+/', '', $studentOutputFiltered[$i]);
 
-                        // if they match after removing all white space, passed
+                        // If they match after removing all white space, passed
                         if (strcmp($masterOutputRmvWSLine, $studentOutputRmvWSLine) == 0) {
                             array_push($lineStatus, "PASSED WITH ERRORS");
                             if (!$hasAddedWs) {
@@ -304,8 +304,8 @@ class Assignment extends Base
 
 
 
-                // Stores the line differences in an array
-                //    - What is stored is the original lines that failed
+                // Enters the line differences into the feedback
+                //    - What is stored is the original lines that failed and the line it was compared to
                 //    - Limit of 10 lines
                 $linesForReview = array();
                 $count = 0;
