@@ -10,6 +10,7 @@ namespace Marking;
 
 use Marking\Controllers\Assignment;
 use Marking\Controllers\Authentication;
+use Marking\Controllers\MarkingConfig;
 use Marking\Controllers\Welcome;
 use Marking\Controllers\Errors;
 use Marking\Controllers\Admin;
@@ -58,6 +59,11 @@ else if ($uri == 'testtools') {
 else if ($uri == 'adminupload') {
     $admin = new Admin();
     $admin->uploadFile();
+}
+
+else if($uri == 'markingsetup') {
+    $admin = new Admin();
+    $admin->markingConfig();
 }
 
 else if ($uri == 'admincompile') {
