@@ -81,15 +81,6 @@ class Authentication extends Base
        $this->render('Add New User', 'adduser.view');
     }
 
-    public function showAllUsers()
-    {
-        $user = new User();
-
-        $viewData = $user->showAllUsers();
-
-        $this->render('Show All Students', 'showallstudents.view', $viewData);
-    }
-
     /**
      * Sets the SESSION data
      *
