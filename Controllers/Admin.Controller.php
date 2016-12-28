@@ -2,6 +2,9 @@
 
 namespace Marking\Controllers;
 
+use Marking\Models\Marks;
+use Marking\Models\User;
+
 /**
  * Class Admin
  *
@@ -19,6 +22,32 @@ class Admin extends Base
 
         $this->render('Admin', 'admin.view');
     }
+
+    public function showAllUsers()
+    {
+        $semester = new MarkingConfig();
+        $user = new User();
+        $marks = new Marks();
+
+        $semester = $semester->getCurrentSemester();
+
+        $viewData['students'] = $user->getCurrentSemestersUsers($semester);
+
+        $viewData['data'] = array();
+
+        foreach ($viewData['students'] as $student) {
+            $studentMarks = $marks->getOnlyUsersMarks($student['student_id'], $student['semester']);
+            foreach ($studentMarks as $sMarks) {
+                $assignmentNumber = $sMarks['assignment_number'];
+                $assignmentMark = $sMarks['mark'];
+                $student[$assignmentNumber] = $assignmentMark;
+            }
+            array_push($viewData['data'], $student);
+    }
+
+        $this->render('Show All Students', 'showallstudents.view', $viewData);
+    }
+
 
     /**
      * Loads the Admin Testing Tools view
