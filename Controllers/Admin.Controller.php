@@ -23,7 +23,7 @@ class Admin extends Base
         $this->render('Admin', 'admin.view');
     }
 
-    public function showAllUsers()
+    public function showCurrentStudents()
     {
         $semester = new MarkingConfig();
         $user = new User();
@@ -35,6 +35,7 @@ class Admin extends Base
 
         $viewData['data'] = array();
 
+        // Loops through the students array and adds their marks to their array
         foreach ($viewData['students'] as $student) {
             $studentMarks = $marks->getOnlyUsersMarks($student['student_id'], $student['semester']);
             foreach ($studentMarks as $sMarks) {
@@ -43,9 +44,10 @@ class Admin extends Base
                 $student[$assignmentNumber] = $assignmentMark;
             }
             array_push($viewData['data'], $student);
-    }
+        }
+        unset($viewData['students']);
 
-        $this->render('Show All Students', 'showallstudents.view', $viewData);
+        $this->render('Current Students Results', 'showcurrentstudents.view', $viewData);
     }
 
 
