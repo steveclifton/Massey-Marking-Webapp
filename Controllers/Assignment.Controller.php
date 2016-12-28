@@ -214,6 +214,7 @@ class Assignment extends Base
                     // - Set var as true
                     if (strcmp($masterOutputFiltered[$i], $studentOutputFiltered[$i]) == 0) {
                         array_push($lineStatus, "PASSED WITH ERRORS");
+                        array_push($differOnLine, $i);
                         $hasAddedCaseOrWs = true;
                     }
 
@@ -227,6 +228,7 @@ class Assignment extends Base
                         // If they match after removing all white space, passed
                         if (strcmp($masterOutputRmvWSLine, $studentOutputRmvWSLine) == 0) {
                             array_push($lineStatus, "PASSED WITH ERRORS");
+                            array_push($differOnLine, $i);
                             if (!$hasAddedWs) {
                                 $hasAddedWs = true;
                             }
