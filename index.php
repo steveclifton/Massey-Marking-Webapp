@@ -47,8 +47,8 @@ else if ($uri == 'adduser') {
     $authentication->addSingleUser();
 }
 else if ($uri == 'showstudents') {
-    $authentication = new Authentication();
-    $authentication->showAllUsers();
+    $admin = new Admin();
+    $admin->showAllUsers();
 }
 else if ($uri == 'testtools') {
     $test = new Admin();
