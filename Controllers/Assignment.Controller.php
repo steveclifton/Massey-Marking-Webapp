@@ -286,7 +286,10 @@ class Assignment extends Base
                     array_push($databaseFeedback, "<h4 style=\"color:red\">Failed</h4>");
                 } else if (isset($totalCount['PASSED']) && !isset($totalCount['PASSED WITH ERRORS'])) {
                     array_push($databaseFeedback, "<h4 style=\"color:red\">Passed</h4>");
-                } else if (isset($totalCount['PASSED']) && isset($totalCount['PASSED WITH ERRORS'])) {
+                }
+
+                else if (isset($totalCount['PASSED']) || isset($totalCount['PASSED WITH ERRORS'])) {
+                    $this->assignmentMark++;
                     array_push($databaseFeedback, "<h4 style=\"color:red\">Passed with Errors</h4>");
                 }
 
