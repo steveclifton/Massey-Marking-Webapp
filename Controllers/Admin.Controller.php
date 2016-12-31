@@ -123,10 +123,11 @@ class Admin extends Base
     {
         $setup = new AdminSetup();
 
-        $result = $setup->getCurrentSemester();
+        $viewData['semester'] = $setup->getCurrentSemester();
+        $viewData['numAss'] = $setup->getNumberOfAssignments();
+        $viewData['numTests'] = $setup->getNumberOfTests();
 
-        var_export($result);die();
-        $this->render('Admin', 'testtools.view');
+        $this->render('Admin', 'markingsetup.view', $viewData);
     }
 
 }
