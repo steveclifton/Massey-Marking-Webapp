@@ -3,6 +3,8 @@
 
 namespace Marking\Controllers;
 
+use Marking\Models\AdminSetup;
+
 
 /**
  * Class AssignmentConfig
@@ -16,9 +18,12 @@ namespace Marking\Controllers;
  */
 class MarkingSetup extends Base
 {
-    private $numberOfAssignments = 7;
-    private $numberOfAssignmentTestCases = 10;
-    private $currentSemester = "17-01";
+    private $setup;
+
+    function __construct()
+    {
+        $this->setup = new AdminSetup();
+    }
 
 
     /**
@@ -26,7 +31,7 @@ class MarkingSetup extends Base
      */
     public function getAssignmentNumber()
     {
-        return $this->numberOfAssignments;
+        return $assignments = $this->setup->getNumberOfAssignments();
     }
 
     /**
@@ -34,7 +39,7 @@ class MarkingSetup extends Base
      */
     public function getCurrentSemester()
     {
-        return $this->currentSemester;
+        return $semester = $this->setup->getCurrentSemester();
     }
 
     /**
@@ -42,7 +47,7 @@ class MarkingSetup extends Base
      */
     public function getAssignmentTestNumber()
     {
-        return $this->numberOfAssignmentTestCases;
+        return $tests = $this->setup->getNumberOfTests();
     }
 
     /**
