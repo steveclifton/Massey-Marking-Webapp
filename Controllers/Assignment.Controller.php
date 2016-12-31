@@ -16,7 +16,7 @@ class Assignment extends Base
 
     public function __construct()
     {
-        $mSemester = new MarkingConfig();
+        $mSemester = new MarkingSetup();
         $this->semester = $mSemester->getCurrentSemester();
 
         $this->studentId = $_SESSION['student_id'];
@@ -146,7 +146,6 @@ class Assignment extends Base
             // Loops through each test output and checks it
             // If it passed, push into the array
             // If it failed, start parsing and checking
-
 
             $databaseFeedback = array();
             $this->assignmentMark = 0;
@@ -280,6 +279,7 @@ class Assignment extends Base
                  */
 
                 $totalCount = array_count_values($lineStatus);
+                //var_dump($totalCount); die();
                 $targetOutputFailed = false;
 
                 if (isset($totalCount['FAILED'])) {
@@ -503,7 +503,7 @@ class Assignment extends Base
      */
     private function runAssignmentTests()
     {
-        $assignmentController = new MarkingConfig();
+        $assignmentController = new MarkingSetup();
 
         /* Copies all the test files into the students Assignment Folder */
         $assignmentController->copyTestFiles($this->assignmentNumber);
@@ -535,7 +535,7 @@ class Assignment extends Base
      */
     private function compareOutputs()
     {
-        $assignmentController = new MarkingConfig();
+        $assignmentController = new MarkingSetup();
 
         /* Gets the assignment Commands from the config file */
         $cmd = $assignmentController->getCompareCommands($this->assignmentNumber);

@@ -26,7 +26,7 @@ class Admin extends Base
 
     public function showCurrentStudents()
     {
-        $markConfig = new MarkingConfig();
+        $markConfig = new MarkingSetup();
         $user = new User();
         $marks = new Marks();
 

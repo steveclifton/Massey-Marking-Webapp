@@ -2,7 +2,7 @@
 
 namespace Marking\Models;
 
-use Marking\Controllers\MarkingConfig;
+use Marking\Controllers\MarkingSetup;
 use PDO;
 
 /**
@@ -58,7 +58,7 @@ class User extends Base
         $studentId = $userData['student_id'];
         $password = password_hash($userData['password'], PASSWORD_DEFAULT);
         $userType = $userData['user_type'];
-        $semester = new MarkingConfig();
+        $semester = new MarkingSetup();
         $semester = $semester->getCurrentSemester();
 
         $sql = "INSERT INTO `users` 

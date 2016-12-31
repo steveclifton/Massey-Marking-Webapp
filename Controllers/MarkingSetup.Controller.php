@@ -14,7 +14,7 @@ namespace Marking\Controllers;
  * - Number of test cases per assignment is 10
  * - Current Semester is 17-01
  */
-class MarkingConfig extends Base
+class MarkingSetup extends Base
 {
     private $numberOfAssignments = 7;
     private $numberOfAssignmentTestCases = 10;

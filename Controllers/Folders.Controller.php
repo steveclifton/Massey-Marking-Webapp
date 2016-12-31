@@ -14,7 +14,7 @@ class Folders extends Base
         /**
          * Gets the number of Assignments specified
          */
-        $assignmentNumber = new MarkingConfig();
+        $assignmentNumber = new MarkingSetup();
         $assignmentNumber = $assignmentNumber->getAssignmentNumber();
 
 

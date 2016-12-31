@@ -3,7 +3,7 @@
 namespace Marking\Models;
 
 use Marking\Exceptions\CustomException;
-use Marking\Controllers\MarkingConfig;
+use Marking\Controllers\MarkingSetup;
 use PDO;
 
 /**

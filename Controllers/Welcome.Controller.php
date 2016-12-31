@@ -40,7 +40,7 @@ class Welcome extends Base
          *  - Gets the users current marks and displays them on the welcome page
          */
         else {
-            $semester = new MarkingConfig();
+            $semester = new MarkingSetup();
             $feedback = new Feedback();
 
             $semester = $semester->getCurrentSemester();

@@ -12,7 +12,7 @@ return array(
     'Marking\\Controllers\\Base' => $baseDir . '/Controllers/Base.Controller.php',
     'Marking\\Controllers\\Errors' => $baseDir . '/Controllers/Errors.Controller.php',
     'Marking\\Controllers\\Folders' => $baseDir . '/Controllers/Folders.Controller.php',
-    'Marking\\Controllers\\MarkingConfig' => $baseDir . '/Controllers/MarkingSetup.Controller.php',
+    'Marking\\Controllers\\MarkingSetup' => $baseDir . '/Controllers/MarkingSetup.Controller.php',
     'Marking\\Controllers\\Welcome' => $baseDir . '/Controllers/Welcome.Controller.php',
     'Marking\\Exceptions\\CustomException' => $baseDir . '/Exceptions/Custom.Exception.php',
     'Marking\\Models\\AdminSetup' => $baseDir . '/Models/AdminSetup.Model.php',

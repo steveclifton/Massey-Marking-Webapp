@@ -1,6 +1,6 @@
 <?php
 
-use Marking\Controllers\MarkingConfig;
+use Marking\Controllers\MarkingSetup;
 /**
  * If the user is logged in (SessionID is set) then a list of available
  *   assignments will be displayed.
@@ -15,7 +15,7 @@ if (isset($_SESSION['id'])) {
             <h4 style='padding-left: 12px; font-size: 20pt;'>Assignments</h4>
             <ul class=\"nav\">
           ";
-    $assignments = new MarkingConfig();
+    $assignments = new MarkingSetup();
     $assignments = $assignments->getAssignmentNumber();
 
 

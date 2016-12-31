@@ -10,7 +10,7 @@ namespace Marking;
 
 use Marking\Controllers\Assignment;
 use Marking\Controllers\Authentication;
-use Marking\Controllers\MarkingConfig;
+use Marking\Controllers\MarkingSetup;
 use Marking\Controllers\Welcome;
 use Marking\Controllers\Errors;
 use Marking\Controllers\Admin;
