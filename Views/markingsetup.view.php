@@ -14,14 +14,14 @@
             <label class="control-label">Number of Assignments</label>
             <div class="controls">
                 <input type="text" id="first_name" name="first_name" placeholder="" class="input-xlarge"
-                       value="<?= $viewData['numAss'] ?>" required>
+                       value="<?= $viewData['numAss'] ?>" disabled>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Number of Tests</label>
             <div class="controls">
                 <input type="text" id="last_name" name="last_name" placeholder="" class="input-xlarge"
-                       value="<?= $viewData['numTests'] ?>" required>
+                       value="<?= $viewData['numTests'] ?>" disabled>
             </div>
         </div>
         <br>
