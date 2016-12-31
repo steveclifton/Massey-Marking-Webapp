@@ -26,23 +26,28 @@ class Admin extends Base
 
     public function showCurrentStudents()
     {
-        $semester = new MarkingConfig();
+        $markConfig = new MarkingConfig();
         $user = new User();
         $marks = new Marks();
 
-        $semester = $semester->getCurrentSemester();
+        $semester = $markConfig->getCurrentSemester();
 
         $viewData['students'] = $user->getCurrentSemestersUsers($semester);
+        $viewData['number_of_assignments'] = $markConfig->getAssignmentNumber();
 
         $viewData['data'] = array();
 
         // Loops through the students array and adds their marks to their array
         foreach ($viewData['students'] as $student) {
             $studentMarks = $marks->getOnlyUsersMarks($student['student_id'], $student['semester']);
+
+            // Initialise the student assignments (in case they have none)
+            $student['assignments'] = array();
+
             foreach ($studentMarks as $sMarks) {
                 $assignmentNumber = $sMarks['assignment_number'];
                 $assignmentMark = $sMarks['mark'];
-                $student[$assignmentNumber] = $assignmentMark;
+                $student['assignments'][$assignmentNumber] = $assignmentMark;
             }
             array_push($viewData['data'], $student);
         }
