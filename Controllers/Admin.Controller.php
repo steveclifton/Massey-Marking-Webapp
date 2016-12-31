@@ -126,6 +126,7 @@ class Admin extends Base
         $result = $setup->getCurrentSemester();
 
         var_export($result);die();
+        $this->render('Admin', 'testtools.view');
     }
 
 }
