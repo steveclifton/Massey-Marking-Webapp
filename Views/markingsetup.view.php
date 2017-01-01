@@ -1,4 +1,4 @@
-<form class="form-horizontal" action="#" method="POST">
+<form class="form-horizontal" action="/markingsetup" method="POST">
     <div>
         <legend class="">Marking System Setup</legend>
     </div>
@@ -6,22 +6,22 @@
         <div class="control-group">
             <label class="control-label">Semester</label>
             <div class="controls">
-                <input type="text" id="anz_num" name="anz_num" class="input-xlarge"
+                <input type="text" id="semester" name="semester" class="input-xlarge"
                        value="<?= $viewData['semester'] ?>" required>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Number of Assignments</label>
             <div class="controls">
-                <input type="text" id="first_name" name="first_name" placeholder="" class="input-xlarge"
-                       value="<?= $viewData['numAss'] ?>" disabled>
+                <input type="text" id="numAss" name="numAss" placeholder="" class="input-xlarge"
+                       value="<?= $viewData['numAss'] ?>" readonly >
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Number of Tests</label>
             <div class="controls">
-                <input type="text" id="last_name" name="last_name" placeholder="" class="input-xlarge"
-                       value="<?= $viewData['numTests'] ?>" disabled>
+                <input type="text" id="numTests" name="numTests" placeholder="" class="input-xlarge"
+                       value="<?= $viewData['numTests'] ?>" readonly >
             </div>
         </div>
         <br>
@@ -35,6 +35,5 @@
                 <h2>Here is where other configs will go, assignment specific stuff</h2>
             </div>
         </div>
-
     </fieldset>
 </form>
