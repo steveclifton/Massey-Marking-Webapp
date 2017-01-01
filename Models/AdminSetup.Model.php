@@ -75,5 +75,19 @@ class AdminSetup extends Base
         die();
     }
 
+    public function setMarkingSetup($numAss, $numTests, $semester)
+    {
+        $sql = "INSERT INTO `admin_setup` (`id`, `num_assignments`, `num_tests`, `semester`, `created_at`) 
+                VALUES (NULL, '$numAss', '$numTests', '$semester', CURRENT_TIMESTAMP)
+                ";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $stm->execute(array('$numAss, $numTests, $semester'));
+
+        $data = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+        return;
+    }
 
 }
