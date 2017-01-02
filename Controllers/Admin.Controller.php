@@ -123,6 +123,11 @@ class Admin extends Base
     {
         $setup = new AdminSetup();
 
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $result = $setup->setMarkingSetup($_POST['numAss'],$_POST['numTests'],$_POST['semester']);
+            $viewData['updated'] = true;
+        }
+
         $viewData['semester'] = $setup->getCurrentSemester();
         $viewData['numAss'] = $setup->getNumberOfAssignments();
         $viewData['numTests'] = $setup->getNumberOfTests();
