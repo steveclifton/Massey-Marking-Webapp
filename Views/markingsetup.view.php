@@ -30,6 +30,9 @@
                 <button class="btn btn-success" id="update">Update</button>
             </div>
         </div>
+        <div>
+            <h5 style="color: red;"><?php if(isset($viewData['updated'])) { echo "Updated Successfully";} ?></h5>
+        </div>
         <div class="control-group">
             <div class="controls">
                 <h2>Here is where other configs will go, assignment specific stuff</h2>
