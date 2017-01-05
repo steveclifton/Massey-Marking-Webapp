@@ -17,8 +17,8 @@ class Feedback extends Base
      * Returns all from the Feedback and Marks table (joined)
      */
     public function getMarkAndFeedback($studentId, $semester)
-    {
-        $sql = "SELECT *  
+{
+    $sql = "SELECT *  
                 FROM `feedback` 
                 JOIN `marks`
                 ON feedback.mark_id = marks.id
@@ -26,14 +26,14 @@ class Feedback extends Base
                 AND feedback.semester='$semester'
                 ";
 
-        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-        $stm->execute(array('$studentId, $semester'));
+    $stm->execute(array('$studentId, $semester'));
 
-        $data = $stm->fetchAll(PDO::FETCH_ASSOC);
+    $data = $stm->fetchAll(PDO::FETCH_ASSOC);
 
-        return $data;
-    }
+    return $data;
+}
 
     /**
      * Returns the ID and Feedback from the Feedback table
