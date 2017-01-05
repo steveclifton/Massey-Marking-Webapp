@@ -30,7 +30,7 @@ class Admin extends Base
         $user = new User();
         $marks = new Marks();
 
-        $semester = $markConfig->getCurrentSemester();
+        (isset($_POST['semester'])) ? $semester = $_POST['semester'] : $semester = $markConfig->getCurrentSemester();
 
         $viewData['students'] = $user->getCurrentSemestersUsers($semester);
         $viewData['number_of_assignments'] = $markConfig->getAssignmentNumber();
@@ -53,7 +53,11 @@ class Admin extends Base
         }
         unset($viewData['students']);
 
-        $this->render('Current Students Results', 'showcurrentstudents.view', $viewData);
+
+        $viewData['semesters'] = $markConfig->getListOfSemesters();
+        $viewData['current_semester'] = $semester;
+
+        $this->render('Current Students Results', 'studentresults.view', $viewData);
     }
 
 
