@@ -31,7 +31,7 @@ class MarkingSetup extends Base
      */
     public function getAssignmentNumber()
     {
-        return $assignments = $this->setup->getNumberOfAssignments();
+        return $this->setup->getNumberOfAssignments();
     }
 
     /**
@@ -39,7 +39,7 @@ class MarkingSetup extends Base
      */
     public function getCurrentSemester()
     {
-        return $semester = $this->setup->getCurrentSemester();
+        return $this->setup->getCurrentSemester();
     }
 
     /**
@@ -47,7 +47,12 @@ class MarkingSetup extends Base
      */
     public function getAssignmentTestNumber()
     {
-        return $tests = $this->setup->getNumberOfTests();
+        return $this->setup->getNumberOfTests();
+    }
+
+    public function getListOfSemesters()
+    {
+        return $this->setup->getAllSemesters();
     }
 
     /**
