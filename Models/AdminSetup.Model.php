@@ -75,6 +75,32 @@ class AdminSetup extends Base
         die();
     }
 
+    public function getAllSemesters()
+    {
+        $sql = "SELECT semester 
+                FROM `admin_setup` 
+                ORDER BY created_at DESC 
+                ";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $stm->execute();
+
+        $data = $stm->fetchAll(PDO::FETCH_ASSOC);
+        $semesters = array();
+        foreach ($data as $sem) {
+            array_push($semesters, $sem['semester']);
+        }
+
+        if (isset($semesters)) {
+            return $semesters;
+        }
+        header('location: /welcome');
+        die();
+    }
+
+
+
     public function setMarkingSetup($numAss, $numTests, $semester)
     {
         $sql = "INSERT INTO `admin_setup` (`id`, `num_assignments`, `num_tests`, `semester`, `created_at`) 
