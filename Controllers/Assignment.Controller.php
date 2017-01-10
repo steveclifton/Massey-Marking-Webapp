@@ -520,8 +520,9 @@ class Assignment extends Base
         for ($i = 1; $i <= $testNumber; $i++) {
             system(trim($cmd[$i]), $result);
 
-            // If there is an infinite loop
-            if ($result == 139) {
+            // A correct run of the test returns a 0
+            // If it is not a 0, possible seg fault / infinite loop
+            if ($result != 0) {
                 return false;
             }
         }
