@@ -51,10 +51,6 @@ else if ($uri == 'showcurrentstudents') {
     $admin = new Admin();
     $admin->showCurrentStudents();
 }
-else if ($uri == 'testtools') {
-    $test = new Admin();
-    $test->testingTools();
-}
 
 else if ($uri == 'adminupload') {
     $admin = new Admin();

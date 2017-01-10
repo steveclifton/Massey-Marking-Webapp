@@ -17,7 +17,6 @@ if (isset($_SESSION['id'])) {
 
     echo "<li><a href=\"/adduser\" style='text-decoration: underline; font-size: 12pt;'>Single Add User</a></li>";
     echo "<li><a href=\"/showcurrentstudents\" style='text-decoration: underline; font-size: 12pt;'>Current Semester Students</a></li>";
-    echo "<li><a href=\"/testtools\" style='text-decoration: underline; font-size: 12pt;'>Test Tools</a></li>";
     echo "<li><a href=\"/markingsetup\" style='text-decoration: underline; font-size: 12pt;'>Marking Setup</a></li>";
 }
 echo "</ul>";
