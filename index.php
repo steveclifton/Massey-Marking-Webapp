@@ -62,11 +62,18 @@ else if($uri == 'markingsetup') {
     $admin->markingConfig();
 }
 
+else if ($uri == 'uploadcsv') {
+    $admin = new Admin();
+    $admin->importCSVStudents();
+}
+
 
 else if ($uri == 'upload') {
     $uploadAssignment = new Assignment();
     $uploadAssignment->processUploadedFile();
 }
+
+
 
 else if ($uri == 'assignment') {
     $assignment = new Assignment();
