@@ -46,3 +46,20 @@
         </div>
     </fieldset>
 </form>
+<hr><br>
+<form action="/uploadcsv" method="post" enctype="multipart/form-data">
+    <h4>Upload CSV File</h4><br>
+    <input type="file" name="fileToUpload" id="fileToUpload"><br><br>
+    <input type="submit" id="submitButtom" class="btn btn-primary" value="submit">
+    <p>
+        <?php if (isset($viewData['success'])) {
+                if ($viewData['success'] == true) {
+                    echo "Import Successful";
+                } else {
+                    echo "Import Failed";
+                }
+            } // Displays whether the import was good or not
+        ?>
+    </p>
+</form>
+
