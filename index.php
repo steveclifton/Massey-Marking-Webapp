@@ -44,9 +44,10 @@ else if ($uri == 'logout') {
 }
 
 else if ($uri == 'adduser') {
-    $authentication = new Authentication();
+    $authentication = new Admin();
     $authentication->addSingleUser();
 }
+
 else if ($uri == 'showcurrentstudents') {
     $admin = new Admin();
     $admin->showCurrentStudents();
