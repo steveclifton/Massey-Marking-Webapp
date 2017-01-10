@@ -26,6 +26,8 @@ class Admin extends Base
 
     public function showCurrentStudents()
     {
+        $this->isAdminLoggedIn();
+
         $markConfig = new MarkingSetup();
         $user = new User();
         $marks = new Marks();
