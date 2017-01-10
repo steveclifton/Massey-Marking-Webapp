@@ -94,7 +94,7 @@ class Assignment extends Base
          */
         if (!$this->compileAssignment($target_dir, $this->assignmentNumber)) {
             $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 0);
-            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Failed to compiled", $markId);
+            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "<pre>Failed to compile</pre>", $markId);
 
             header("location: /assignment?num=$this->assignmentNumber");
             die();
@@ -105,7 +105,7 @@ class Assignment extends Base
 
             if (!$result) {
                 $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 0);
-                $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "Infinite Loop", $markId);
+                $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "<pre>System Timeout - Possibly an Infinite Loop</pre>", $markId);
                 header("location: /assignment?num=$this->assignmentNumber");
                 die();
             }
@@ -326,7 +326,7 @@ class Assignment extends Base
                         $studentOutput[$line] = substr($studentOutput[$line],0, 100) . "..." . PHP_EOL;
                     }
 
-                    $string = "Line $numLine<br>$masterOutput[$line]" . "<b style=\"color:red\">$studentOutput[$line]</b><br>";
+                    $string = "Line $numLine<br><b style=\"color:green\">$masterOutput[$line]</b>" . "<b style=\"color:red\">$studentOutput[$line]</b><br>";
                     array_push($linesForReview, $string);
 
                     $count++;
