@@ -10,7 +10,6 @@ namespace Marking;
 
 use Marking\Controllers\Assignment;
 use Marking\Controllers\Authentication;
-use Marking\Controllers\MarkingSetup;
 use Marking\Controllers\Welcome;
 use Marking\Controllers\Errors;
 use Marking\Controllers\Admin;
@@ -53,7 +52,6 @@ else if ($uri == 'showcurrentstudents') {
     $admin->showCurrentStudents();
 }
 
-
 else if($uri == 'markingsetup') {
     $admin = new Admin();
     $admin->markingConfig();
@@ -70,10 +68,6 @@ else if ($uri == 'assignment') {
     $assignment->loadAssignmentView();
 }
 
-else if ($uri == 'admin') {
-    $admin = new Admin();
-    $admin->adminView();
-}
 
 else {
     $errorController = new Errors();
