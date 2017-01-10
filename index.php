@@ -53,20 +53,12 @@ else if ($uri == 'showcurrentstudents') {
     $admin->showCurrentStudents();
 }
 
-else if ($uri == 'adminupload') {
-    $admin = new Admin();
-    $admin->uploadFile();
-}
 
 else if($uri == 'markingsetup') {
     $admin = new Admin();
     $admin->markingConfig();
 }
 
-else if ($uri == 'admincompile') {
-    $admin = new Admin();
-    $admin->compileFile();
-}
 
 else if ($uri == 'upload') {
     $uploadAssignment = new Assignment();
