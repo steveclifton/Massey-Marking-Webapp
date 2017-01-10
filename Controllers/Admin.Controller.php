@@ -128,4 +128,29 @@ class Admin extends Base
         $this->render('Add New User', 'adduser.view');
     }
 
+    /**
+     * Method used by CSV import to create user and folders
+     */
+    private function createUser($studentId, $first, $last, $pass)
+    {
+        $user = new User();
+        $userFolders = new Folders();
+
+        /* If the user already exists, remove them from the DB */
+        $checkStudent = $user->getUserByStudentId($studentId);
+        if (isset($checkStudent[0])) {
+            $user->removeExistingUser($studentId);
+        }
+        $data['first_name'] = $first;
+        $data['last_name'] = $last;
+        $data['student_id'] = $studentId;
+        $data['password'] = $pass;
+        $data['user_type'] = "student";
+
+
+        /* Create user and folders */
+        $user->create($data);
+        $userFolders->createFolders($data['student_id']);
+    }
+
 }
