@@ -73,8 +73,6 @@ else if ($uri == 'upload') {
     $uploadAssignment->processUploadedFile();
 }
 
-
-
 else if ($uri == 'assignment') {
     $assignment = new Assignment();
     $assignment->loadAssignmentView();
