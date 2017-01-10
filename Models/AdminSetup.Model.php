@@ -12,6 +12,9 @@ use PDO;
  */
 class AdminSetup extends Base
 {
+    /**
+     * Returns the current semester
+     */
     public function getCurrentSemester()
     {
         $sql = "SELECT semester 
@@ -34,6 +37,9 @@ class AdminSetup extends Base
     }
 
 
+    /**
+     * Returns the number of assignments
+     */
     public function getNumberOfAssignments()
     {
         $sql = "SELECT num_assignments 
@@ -55,6 +61,9 @@ class AdminSetup extends Base
         die();
     }
 
+    /**
+     * Returns the number of tests
+     */
     public function getNumberOfTests()
     {
         $sql = "SELECT num_tests 
@@ -75,6 +84,9 @@ class AdminSetup extends Base
         die();
     }
 
+    /**
+     * Returns all semesters in the database
+     */
     public function getAllSemesters()
     {
         $sql = "SELECT semester 
@@ -100,7 +112,9 @@ class AdminSetup extends Base
     }
 
 
-
+    /**
+     * Creates an entry in the database for the marking systems current semester and setup
+     */
     public function setMarkingSetup($numAss, $numTests, $semester)
     {
         $sql = "INSERT INTO `admin_setup` (`id`, `num_assignments`, `num_tests`, `semester`, `created_at`) 
@@ -115,5 +129,23 @@ class AdminSetup extends Base
 
         return;
     }
+
+    /**
+     * Removes a semester from the database if it exists
+     */
+    public function removeSemester($semester)
+    {
+        $sql = "DELETE FROM `admin_setup` WHERE `admin_setup`.`semester` = '$semester'";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $stm->execute(array('$semester'));
+
+        $data = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+        return;
+    }
+
+
 
 }
