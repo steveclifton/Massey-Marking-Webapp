@@ -67,7 +67,16 @@ class Admin extends Base
         $setup = new AdminSetup();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $result = $setup->setMarkingSetup($_POST['numAss'],$_POST['numTests'],$_POST['semester']);
+
+            /* Checks to see if the semester already exists in the DB,
+            *   Removes if does to ensure the latest entry is the current semester
+            */
+            $semesters = $setup->getAllSemesters();
+            if (in_array($_POST['semester'], $semesters)) {
+                $setup->removeSemester($_POST['semester']);
+            }
+
+            $setup->setMarkingSetup($_POST['numAss'],$_POST['numTests'],$_POST['semester']);
             $viewData['updated'] = true;
         }
 
