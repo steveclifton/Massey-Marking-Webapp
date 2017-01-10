@@ -1,11 +1,11 @@
 # 159.201 Assignment 1 test cases
-timeout 10 ./A1 matrix_3x3_A.txt matrix_3x3_B.txt > result1.txt
-timeout 10 ./A1 matrix_3x3_C.txt matrix_3x3_B.txt > result2.txt
-timeout 10 ./A1 matrix_3x3_A.txt matrix_3x3_C.txt > result3.txt
-timeout 10 ./A1 matrix_4x4_A.txt matrix_4x4_B.txt > result4.txt
-timeout 10 ./A1 matrix_4x4_C.txt matrix_4x4_B.txt > result5.txt
-timeout 10 ./A1 matrix_4x4_A.txt matrix_4x4_C.txt > result6.txt
-timeout 10 ./A1 matrix_5x5_A.txt matrix_5x5_B.txt > result7.txt
-timeout 10 ./A1 matrix_5x5_C.txt matrix_5x5_B.txt > result8.txt
-timeout 10 ./A1 matrix_5x5_A.txt matrix_5x5_C.txt > result9.txt
-timeout 10 ./A1 matrix_10x10_A.txt matrix_10x10_B.txt > result10.txt
+timeout 4 ./A1 matrix_3x3_A.txt matrix_3x3_B.txt > result1.txt
+timeout 4 ./A1 matrix_3x3_C.txt matrix_3x3_B.txt > result2.txt
+timeout 4 ./A1 matrix_3x3_A.txt matrix_3x3_C.txt > result3.txt
+timeout 4 ./A1 matrix_4x4_A.txt matrix_4x4_B.txt > result4.txt
+timeout 4 ./A1 matrix_4x4_C.txt matrix_4x4_B.txt > result5.txt
+timeout 4 ./A1 matrix_4x4_A.txt matrix_4x4_C.txt > result6.txt
+timeout 4 ./A1 matrix_5x5_A.txt matrix_5x5_B.txt > result7.txt
+timeout 4 ./A1 matrix_5x5_C.txt matrix_5x5_B.txt > result8.txt
+timeout 4 ./A1 matrix_5x5_A.txt matrix_5x5_C.txt > result9.txt
+timeout 4 ./A1 matrix_10x10_A.txt matrix_10x10_B.txt > result10.txt
