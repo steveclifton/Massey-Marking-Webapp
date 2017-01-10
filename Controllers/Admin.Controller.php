@@ -64,6 +64,8 @@ class Admin extends Base
 
     public function markingConfig()
     {
+        $this->isAdminLoggedIn();
+
         $setup = new AdminSetup();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -78,6 +80,14 @@ class Admin extends Base
         $this->render('Admin', 'markingsetup.view', $viewData);
     }
 
+
+    public function editStudentsProfiles()
+    {
+        $this->isAdminLoggedIn();
+        $viewData = "hello";
+
+        $this->render('Admin', 'editstudentprofile.view', $viewData);
+    }
 
     /**
      * Attempts to register a new user

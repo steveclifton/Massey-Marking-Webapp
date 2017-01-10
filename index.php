@@ -51,6 +51,11 @@ else if ($uri == 'showcurrentstudents') {
     $admin = new Admin();
     $admin->showCurrentStudents();
 }
+else if ($uri == 'editstudents') {
+    $admin = new Admin();
+    $admin->editStudentsProfiles();
+}
+
 
 else if($uri == 'markingsetup') {
     $admin = new Admin();
