@@ -43,8 +43,8 @@ class Welcome extends Base
             $semester = new MarkingSetup();
             $feedback = new Feedback();
 
-            $semester = $semester->getCurrentSemester();
-            $viewData['marks'] = $feedback->getMarkAndFeedback($_SESSION['student_id'], $semester);
+            $viewData['semester'] = $semester->getCurrentSemester();
+            $viewData['marks'] = $feedback->getMarkAndFeedback($_SESSION['student_id'], $viewData['semester']);
 
 
             $this->render('Welcome', 'welcome.view', $viewData);

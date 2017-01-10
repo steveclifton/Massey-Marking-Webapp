@@ -1,5 +1,5 @@
 <h2>Welcome <?= $viewData['first_name'] ?></h2>
-<h4>Current Assignment results</h4>
+<h4>Overall Results - Semester <?= $viewData['semester'] ?></h4>
 <hr><br>
 <div class="table">
     <table class="table table-bordered table-hover">
