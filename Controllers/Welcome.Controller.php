@@ -27,11 +27,7 @@ class Welcome extends Base
          */
         if ($_SESSION['user_type'] == 'admin') {
 
-            /**
-             * Need to decide what to put on the landing page of the admin view
-             */
-            $this->render('Admin', 'admin.view', $viewData);
-            return;
+            $this->render('Student Results', 'showcurrentstudents.view', $viewData);
             die();
         }
 

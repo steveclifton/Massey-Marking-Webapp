@@ -37,7 +37,7 @@ abstract class Base
             die();
         }
         if (isset($_SESSION) && $_SESSION['user_type'] != 'student') {
-            header('location: /admin');
+            header('location: /showcurrentstudents');
             die();
         }
     }
