@@ -15,15 +15,9 @@ class Admin extends Base
 {
 
     /**
-     * Loads the Admin View
+     * Displays the list of students and the results for each assignment
+     * Main landing page for the admin view
      */
-    public function adminView()
-    {
-        $this->isAdminLoggedIn();
-
-        $this->render('Admin', 'admin.view');
-    }
-
     public function showCurrentStudents()
     {
         $this->isAdminLoggedIn();
@@ -62,6 +56,10 @@ class Admin extends Base
         $this->render('Current Students Results', 'studentresults.view', $viewData);
     }
 
+
+    /**
+     * Allows the admin to control the setup of the marking system
+     */
     public function markingConfig()
     {
         $this->isAdminLoggedIn();
@@ -81,13 +79,18 @@ class Admin extends Base
     }
 
 
+    /**
+     * Allows the admin to edit students profiles
+     */
     public function editStudentsProfiles()
     {
         $this->isAdminLoggedIn();
-        $viewData = "hello";
+
+        $viewData = "";
 
         $this->render('Admin', 'editstudentprofile.view', $viewData);
     }
+
 
     /**
      * Attempts to register a new user
@@ -122,7 +125,6 @@ class Admin extends Base
                 header('location: /');
             }
         }
-
         $this->render('Add New User', 'adduser.view');
     }
 
