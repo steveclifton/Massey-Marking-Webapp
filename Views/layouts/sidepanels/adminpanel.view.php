@@ -15,9 +15,10 @@ if (isset($_SESSION['id'])) {
             <ul class=\"nav\">
           ";
 
-    echo "<li><a href=\"/adduser\" style='text-decoration: underline; font-size: 12pt;'>Single Add User</a></li>";
-    echo "<li><a href=\"/showcurrentstudents\" style='text-decoration: underline; font-size: 12pt;'>Current Semester Students</a></li>";
-    echo "<li><a href=\"/markingsetup\" style='text-decoration: underline; font-size: 12pt;'>Marking Setup</a></li>";
+    echo "<li><a href=\"/adduser\" style='text-decoration: underline; font-size: 12pt;'>Add Students</a></li>";
+    echo "<li><a href=\"/#\" style='text-decoration: underline; font-size: 12pt;'>Edit Students</a></li>";
+    echo "<li><a href=\"/showcurrentstudents\" style='text-decoration: underline; font-size: 12pt;'>Results</a></li>";
+    echo "<li><a href=\"/markingsetup\" style='text-decoration: underline; font-size: 12pt;'>Setup</a></li>";
 }
 echo "</ul>";
 
