@@ -50,6 +50,9 @@ class MarkingSetup extends Base
         return $this->setup->getNumberOfTests();
     }
 
+    /**
+     * Returns a list of semesters
+     */
     public function getListOfSemesters()
     {
         return $this->setup->getAllSemesters();
@@ -65,9 +68,11 @@ class MarkingSetup extends Base
         return $file;
     }
 
+    /**
+     * Gets the compare commands file
+     */
     public function getCompareCommands($num)
     {
-
         $file = file("/var/www/marking/AssignmentConfig/MasterCompare$num.txt");
 
         return $file;
