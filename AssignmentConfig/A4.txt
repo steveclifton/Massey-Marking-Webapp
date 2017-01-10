@@ -1,11 +1,11 @@
 # 159.201 Assignment 4
-timeout 10 ./A4 numbers1.txt > result1.txt
-timeout 10 ./A4 numbers2.txt > result2.txt
-timeout 10 ./A4 numbers3.txt > result3.txt
-timeout 10 ./A4 numbers4.txt > result4.txt
-timeout 10 ./A4 numbers5.txt > result5.txt
-timeout 10 ./A4 numbers6.txt > result6.txt
-timeout 10 ./A4 numbers7.txt > result7.txt
-timeout 10 ./A4 numbers8.txt > result8.txt
-timeout 10 ./A4 numbers9.txt > result9.txt
-timeout 10 ./A4 numbers10.txt > result10.txt
+timeout 4 ./A4 numbers1.txt > result1.txt
+timeout 4 ./A4 numbers2.txt > result2.txt
+timeout 4 ./A4 numbers3.txt > result3.txt
+timeout 4 ./A4 numbers4.txt > result4.txt
+timeout 4 ./A4 numbers5.txt > result5.txt
+timeout 4 ./A4 numbers6.txt > result6.txt
+timeout 4 ./A4 numbers7.txt > result7.txt
+timeout 4 ./A4 numbers8.txt > result8.txt
+timeout 4 ./A4 numbers9.txt > result9.txt
+timeout 4 ./A4 numbers10.txt > result10.txt
