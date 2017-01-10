@@ -121,12 +121,49 @@ class Admin extends Base
                 $user->create($data);
                 $userFolders->createFolders($data['student_id']);
 
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 header('location: /');
             }
         }
         $this->render('Add New User', 'adduser.view');
     }
+
+    /**
+     * Method to import a CSV list of students and create an account for them
+     */
+    public function importCSVStudents()
+    {
+        $target_dir = "/home/Admin";
+
+        // Removes all files in the folder currently
+        system("sudo rm $target_dir/*");
+
+        // Sets the target file
+        $target_file = $target_dir . "/import.csv";
+
+        move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
+        chmod($target_file, 0777);
+
+
+        /* Open CSV and create users */
+        $csv = array_map('str_getcsv', file('/home/Admin/import.csv'));
+
+        foreach ($csv as $line) {
+            if (!isset($line[0]) || !isset($line[1]) || !isset($line[2])) {
+                $viewData['success'] = false;
+                break;
+            }
+            // Convert first char to upper case concat add student id
+            $pass = strtoupper($line[1][0]) . $line[0];
+
+            $this->createUser($line[0], $line[1], $line[2], $pass);
+        }
+        if (!isset($viewData['success'])) {
+            $viewData['success'] = true;
+        }
+        $this->render('Add New User', 'adduser.view', $viewData);
+    }
+
 
     /**
      * Method used by CSV import to create user and folders
