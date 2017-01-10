@@ -18,10 +18,13 @@
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     </head>
     <body>
+
+    <!--    Header for Pages-->
         <div class="container-fluid">
             <?php include('/var/www/marking/Views/layouts/header.php'); ?>
         </div>
 
+    <!--    Center display for pages-->
         <div class="page-container">
             <div class="container-fluid">
 
@@ -32,5 +35,6 @@
                 </div>
             </div>
         </div>
+
     </body>
 </html>
