@@ -6,3 +6,5 @@ Backup
 *.sql
 pma
 
+*.env
+.env
