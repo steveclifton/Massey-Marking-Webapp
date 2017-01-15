@@ -58,6 +58,16 @@ class MarkingSetup extends Base
         return $this->setup->getAllSemesters();
     }
 
+    public function getHighTolerance()
+    {
+        return $this->setup->getHighTolerance();
+    }
+
+    public function getLowTolerance()
+    {
+        return $this->setup->getLowTolerance();
+    }
+
     /**
      * Gets the commands from the assignments command-file
      */
