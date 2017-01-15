@@ -6,6 +6,20 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitd14b701456a190287802b67245d9893b
 {
+    public static $prefixLengthsPsr4 = array (
+        'D' => 
+        array (
+            'Dotenv\\' => 7,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+    );
+
     public static $classMap = array (
         'Marking\\Controllers\\Admin' => __DIR__ . '/../..' . '/Controllers/Admin.Controller.php',
         'Marking\\Controllers\\Assignment' => __DIR__ . '/../..' . '/Controllers/Assignment.Controller.php',
@@ -22,13 +36,13 @@ class ComposerStaticInitd14b701456a190287802b67245d9893b
         'Marking\\Models\\Marks' => __DIR__ . '/../..' . '/Models/Marks.Model.php',
         'Marking\\Models\\User' => __DIR__ . '/../..' . '/Models/User.Model.php',
         'Marking\\Services\\DB' => __DIR__ . '/../..' . '/Services/DB.Service.php',
-        'Marking\\Services\\Database' => __DIR__ . '/../..' . '/Services/Database.Service.php',
-        'Marking\\Services\\Env' => __DIR__ . '/../..' . '/Services/Env.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInitd14b701456a190287802b67245d9893b::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitd14b701456a190287802b67245d9893b::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInitd14b701456a190287802b67245d9893b::$classMap;
 
         }, null, ClassLoader::class);

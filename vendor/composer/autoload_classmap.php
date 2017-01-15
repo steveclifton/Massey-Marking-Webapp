@@ -21,6 +21,4 @@ return array(
     'Marking\\Models\\Marks' => $baseDir . '/Models/Marks.Model.php',
     'Marking\\Models\\User' => $baseDir . '/Models/User.Model.php',
     'Marking\\Services\\DB' => $baseDir . '/Services/DB.Service.php',
-    'Marking\\Services\\Database' => $baseDir . '/Services/Database.Service.php',
-    'Marking\\Services\\Env' => $baseDir . '/Services/Env.php',
 );
