@@ -5,6 +5,7 @@ namespace Marking\Controllers;
 use Marking\Models\AdminSetup;
 use Marking\Models\Marks;
 use Marking\Models\User;
+use ReCaptcha\RequestMethod;
 
 /**
  * Class Admin
@@ -76,13 +77,16 @@ class Admin extends Base
                 $setup->removeSemester($_POST['semester']);
             }
 
-            $setup->setMarkingSetup($_POST['numAss'],$_POST['numTests'],$_POST['semester']);
+            $setup->setMarkingSetup($_POST['numAss'],$_POST['numTests'],$_POST['semester'], $_POST['hightolerance'], $_POST['lowtolerance']);
             $viewData['updated'] = true;
         }
 
         $viewData['semester'] = $setup->getCurrentSemester();
         $viewData['numAss'] = $setup->getNumberOfAssignments();
         $viewData['numTests'] = $setup->getNumberOfTests();
+        $viewData['high_tolerance'] = $setup->getHighTolerance();
+        $viewData['low_tolerance'] = $setup->getLowTolerance();
+
 
         $this->render('Admin', 'markingsetup.view', $viewData);
     }
@@ -95,9 +99,50 @@ class Admin extends Base
     {
         $this->isAdminLoggedIn();
 
-        $viewData = "";
+        $setup = new AdminSetup();
+        $user = new User();
+        $viewData['students'] = $user->getCurrentSemestersUsers($setup->getCurrentSemester());
 
         $this->render('Admin', 'editstudentprofile.view', $viewData);
+    }
+
+    /**
+     * Allows the admin to edit students profiles
+     */
+    public function editStudent()
+    {
+        $this->isAdminLoggedIn();
+        $setup = new AdminSetup();
+        $user = new User();
+
+        // Makes sure the request is valid
+        if (!isset($_POST['db_id']) || !isset($_GET['id'])) {
+            header('location: /welcome');
+            die();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $oldStudentId = $user->getStudentID($_POST['db_id']);
+            $studentId = $user->updateStudentDetails($_POST);
+
+            // If the student ID has changed, need to create new folders for it
+            if ($oldStudentId != $studentId) {
+                $folder = new Folders();
+                $folder->createFolders($studentId);
+            }
+
+            $result = $user->getUserByStudentId($studentId);
+            $viewData = $result[0];
+            $viewData['updated'] = true;
+        } else {
+            $result = $user->getUserByStudentId($_GET['id']);
+            $viewData = $result[0];
+        }
+
+
+
+
+        $this->render('Admin', 'editstudent.view', $viewData);
     }
 
 
