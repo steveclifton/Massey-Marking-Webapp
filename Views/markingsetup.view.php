@@ -11,6 +11,20 @@
             </div>
         </div>
         <div class="control-group">
+            <label class="control-label">High Tolerance</label>
+            <div class="controls">
+                <input type="text" id="hightolerance" name="hightolerance" placeholder="" class="input-xlarge"
+                       value="<?= $viewData['high_tolerance'] ?>" >
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Low Tolerance</label>
+            <div class="controls">
+                <input type="text" id="lowtolerance" name="lowtolerance" placeholder="" class="input-xlarge"
+                       value="<?= $viewData['low_tolerance'] ?>" >
+            </div>
+        </div>
+        <div class="control-group">
             <label class="control-label">Number of Assignments</label>
             <div class="controls">
                 <input type="text" id="numAss" name="numAss" placeholder="" class="input-xlarge"
@@ -32,11 +46,6 @@
         </div>
         <div>
             <h5 style="color: red;"><?php if(isset($viewData['updated'])) { echo "Updated Successfully";} ?></h5>
-        </div>
-        <div class="control-group">
-            <div class="controls">
-                <h2>Here is where other configs will go, assignment specific stuff</h2>
-            </div>
         </div>
     </fieldset>
 </form>
