@@ -77,6 +77,52 @@ class User extends Base
         return true;
     }
 
+    public function updateStudentDetails($userData)
+    {
+        $dbID = $userData['db_id'];
+        $firstName = $userData['first_name'];
+        $lastName = $userData['last_name'];
+        $studentId = $userData['student_id'];
+        if ($userData['password'] != '') {
+            $password = password_hash($userData['password'], PASSWORD_DEFAULT);
+        }
+
+        $userType = $userData['user_type'];
+        $semester = $userData['semester'];
+
+        /**
+         * This allows for the existing password to remain hashed and untouched.
+         * - Only updated if it is attempting to be changed
+         */
+        if(isset($password)) {
+            $sql = "UPDATE `users` 
+              SET `first_name` = '$firstName',
+                  `last_name` = '$lastName',
+                  `user_type` = '$userType',
+                  `student_id` = '$studentId',
+                  `semester` = '$semester',
+                  `password` = '$password'
+              WHERE `users`.`id` = '$dbID'
+        ";
+        } else {
+            $sql = "UPDATE `users` 
+              SET `first_name` = '$firstName',
+                  `last_name` = '$lastName',
+                  `user_type` = '$userType',
+                  `student_id` = '$studentId',
+                  `semester` = '$semester'
+              WHERE `users`.`id` = '$dbID'
+        ";
+        }
+
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $result = $stm->execute(array('$firstName, $lastName, $userType, $studentId, $semester, $password'));
+
+        return $studentId;
+    }
+
     public function removeExistingUser($studentId)
     {
 
@@ -107,6 +153,25 @@ class User extends Base
         $data = $stm->fetchAll(PDO::FETCH_ASSOC);
 
         return $data;
+    }
+
+    /**
+     * Returns a students ID number based on their DB ID
+     */
+    public function getStudentID($dbID)
+    {
+        $sql = "SELECT student_id
+                FROM `users`
+                WHERE `users`.`id` = '$dbID'
+                ";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $stm->execute(array('$dbID'));
+
+        $data = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+        return $data[0];
     }
 
 }
