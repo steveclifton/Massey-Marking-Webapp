@@ -130,6 +130,8 @@ class AdminSetup extends Base
         header('location: /welcome');
         die();
     }
+
+    /**
      * Returns all semesters in the database
      */
     public function getAllSemesters()
@@ -160,15 +162,15 @@ class AdminSetup extends Base
     /**
      * Creates an entry in the database for the marking systems current semester and setup
      */
-    public function setMarkingSetup($numAss, $numTests, $semester)
+    public function setMarkingSetup($numAss, $numTests, $semester, $high, $low)
     {
-        $sql = "INSERT INTO `admin_setup` (`id`, `num_assignments`, `num_tests`, `semester`, `created_at`) 
-                VALUES (NULL, '$numAss', '$numTests', '$semester', CURRENT_TIMESTAMP)
+        $sql = "INSERT INTO `admin_setup` (`id`, `num_assignments`, `num_tests`, `semester`, `high_tolerance`, `low_tolerance`, `created_at`) 
+                VALUES (NULL, '$numAss', '$numTests', '$semester', '$high', '$low', CURRENT_TIMESTAMP)
                 ";
 
         $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-        $stm->execute(array('$numAss, $numTests, $semester'));
+        $stm->execute(array('$numAss, $numTests, $semester, $high, $low'));
 
         $data = $stm->fetchAll(PDO::FETCH_ASSOC);
 
