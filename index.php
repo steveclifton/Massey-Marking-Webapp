@@ -13,8 +13,12 @@ use Marking\Controllers\Authentication;
 use Marking\Controllers\Welcome;
 use Marking\Controllers\Errors;
 use Marking\Controllers\Admin;
+use Dotenv\Dotenv;
 
 require 'vendor/autoload.php';
+
+$dotenv = new Dotenv(__DIR__);
+$dotenv->load();
 
 session_start();
 
