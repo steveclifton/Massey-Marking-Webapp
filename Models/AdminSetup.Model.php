@@ -85,6 +85,51 @@ class AdminSetup extends Base
     }
 
     /**
+     * Returns the high tolerance
+     */
+    public function getHighTolerance()
+    {
+        $sql = "SELECT high_tolerance 
+                FROM `admin_setup` 
+                ORDER BY created_at DESC 
+                LIMIT 1
+                ";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $stm->execute();
+
+        $data = $stm->fetchAll(PDO::FETCH_ASSOC);
+        //var_dump($data); die();
+        if (isset($data[0]['high_tolerance'])) {
+            return $data[0]['high_tolerance'];
+        }
+        header('location: /welcome');
+        die();
+    }
+
+    /**
+     * Returns the low tolerance
+     */
+    public function getLowTolerance()
+    {
+        $sql = "SELECT low_tolerance 
+                FROM `admin_setup` 
+                ORDER BY created_at DESC 
+                LIMIT 1
+                ";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $stm->execute();
+
+        $data = $stm->fetchAll(PDO::FETCH_ASSOC);
+        if (isset($data[0]['low_tolerance'])) {
+            return $data[0]['low_tolerance'];
+        }
+        header('location: /welcome');
+        die();
+    }
      * Returns all semesters in the database
      */
     public function getAllSemesters()
