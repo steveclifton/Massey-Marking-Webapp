@@ -51,9 +51,13 @@ else if ($uri == 'showcurrentstudents') {
     $admin = new Admin();
     $admin->showCurrentStudents();
 }
-else if ($uri == 'editstudents') {
+else if ($uri == 'editstudentprofile') {
     $admin = new Admin();
     $admin->editStudentsProfiles();
+}
+else if ($uri == 'editstudent') {
+    $admin = new Admin();
+    $admin->editStudent();
 }
 
 
