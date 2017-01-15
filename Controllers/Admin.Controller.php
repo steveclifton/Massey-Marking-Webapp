@@ -5,7 +5,6 @@ namespace Marking\Controllers;
 use Marking\Models\AdminSetup;
 use Marking\Models\Marks;
 use Marking\Models\User;
-use ReCaptcha\RequestMethod;
 
 /**
  * Class Admin
@@ -87,7 +86,6 @@ class Admin extends Base
         $viewData['high_tolerance'] = $setup->getHighTolerance();
         $viewData['low_tolerance'] = $setup->getLowTolerance();
 
-
         $this->render('Admin', 'markingsetup.view', $viewData);
     }
 
@@ -139,9 +137,6 @@ class Admin extends Base
             $viewData = $result[0];
         }
 
-
-
-
         $this->render('Admin', 'editstudent.view', $viewData);
     }
 
@@ -184,6 +179,9 @@ class Admin extends Base
 
     /**
      * Method to import a CSV list of students and create an account for them
+     * Example
+     *      StudentID,Firstname,Lastname
+     *      123456,John,Smith
      */
     public function importCSVStudents()
     {
@@ -197,7 +195,6 @@ class Admin extends Base
 
         move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
         chmod($target_file, 0777);
-
 
         /* Open CSV and create users */
         $csv = array_map('str_getcsv', file('/home/Admin/import.csv'));
