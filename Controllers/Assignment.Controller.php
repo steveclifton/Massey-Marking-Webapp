@@ -128,74 +128,52 @@ class Assignment extends Base
 
         if (!in_array('FAILED', $assignmentsToCheck)) {
             $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, 10);
-            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "All test cases passed", $markId);
+            $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, "<pre>All Test Cases Passed, Well Done</pre>", $markId);
             header("location: /assignment?num=$this->assignmentNumber");
             die();
         }
+
+
+
+        /**
+         * Here one or more of the tests have failed
+         * Begins parsing the output from each test and checking it
+         */
         else
         {
-            /*Structure
-             *  Test X
-             *    - Pass/Passed with errors/Failed
-             *
-             *  Possible Causes
-             *
-             *  Desired output
-             */
-
-            // Loops through each test output and checks it
-            // If it passed, push into the array
-            // If it failed, start parsing and checking
-
             $databaseFeedback = array();
             $this->assignmentMark = 0;
+
+
             for ($j = 1; $j <= 10; $j++) {
                 array_push($databaseFeedback, "<pre><h3><u>Test $j</u></h3>");
 
                 // If the assignment was compared previously and classed as passed
-                // Don't check, assign as passed and continue
+                // Don't check, assign mark and continue
                 if ($assignmentsToCheck[$j] === 'PASSED') {
                     array_push($databaseFeedback, "<h4 style=\"color:red\">Passed</h4></pre>");
                     $this->assignmentMark++;
                     continue;
                 }
 
-
                 // Loads the output of the two assignments in question
                 $masterOutput = $this->getMasterOutput($j);
                 $studentOutput = $this->getAssignmentOutput($j);
 
-//                // If there is only 2 lines of output
-//                // Skip printing the desired output
-//                if (count($studentOutput) <= 2) {
-//                    array_push($databaseFeedback, "<h4 style=\"color:red\">Failed</h4>");
-//                    array_push($databaseFeedback, "</pre>");
-//                    continue;
-//                }
-
-
-
-                /*
-                 * Loops through each line and checks to see if the lines are identical
-                 * If the lines are identical
-                 *  - Push a 'Passed' string onto the array
-                 * If the lines are not identical
-                 *  - Removes all white space and check again
-                 * If the lines still differ after removing whitespace
-                 *  - Push the line number difference onto an array
-                 */
 
                 $lineStatus = array();
                 $differOnLine = array();
 
                 $hasAddedCaseOrWs = false;
-                $hasAddedWs = false;
-
 
                 $masterOutputFiltered= '';
                 $studentOutputFiltered='';
+
+                // Checks to see which of the files has the lowest line
+                // This can be helpful to provide some feedback to the student if the output is somewhat correct
                 $lowLineCount = (count($masterOutput) < count($studentOutput) ? count($masterOutput) : count($studentOutput));
 
+                // Begin looping through the files lines
                 for ($i = 0; $i < $lowLineCount; $i++) {
 
                     // If the lines match without being modified
@@ -205,18 +183,19 @@ class Assignment extends Base
                         continue;
                     }
 
+                    // Removes whitespace from front and end and converts to lower case
                     $masterOutputFiltered[$i] = trim(strtolower($masterOutput[$i]));
                     $studentOutputFiltered[$i] = trim(strtolower($studentOutput[$i]));
 
                     // If the lines match after they have been trimmed / case corrected
                     // - Passed
-                    // - Set var as true
                     if (strcmp($masterOutputFiltered[$i], $studentOutputFiltered[$i]) == 0) {
                         array_push($lineStatus, "PASSED WITH ERRORS");
                         array_push($differOnLine, $i);
-                        $hasAddedCaseOrWs = true;
+                        if (!$hasAddedCaseOrWs) {
+                            $hasAddedCaseOrWs = true;
+                        }
                     }
-
 
                     // The lines do not match after being trimmed/converted to lower case
                     // Remove all white space and check to see if they match then
@@ -228,41 +207,73 @@ class Assignment extends Base
                         if (strcmp($masterOutputRmvWSLine, $studentOutputRmvWSLine) == 0) {
                             array_push($lineStatus, "PASSED WITH ERRORS");
                             array_push($differOnLine, $i);
-                            if (!$hasAddedWs) {
-                                $hasAddedWs = true;
-                            }
                         }
 
-                        // Else there is something else wrong on that needs further investigation
+                        /**
+                         * Below executes if after trimming, removing whitespace and changing case it still does not match
+                         */
                         else {
-                            array_push($differOnLine, $i);
-                            array_push($lineStatus, "FAILED");
+
+                            // Check if the assignment is 3 or 7
+                            // If it is, Explode the line and see if the numbers match
+                            if ($this->assignmentNumber == 3 || $this->assignmentNumber == 7) {
+
+                                // Replaces spaces with commas in case multiple spaces exist
+                                $masterOutputComa = preg_replace('/\s+/', ',', $masterOutputFiltered[$i]);
+                                $studentOutputComa = preg_replace('/\s+/', ',', $studentOutputFiltered[$i]);
+
+                                // Explodes the line by comma
+                                $explodeMasterLine = explode(",", $masterOutputComa);
+                                $explodeStudentLine = explode(",", $studentOutputComa);
+
+                                // If one line has more values than the other, it fails
+                                if (count($explodeMasterLine) != count($explodeStudentLine)) {
+                                    array_push($differOnLine, $i);
+                                    array_push($lineStatus, "FAILED");
+                                }
+
+                                // Loop through the lines and find which token is a number
+                                else {
+
+                                    for ($inc = 0; $inc < count($explodeMasterLine); $inc++) {
+
+                                        // Checks to see if one token or the other is a number
+                                        if (is_numeric($explodeMasterLine[$inc]) || is_numeric($explodeStudentLine[$inc])) {
+
+                                            // Checks to make sure both are numbers, if they are tests are done
+                                            // If they are not, the output fails
+                                            if (is_numeric($explodeMasterLine[$inc]) && is_numeric($explodeStudentLine[$inc])) {
+
+                                                $setup = new MarkingSetup();
+
+                                                // Sets the high and low values that a students result can be in
+                                                $masterResultHigh = (float)$explodeMasterLine[$inc] * (float)$setup->getHighTolerance();
+                                                $masterResultLow = (float)$explodeMasterLine[$inc] * (float)$setup->getLowTolerance();
+
+
+                                                // If the students result is between the high and low tolerance, pass
+                                                if ($explodeStudentLine[$inc] < $masterResultHigh && $explodeStudentLine[$inc] > $masterResultLow) {
+                                                    array_push($lineStatus, "PASSED INSIDE TOLERANCE");
+                                                    array_push($differOnLine, $i);
+                                                } else {
+                                                    array_push($differOnLine, $i);
+                                                    array_push($lineStatus, "FAILED");
+                                                }
+                                            }
+
+                                            // If one is a number and one is not a number, output is faulty
+                                            else {
+                                                array_push($differOnLine, $i);
+                                                array_push($lineStatus, "FAILED");
+                                                if (!$hasAddedCaseOrWs) {
+                                                    $hasAddedCaseOrWs = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
-//                        $masterSplit = preg_split('/\s+/', $masterOutputFiltered[$i]);
-//                        $studentSplit = preg_split('/\s+/', $studentOutputFiltered[$i]);
-//                        $elemCount = (count($masterSplit) < count($studentSplit) ? count($masterSplit) : count($studentSplit));
-//                        //var_dump($masterSplit); echo "<br>"; var_dump($studentSplit); die();
-//                        for ($k = 0; $k < $elemCount; $k++) {
-//
-//                            if (strcmp($masterSplit[$k], $studentSplit[$k]) == 0) {
-//                                if (is_numeric($masterSplit[$k]) && is_numeric($studentSplit[$k])) {
-//                                    array_push($closeEnough, "PASSED");
-//                                }
-//                            }
-//                            if (strcmp($masterSplit[$k], $studentSplit[$k]) != 0) {
-//                                if (is_numeric($masterSplit[$k]) && is_numeric($studentSplit[$k])) {
-//                                    $masterVal = $masterSplit[$k];
-//                                    $studentVal = $studentSplit[$k];
-//                                    $difference = abs($masterVal - $studentVal);
-//                                    if ($difference < 5) {
-//                                        array_push($closeEnough, "PASSED");
-//                                    } else {
-//                                        array_push($closeEnough, "FAILED");
-//                                    }
-//                                }
-//                            }
-//                        }
-//                        //var_dump($masterSplit); echo "<br>"; var_dump($studentSplit); die();
                     }
                 }
 
@@ -279,37 +290,21 @@ class Assignment extends Base
                  */
 
                 $totalCount = array_count_values($lineStatus);
-                //var_dump($totalCount); die();
-                $targetOutputFailed = false;
+                //if ($j == 8) { var_dump($totalCount);die(); }
 
                 if (isset($totalCount['FAILED'])) {
                     array_push($databaseFeedback, "<h4 style=\"color:red\">Failed</h4>");
                 }
 
-                else if (isset($totalCount['PASSED']) && !isset($totalCount['PASSED WITH ERRORS'])) {
+                else if (isset($totalCount['PASSED']) && !isset($totalCount['PASSED WITH ERRORS']) && !isset($totalCount['PASSED INSIDE TOLERANCE'])) {
                     $this->assignmentMark++;
                     array_push($databaseFeedback, "<h4 style=\"color:red\">Passed</h4>");
                 }
 
-                else if (isset($totalCount['PASSED']) || isset($totalCount['PASSED WITH ERRORS'])) {
+                else if (isset($totalCount['PASSED']) || isset($totalCount['PASSED WITH ERRORS']) || isset($totalCount['PASSED INSIDE TOLERANCE'])) {
                     $this->assignmentMark++;
                     array_push($databaseFeedback, "<h4 style=\"color:red\">Passed with Errors</h4>");
                 }
-
-
-
-
-
-                /*****************************************************************
-                 * Here I want to perform assignment specific fault analysis to report to a user
-                 * EG for
-                 *    - assignment 1 - 'Cannot open file %s. Exiting' and
-                 *    - assignment 2 - 'too many operators'
-                 *    - assignment 7 - 'Heap is already empty'
-                 *
-                 * Basically check which assignment it is, see if any of the errors exist
-                 *****************************************************************/
-
 
 
                 // Enters the line differences into the feedback
@@ -335,6 +330,7 @@ class Assignment extends Base
                         break;
                     }
                 }
+
                 // Push the lines that differ into the feedback array
                 $linesForReview = implode($linesForReview);
                 array_push($databaseFeedback, $linesForReview);
@@ -353,10 +349,8 @@ class Assignment extends Base
                 array_push($databaseFeedback, "<h4><u>Possible Causes</u></h4>");
                 array_push($databaseFeedback, "<ul>");
 
-                if ($hasAddedWs) {
-                    array_push($databaseFeedback, "<li>Additional whitespace (spaces) in the middle of lines</li>");
-                } else if ($hasAddedCaseOrWs) {
-                    array_push($databaseFeedback, "<li>Possible added whitespace (spaces) at ends of lines</li>");
+                if ($hasAddedCaseOrWs) {
+                    array_push($databaseFeedback, "<li>Possible added whitespace (spaces)</li>");
                     array_push($databaseFeedback, "<li>Possible character case difference</li>");
                 } else {
                     array_push($databaseFeedback, "<li>Possible differences in target output</li>");
@@ -383,11 +377,14 @@ class Assignment extends Base
                         break;
                     }
                 }
+
+                // Push the final outputs into the database feedback array
                 $sampleMasterOutput = implode($sampleMasterOutput);
                 array_push($databaseFeedback, $sampleMasterOutput);
                 array_push($databaseFeedback, "</pre>");
             }
 
+            // Sets the users mark and updates the users feedback
             $databaseFeedback = implode($databaseFeedback);
             $markId = $mark->setUsersMark($this->studentId, $this->assignmentNumber, $this->semester, $this->assignmentMark);
             $feedback->setUserFeedback($_SESSION['student_id'], $this->semester, $this->assignmentNumber, $databaseFeedback, $markId);
