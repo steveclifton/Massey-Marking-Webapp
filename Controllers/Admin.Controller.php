@@ -114,8 +114,9 @@ class Admin extends Base
         $user = new User();
 
         // Makes sure the request is valid
-        if (!isset($_POST['db_id']) || !isset($_GET['id'])) {
+        if ((!isset($_GET['id'])) && (!isset($_POST['db_id']))) {
             header('location: /welcome');
+            //var_dump($_GET);
             die();
         }
 
