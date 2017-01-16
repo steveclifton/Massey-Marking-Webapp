@@ -22,7 +22,7 @@ class DB extends PDO
     /**
      * Constructs a new Database object
      *
-     * Uses the Env class to get login details
+     * Uses the env class to get login details
      */
     public function __construct()
     {
@@ -30,6 +30,7 @@ class DB extends PDO
             parent::__construct(getenv('DB_NAME'), getenv('DB_USER'), getenv('DB_PASS'));
         } catch (PDOException $Exception) {
             header('location: /error');
+            die();
         }
     }
 
