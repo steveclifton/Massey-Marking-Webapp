@@ -21,14 +21,14 @@
 
     <!--    Header for Pages-->
         <div class="container-fluid">
-            <?php include('/var/www/marking/Views/layouts/header.php'); ?>
+            <?php include('Views/layouts/header.php'); ?>
         </div>
 
     <!--    Center display for pages-->
         <div class="page-container">
             <div class="container-fluid">
 
-                <?php include('/var/www/marking/Views/layouts/sidepanels/sidepanel.view.php'); ?>
+                <?php include('Views/layouts/sidepanels/sidepanel.view.php'); ?>
 
                 <div class="col-sm-6 col-md-10" style="padding-top: 20px">
                     <?php include($viewName . '.php'); ?>
