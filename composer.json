@@ -6,5 +6,8 @@
       "Services/",
       "Exceptions"
     ]
+  },
+  "require": {
+    "vlucas/phpdotenv": "^2.4"
   }
 }
