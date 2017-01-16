@@ -8,3 +8,4 @@ pma
 
 *.env
 .env
+vendor
