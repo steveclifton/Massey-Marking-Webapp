@@ -64,7 +64,6 @@ else if ($uri == 'editstudent') {
     $admin->editStudent();
 }
 
-
 else if($uri == 'markingsetup') {
     $admin = new Admin();
     $admin->markingConfig();
@@ -75,7 +74,6 @@ else if ($uri == 'uploadcsv') {
     $admin->importCSVStudents();
 }
 
-
 else if ($uri == 'upload') {
     $uploadAssignment = new Assignment();
     $uploadAssignment->processUploadedFile();
@@ -85,7 +83,10 @@ else if ($uri == 'assignment') {
     $assignment = new Assignment();
     $assignment->loadAssignmentView();
 }
-
+else if ($uri == 'error') {
+    $error = new Errors();
+    $error->notFound();
+}
 
 else {
     $errorController = new Errors();
