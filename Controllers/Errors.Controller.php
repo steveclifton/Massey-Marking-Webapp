@@ -16,8 +16,8 @@ class Errors extends Base
      */
     public function notFound()
     {
-
         $this->render('Page Not Found', '404.view');
+        die();
     }
 }
 
