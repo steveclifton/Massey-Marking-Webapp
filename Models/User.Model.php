@@ -173,5 +173,4 @@ class User extends Base
 
         return $data[0];
     }
-
 }
