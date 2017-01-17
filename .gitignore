@@ -7,3 +7,5 @@ Backup
 pma
 
 *.env
+vendor
+
