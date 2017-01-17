@@ -8,4 +8,5 @@ pma
 
 *.env
 vendor
+.htaccess
 
