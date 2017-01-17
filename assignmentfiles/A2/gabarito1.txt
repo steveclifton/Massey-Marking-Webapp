@@ -1,0 +1,4 @@
+reading number 3
+reading number 4
+reading operator +
+The result is 7

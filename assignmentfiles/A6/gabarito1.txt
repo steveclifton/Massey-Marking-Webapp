@@ -1,0 +1,2 @@
+From A to B:6
+From A to C:5
