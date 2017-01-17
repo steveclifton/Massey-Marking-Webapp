@@ -1,4 +1,0 @@
-From A to B:1
-From A to C:7
-From A to D:3
-From A to E:2

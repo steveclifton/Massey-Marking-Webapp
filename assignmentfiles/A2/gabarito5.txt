@@ -1,6 +1,0 @@
-reading number 24
-reading number 15
-reading number 3
-reading operator *
-reading operator +
-The result is 69

@@ -1,5 +1,0 @@
-reading number 68
-reading number 49
-reading operator -
-reading operator *
-too many operators
