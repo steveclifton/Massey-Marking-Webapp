@@ -55,7 +55,6 @@ class Assignment extends Base
             $viewData['feedback'] = "";
         }
 
-
         $this->render('Assignment', 'assignment.view', $viewData);
     }
 
@@ -151,7 +150,7 @@ class Assignment extends Base
                 // If the assignment was compared previously and classed as passed
                 // Don't check, assign mark and continue
                 if ($assignmentsToCheck[$j] === 'PASSED') {
-                    array_push($databaseFeedback, "<h4 style=\"color:red\">Passed</h4></pre>");
+                    array_push($databaseFeedback, "<h4 style=\"color:green\">Passed</h4></pre>");
                     $this->assignmentMark++;
                     continue;
                 }
@@ -230,11 +229,8 @@ class Assignment extends Base
                                 if (count($explodeMasterLine) != count($explodeStudentLine)) {
                                     array_push($differOnLine, $i);
                                     array_push($lineStatus, "FAILED");
-                                }
-
-                                // Loop through the lines and find which token is a number
-                                else {
-
+                                } else {
+                                    // Loop through the lines and find which token is a number
                                     for ($inc = 0; $inc < count($explodeMasterLine); $inc++) {
 
                                         // Checks to see if one token or the other is a number
@@ -243,6 +239,7 @@ class Assignment extends Base
                                             // Checks to make sure both are numbers, if they are tests are done
                                             // If they are not, the output fails
                                             if (is_numeric($explodeMasterLine[$inc]) && is_numeric($explodeStudentLine[$inc])) {
+
 
                                                 $setup = new MarkingSetup();
 
@@ -273,6 +270,12 @@ class Assignment extends Base
                                     }
                                 }
                             }
+
+                            // The lines do not match and need to be checked
+                            else {
+                                array_push($differOnLine, $i);
+                                array_push($lineStatus, "FAILED");
+                            }
                         }
                     }
                 }
@@ -298,12 +301,12 @@ class Assignment extends Base
 
                 else if (isset($totalCount['PASSED']) && !isset($totalCount['PASSED WITH ERRORS']) && !isset($totalCount['PASSED INSIDE TOLERANCE'])) {
                     $this->assignmentMark++;
-                    array_push($databaseFeedback, "<h4 style=\"color:red\">Passed</h4>");
+                    array_push($databaseFeedback, "<h4 style=\"color:green\">Passed</h4>");
                 }
 
                 else if (isset($totalCount['PASSED']) || isset($totalCount['PASSED WITH ERRORS']) || isset($totalCount['PASSED INSIDE TOLERANCE'])) {
                     $this->assignmentMark++;
-                    array_push($databaseFeedback, "<h4 style=\"color:red\">Passed with Errors</h4>");
+                    array_push($databaseFeedback, "<h4 style=\"color:orange\">Passed with Errors</h4>");
                 }
 
 
@@ -321,7 +324,7 @@ class Assignment extends Base
                         $studentOutput[$line] = substr($studentOutput[$line],0, 100) . "..." . PHP_EOL;
                     }
 
-                    $string = "Line $numLine<br><b style=\"color:green\">$masterOutput[$line]</b>" . "<b style=\"color:red\">$studentOutput[$line]</b><br>";
+                    $string = "Line $numLine<br><b\">Expected  : $masterOutput[$line]</b>" . "<b style=\"color:red\">Assignment: $studentOutput[$line]</b><br>";
                     array_push($linesForReview, $string);
 
                     $count++;
@@ -421,6 +424,7 @@ class Assignment extends Base
         $target_file = $target_dir . "/A$this->assignmentNumber.cpp";
 
         move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
+
         chmod($target_file, 0777);
 
     }
