@@ -92,6 +92,7 @@ class Admin extends Base
 
     /**
      * Allows the admin to edit students profiles
+     * - Returns all students in the system
      */
     public function editStudentsProfiles()
     {
@@ -99,7 +100,7 @@ class Admin extends Base
 
         $setup = new AdminSetup();
         $user = new User();
-        $viewData['students'] = $user->getCurrentSemestersUsers($setup->getCurrentSemester());
+        $viewData['students'] = $user->getUsers();
 
         $this->render('Admin', 'editstudentprofile.view', $viewData);
     }
@@ -186,6 +187,12 @@ class Admin extends Base
      */
     public function importCSVStudents()
     {
+
+        if ($_FILES["fileToUpload"]["tmp_name"] == null) {
+            $viewData['success'] = 'missing';
+            $this->render('Add New User', 'adduser.view', $viewData);
+            die();
+        }
         $target_dir = "/home/Admin";
 
         // Removes all files in the folder currently
