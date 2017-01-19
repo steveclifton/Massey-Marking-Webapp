@@ -156,6 +156,25 @@ class User extends Base
     }
 
     /**
+     * Returns a list of students
+     */
+    public function getUsers()
+    {
+        $sql = "SELECT id, first_name, last_name, student_id, semester
+                FROM `users`
+                ORDER BY `student_id`
+                ";
+
+        $stm = $this->database->prepare(($sql), array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $stm->execute(array('$semester'));
+
+        $data = $stm->fetchAll(PDO::FETCH_ASSOC);
+
+        return $data;
+    }
+
+    /**
      * Returns a students ID number based on their DB ID
      */
     public function getStudentID($dbID)
