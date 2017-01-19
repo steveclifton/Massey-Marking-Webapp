@@ -1,4 +1,4 @@
-<h1>Mark so far : <?= $viewData['mark'] ?>/10</h1>
+<h1>Assignment <?= $_GET['num']?> Mark so far : <?= $viewData['mark'] ?>/10</h1>
 <hr>
 
 <?php include ('Views/layouts/upload.view.php'); ?>
