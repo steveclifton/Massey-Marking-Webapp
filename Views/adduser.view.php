@@ -53,10 +53,12 @@
     <input type="submit" id="submitButtom" class="btn btn-primary" value="submit">
     <p>
         <?php if (isset($viewData['success'])) {
-                if ($viewData['success'] == true) {
-                    echo "Import Successful";
-                } else {
+                if ($viewData['success'] === 'missing') {
+                    echo "Please check file";
+                } else if ($viewData['success'] == false){
                     echo "Import Failed";
+                } else if ($viewData['success'] == true){
+                    echo "Import Successful";
                 }
             } // Displays whether the import was good or not
         ?>
