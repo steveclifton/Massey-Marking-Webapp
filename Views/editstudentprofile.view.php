@@ -10,6 +10,7 @@
                 <th style="text-align: center">Student ID</th>
                 <th style="text-align: center">First Name</th>
                 <th style="text-align: center">Last Name</th>
+                <th style="text-align: center">Current Semester</th>
             </tr>
             </thead>
             <tbody>
@@ -19,6 +20,7 @@
                     <td class="col-md-1 col-sm-1" style="text-align: center"><a href="/editstudent?id=<?= $data['student_id'] ?>"><?= $data['student_id'] ?></a></td>
                     <td class="col-md-1 col-sm-1" style="text-align: center"> <?= $data['first_name'] ?> </td>
                     <td class="col-md-1 col-sm-1" style="text-align: center"> <?= $data['last_name'] ?> </td>
+                    <td class="col-md-1 col-sm-1" style="text-align: center"> <?= $data['semester'] ?> </td>
                 </tr>
             <?php } ?>
             </tbody>
