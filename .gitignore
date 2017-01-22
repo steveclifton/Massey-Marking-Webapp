@@ -7,6 +7,5 @@ Backup
 pma
 
 *.env
-vendor
 .htaccess
 
