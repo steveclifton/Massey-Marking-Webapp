@@ -212,6 +212,11 @@ class Assignment extends Base
                          * Below executes if after trimming, removing whitespace and changing case it still does not match
                          */
                         else {
+                            if (is_numeric($masterOutputRmvWSLine)) {
+                                array_push($differOnLine, $i);
+                                array_push($lineStatus, "FAILED");
+                                continue;
+                            }
 
                             // Check if the assignment is 3 or 7
                             // If it is, Explode the line and see if the numbers match
